@@ -1,0 +1,67 @@
+# mp4 出力フォルダを指定します
+out_dir = "./resources/sample/"  # 要スラッシュ
+
+# VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
+# キーは VOICEVOX のスタイルIDです
+# ここではずんだもんの話速を速めて抑揚を抑え、
+# またずんだもんもつむぎも音高を落ち着かせています
+[voice_settings]
+3 = { speedScale = 1.2, intonationScale = 0.9, pitchScale = -0.025 }
+8 = { pitchScale = -0.025 }
+
+# 立ち絵の画像ファイルパスと縮尺と表示座標を指定します
+# 縮尺と表示座標は試行錯誤するまでわからないので最初は適当にします
+# 画像ファイルは各表情タイプに「口閉じ、口開き」の2ファイルを指定します
+# なければ同じファイルでよいです (がセリフ中でも口パクしません)
+[[character_images]]
+speaker = 3
+scale = 0.59
+coordinate = [457, 286]
+normal = ["./portraits/zundamon_10.png", "./portraits/zundamon_11.png"]
+mattari = ["./portraits/zundamon_00.png", "./portraits/zundamon_01.png"]
+[[character_images]]
+speaker = 8
+scale = 0.555
+coordinate = [-27, 266]
+normal = ["./portraits/tsumugi_10.png", "./portraits/tsumugi_11.png"]
+
+# 画面に描画するテキストの設定を指定します
+[text_settings]
+coordinate = [25, 25]
+font_size = 24
+font_path = '../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf'
+font_color = [0, 0, 0]
+width = 24  # 背景画像が横 640 ピクセルなので 24 文字くらい入りますが調整します
+
+# 場面のデフォルト設定を指定します
+# 各場面はこの設定への差分のみ指定します
+# 立ち絵の座標調整時にもこの設定を使用します
+[shot_default]
+speaker = -1  # 話者のスタイルID (誰も話さないなら -1)
+serifu = ""  # セリフ
+silence = 0  # セリフ後無音秒数
+back_img = ""  # 背景画像パス (これを指定しないときはこの下の2行必須)
+back_size = [640, 480]  # 背景サイズ (画像パス指定時は無視)
+back_color = [204, 226, 229]  # 背景色 (画像パス指定時は無視)
+characters = { 3 = "normal", 8 = "normal" }  # 場面の登場人物及びその表情タイプ
+text = ""
+
+# 各場面のセリフや背景画像や表情などを指定していきます
+[[shots]]
+silence = 1
+[[shots]]
+speaker = 3
+serifu = "定常時系列のあるステップとkステップ前の共分散をラグkの関数と考えて自己共分散関数というのだ。"
+[[shots]]
+speaker = 8
+serifu = "定常時系列じゃないとだめなのー？"
+[[shots]]
+speaker = 3
+serifu = "時系列が定常でない場合自己共分散はラグkのみでは決まらないのだ。時間ステップによって変わっていってしまうかもしれないのだ。"
+[[shots]]
+speaker = 8
+serifu = "あーそっかー。"
+[[shots]]
+silence = 5
+characters = { 3 = "mattari", 8 = "normal" }
+text = "[声の出演]<br/>VOICEVOX:ずんだもん<br/>VOICEVOX:春日部つむぎ"
