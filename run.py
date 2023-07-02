@@ -12,6 +12,7 @@ def main():
     parser.add_argument('path', help='台本tomlファイルのパス')
     parser.add_argument('-s', '--adjust_screen', action='store_true', help='画面調整のみ')
     parser.add_argument('-r', '--refresh', action='store_true', help='中間生成物削除のみ')
+    parser.add_argument('-n', '--no_mp4', action='store_true', help='mp4生成の手前で終わる')
     args = parser.parse_args()
 
     # 台本tomlファイルを読み込みます
@@ -31,7 +32,7 @@ def main():
     # 各ジェネレータを用意します
     ag = AudioGenerator(storyboard)
     ig = ImageGenerator(storyboard)
-    mg = MovieGenerator(storyboard, ig)
+    mg = MovieGenerator(storyboard, ig, args.no_mp4)
 
     # 中間生成物削除のみする場合
     if args.refresh:

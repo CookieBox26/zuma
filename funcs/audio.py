@@ -38,6 +38,7 @@ class AudioGenerator:
     def __init__(self, storyboard):
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
         self.voice_settings = storyboard['voice_settings']
+        self.bgm_file = storyboard.get('bgm', '')
 
     def generate(self, shots):
         """各場面の台詞を wav に出力し全体を通した mp3 を出力しておきます
@@ -51,8 +52,10 @@ class AudioGenerator:
             if shot['speaker'] > -1:  # 話者がいればセリフ音声を合成する
                 out_file = get_audio_filename(self.out_dir_intermediate, shot)
                 if not os.path.isfile(out_file):
+                    serifu = shot['serifu']
+                    serifu = serifu.replace('・', '')
                     synthesize(
-                        shot['serifu'], out_file, speaker=shot['speaker'],
+                        serifu, out_file, speaker=shot['speaker'],
                         options=self.voice_settings.get(str(shot['speaker'])))
                 audio = AudioSegment.from_wav(out_file)
                 komasu = math.ceil(audio.duration_seconds / SPK)
@@ -69,6 +72,14 @@ class AudioGenerator:
                 audio_concat = audio
             else:
                 audio_concat += audio
+
         mp3_file = f'{self.out_dir_intermediate}concat.mp3'
         audio_concat.export(mp3_file, format='mp3')
+
+        if self.bgm_file != '':
+            audio = AudioSegment.from_mp3(mp3_file)
+            bgm = AudioSegment.from_mp3(self.bgm_file) - 11
+            audio = audio.overlay(bgm)
+            audio.export(mp3_file, format='mp3')
+
         return mp3_file, komas
