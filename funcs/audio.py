@@ -77,8 +77,9 @@ class AudioGenerator:
         audio_concat.export(mp3_file, format='mp3')
 
         if self.bgm_file != '':
+            # note: 一旦MP3に出力して再読込しないとBGMが合成できなかった
             audio = AudioSegment.from_mp3(mp3_file)
-            bgm = AudioSegment.from_mp3(self.bgm_file) - 11
+            bgm = AudioSegment.from_mp3(self.bgm_file) - 11  # BGM の音量を下げる
             audio = audio.overlay(bgm)
             audio.export(mp3_file, format='mp3')
 

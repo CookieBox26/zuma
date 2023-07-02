@@ -61,7 +61,7 @@ back_color = [240, 240, 240]  # 背景色 (画像パス指定時は無視)
 front_img = ""  # 前景画像パス (任意)
 front_img_coordinate = [20, 20]  # 前景画像座標
 characters = { 3 = "normal", 8 = "normal" }  # 場面の登場人物及びその表情タイプ
-free_text = ""  # 描画テキスト
+free_text = ""  # フリーテキスト
 
 # 各場面のセリフや背景画像や表情などを指定していきます
 [[shots]]
