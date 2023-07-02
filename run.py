@@ -18,6 +18,9 @@ def main():
     with open(args.path, encoding='utf-8') as f:
         storyboard = toml.load(f)
     out_dir = storyboard['out_dir']
+    if out_dir == '':  # 出力パスが空文字列の場合台本ファイルがあるパスにする
+        out_dir = os.path.dirname(args.path) + '/'
+        storyboard['out_dir'] = out_dir
     out_dir_intermediate = out_dir + 'intermediate/'  # 中間生成物用
     storyboard['out_dir_intermediate'] = out_dir_intermediate
 

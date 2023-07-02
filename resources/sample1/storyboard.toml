@@ -1,5 +1,7 @@
-# mp4 出力フォルダを指定します
-out_dir = "./resources/sample/"  # 要スラッシュ
+# mp4 を出力するフォルダを指定します
+# パスの最後にはスラッシュを付けてください
+# 空文字列にした場合この台本ファイルがあるフォルダに出力します
+out_dir = ""
 
 # VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
 # キーは VOICEVOX のスタイルIDです
@@ -17,13 +19,14 @@ out_dir = "./resources/sample/"  # 要スラッシュ
 speaker = 3
 scale = 0.59
 coordinate = [457, 286]
-normal = ["./portraits/zundamon_10.png", "./portraits/zundamon_11.png"]
-mattari = ["./portraits/zundamon_00.png", "./portraits/zundamon_01.png"]
+normal = ["./materials/zundamon_10.png", "./materials/zundamon_11.png"]
+mattari = ["./materials/zundamon_20.png", "./materials/zundamon_21.png"]
 [[character_images]]
 speaker = 8
 scale = 0.555
 coordinate = [-27, 266]
-normal = ["./portraits/tsumugi_10.png", "./portraits/tsumugi_11.png"]
+normal = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
+mattari = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
 
 # 画面に描画するテキストの設定を指定します
 [text_settings]
@@ -63,5 +66,5 @@ speaker = 8
 serifu = "あーそっかー。"
 [[shots]]
 silence = 5
-characters = { 3 = "mattari", 8 = "normal" }
+characters = { 3 = "mattari", 8 = "mattari" }
 text = "[声の出演]<br/>VOICEVOX:ずんだもん<br/>VOICEVOX:春日部つむぎ"
