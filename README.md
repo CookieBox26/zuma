@@ -18,7 +18,11 @@ materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚éŽ„‚ª•`‚¢‚½“ñŽŸƒCƒ‰ƒXƒg‚ð·‚µ‘Ö‚¦‚¸‚É—˜—p‚µ‚Ä‚à
 
 ### ƒTƒ“ƒvƒ‹‘ä–{ƒtƒ@ƒCƒ‹‚Ì•â‘«
 
-- **resources/sample1/storyboard.toml** F ~~ƒRƒ~ƒbƒg‚µ‚Ä‚ ‚éƒCƒ‰ƒXƒg‚µ‚©ŽQÆ‚µ‚Ä‚¢‚È‚¢‚Ì‚Å‚±‚Ì‚Ü‚Ü“®‰æ¶¬‚Å‚«‚Ü‚·~~ ‰æ–Ê‚ÉƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚Ä‚¢‚é‚½‚ßƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B.ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‚¨Ž‚¿‚ÌƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX‚É‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B¶¬‚µ‚½“®‰æ‚ðŒöŠJ‚³‚ê‚éê‡‚ÍŽQÆ‚µ‚½ƒtƒHƒ“ƒg‚Ì—˜—p‹K–ñ‚ð‚²Šm”F‚­‚¾‚³‚¢B
-- **resources/sample2/storyboard.toml** F ‚³‚ç‚É BGM ‚Ì‚½‚ß‚Ì mp3 ƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B‚È‚¨A“¯‚¶ BGM ‚Å“®‰æ¶¬‚µ‚½‚¢ê‡‚ÍˆÈ‰º‚©‚ç“üŽè‚Å‚«‚Ü‚·B
-  - https://musmus.main.jp/music_img1_03.html
+- **resources/sample1/storyboard.toml**
+  - ~~ƒRƒ~ƒbƒg‚µ‚Ä‚ ‚éƒCƒ‰ƒXƒg‚µ‚©ŽQÆ‚µ‚Ä‚¢‚È‚¢‚Ì‚Å‚±‚Ì‚Ü‚Ü“®‰æ¶¬‚Å‚«‚Ü‚·~~ ‰æ–Ê‚ÉŽš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚é‚½‚ß‚ÉƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚ÈƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð—pˆÓ‚µ‘ä–{“à‚Ì .ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B¶¬‚µ‚½“®‰æ‚ðŒöŠJ‚³‚ê‚éê‡‚ÍŽQÆ‚µ‚½ƒtƒHƒ“ƒg‚Ì—˜—p‹K–ñ‚ð‚²Šm”F‚­‚¾‚³‚¢B
+- **resources/sample2/storyboard.toml**
+  - ‚³‚ç‚É BGM ‚Ì‚½‚ß‚Ì mp3 ƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚È BGM ‚ð—pˆÓ‚µ‘ä–{“à‚Ì mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B‚È‚¨AƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‚Ì‚Æ“¯‚¶ BGM ‚Å“®‰æ¶¬‚µ‚½‚¢ê‡‚ÍˆÈ‰º‚©‚ç“üŽè‚Å‚«‚Ü‚·B
+    - https://musmus.main.jp/music_img1_03.html
+  - .mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‹ó•¶Žš—ñ‚É‚·‚ê‚Î BGM ‚È‚µ‚É‚È‚è‚Ü‚·B
+  - BGM ‚ð•ÏX‚©íœ‚µ‚½ê‡‚Í resources/sample2/credit.png ‚à•ÏX‚­‚¾‚³‚¢B
 
