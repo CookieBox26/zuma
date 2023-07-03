@@ -2,7 +2,7 @@ import requests
 import json
 from retry import retry
 from pydub import AudioSegment
-from funcs import SPK, get_audio_filename
+from funcs import SPK, get_wav_filename, file_to_hash
 import os
 import math
 
@@ -38,25 +38,44 @@ class AudioGenerator:
     def __init__(self, storyboard):
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
         self.voice_settings = storyboard['voice_settings']
-        self.bgm_file = storyboard.get('bgm', '')
+        self.bgm_file = ''
+        self.bgm_adjust = 0
+        if 'bgm_settings' in storyboard:
+            self.bgm_file = storyboard['bgm_settings']['mp3_path']
+            self.bgm_adjust = storyboard['bgm_settings']['adjust']
+        self.shots = storyboard['shots']
 
-    def generate(self, shots):
+    def get_required_wav_files(self):
+        wav_files = []
+        for shot in self.shots:
+            if shot['speaker'] == -1:
+                continue
+            wav_files.append(get_wav_filename(self.out_dir_intermediate,
+                                              self.voice_settings, shot))
+        return wav_files
+
+    def generate(self):
         """各場面の台詞を wav に出力し全体を通した mp3 を出力しておきます
         """
         komas = []  # 各場面の「有音コマ数、無音コマ数」を格納しておく
         audio_concat = None
-        for shot in shots:
+        for shot in self.shots:
             komasu = 0
             silent_komasu = 0
             audio = None
             if shot['speaker'] > -1:  # 話者がいればセリフ音声を合成する
-                out_file = get_audio_filename(self.out_dir_intermediate, shot)
+                out_file = get_wav_filename(self.out_dir_intermediate,
+                                            self.voice_settings, shot)
                 if not os.path.isfile(out_file):
+                    print('未生成なので音声合成します: ',
+                          shot['speaker'], shot['serifu'][:10])
                     serifu = shot['serifu']
                     serifu = serifu.replace('・', '')
                     synthesize(
                         serifu, out_file, speaker=shot['speaker'],
                         options=self.voice_settings.get(str(shot['speaker'])))
+                else:
+                    print('音声合成済みです: ', shot['speaker'], shot['serifu'][:10])
                 audio = AudioSegment.from_wav(out_file)
                 komasu = math.ceil(audio.duration_seconds / SPK)
                 adjust_duration = komasu * SPK - audio.duration_seconds
@@ -77,10 +96,13 @@ class AudioGenerator:
         audio_concat.export(mp3_file, format='mp3')
 
         if self.bgm_file != '':
-            # note: 一旦MP3に出力して再読込しないとBGMが合成できなかった
             audio = AudioSegment.from_mp3(mp3_file)
-            bgm = AudioSegment.from_mp3(self.bgm_file) - 11  # BGM の音量を下げる
+            bgm = AudioSegment.from_mp3(self.bgm_file) + self.bgm_adjust
             audio = audio.overlay(bgm)
-            audio.export(mp3_file, format='mp3')
+            mp3_file_with_bgm = f'{self.out_dir_intermediate}' \
+                + f'concat_{file_to_hash(self.bgm_file)}' \
+                + f'_{str(self.bgm_adjust)}.mp3'
+            audio.export(mp3_file_with_bgm, format='mp3')
+            mp3_file = mp3_file_with_bgm
 
         return mp3_file, komas

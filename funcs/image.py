@@ -10,6 +10,7 @@ class ImageGenerator:
                                  in storyboard['character_images']}
         self.serifu_text_settings = storyboard['serifu_text_settings']
         self.free_text_settings = storyboard['free_text_settings']
+        self.shots = storyboard['shots']
 
     def _add_text(self, img, text, coord, size, font_path, color, width):
         font = ImageFont.truetype(font_path, size)
@@ -50,7 +51,7 @@ class ImageGenerator:
         img_ = img_.convert('RGBA')  # 念のため確実に RGBA にします
         size_new = (int(scale * img_.width), int(scale * img_.height))
         img_ = img_.resize(size_new)
-        img.paste(img_, coord, img_)
+        img.paste(img_, coord.copy(), img_)  # 座標はコピーしないと変更される
 
     def _paste_character(self, img, chara_id, mode, mouse=0):
         """ 背景画像に立ち絵を貼り付けます
@@ -68,7 +69,7 @@ class ImageGenerator:
             return Image.new('RGBA', tuple(shot['back_size']),
                              tuple(shot['back_color']))
 
-    def generate(self, shot, regenerate=False):
+    def generate_shot(self, shot, regenerate=True):
         """ ある場面用の画像を合成します
         """
         # その場面で必要な画像ファイル名を取得します
@@ -95,4 +96,7 @@ class ImageGenerator:
             if shot['free_text'] != '':
                 self._add_free_text(img, shot['free_text'])
             img.save(filename)
-        return filenames
+
+    def generate(self, regenerate=True):
+        for shot in self.shots:
+            self.generate_shot(shot, regenerate)

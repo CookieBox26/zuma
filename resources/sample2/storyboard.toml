@@ -3,8 +3,10 @@
 # 空文字列にした場合この台本ファイルがあるフォルダに出力します
 out_dir = ""
 
-# bgm を指定します
-bgm = "./materials/MusMus-BGM-097.mp3"
+# BGM を指定します
+[bgm_settings]
+mp3_path = "./materials/MusMus-BGM-097.mp3"  # BGM なしなら空文字列に
+adjust = -11  # 音量調整
 
 # VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
 # キーは VOICEVOX のスタイルIDです
@@ -36,7 +38,7 @@ mattari = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
 display = true
 coordinate = [160, 320]
 font_size = 22
-font_path = '../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf'
+font_path = "../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
 font_color = { 3 = [60, 148, 36], 8 = [164, 135, 55] }
 width = 15
 
@@ -44,7 +46,7 @@ width = 15
 [free_text_settings]
 coordinate = [25, 25]
 font_size = 24
-font_path = '../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf'
+font_path = "../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
 font_color = [0, 0, 0]
 width = 24  # 何文字で折り返すかは適宜調整します
 

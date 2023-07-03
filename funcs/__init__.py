@@ -57,8 +57,13 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
         filenames.append((speaker, filebody + f'_{speaker}.png'))
     return filenames
 
-def get_audio_filename(out_dir_intermediate, shot):
+
+def get_wav_filename(out_dir_intermediate, voice_settings, shot):
+    voice_setting = voice_settings.get(str(shot['speaker']))
     out_file = out_dir_intermediate + str(shot['speaker'])
-    out_file += '_' + shot['serifu'][:3] + '_'
-    out_file += str_to_hash(shot['serifu']) + '.wav'
+    if voice_setting is not None:
+        s = dict_to_str(voice_setting)
+        s = s.replace('.', 'p')
+        out_file += '_' + s
+    out_file += '_' + str_to_hash(shot['serifu']) + '.wav'
     return out_file
