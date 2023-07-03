@@ -1,4 +1,4 @@
-from moviepy.editor import ImageClip, concatenate_videoclips
+from moviepy.editor import ImageClip, concatenate_videoclips, VideoFileClip
 from funcs import get_image_filenames, SPK, format_duration
 
 
@@ -27,4 +27,6 @@ class MovieGenerator:
 
         # mp4 に出力する
         video = concatenate_videoclips(clips)
+        print(f'動画の解像度: {video.size}')
+        print(f'動画の再生時間: {video.duration}')
         video.write_videofile(f'{self.out_dir}out.mp4', fps=24, audio=mp3_file)
