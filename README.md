@@ -29,10 +29,11 @@ python run.py resources/sample1/storyboard.toml -r 1
 # -r 1  ’†ŠÔ¶¬•¨‚ðíœ; Œ»Ý‚Ì‘ä–{ã•K—v‚È‡¬‰¹º‚ÍŽc‚·
 # -r 2  ’†ŠÔ¶¬•¨‚ðíœ; ‚·‚×‚Ä‚Ì’†ŠÔ¶¬•¨‚ðíœ‚·‚é
 ```
-<table>
-<tr><td>-m</td><td>‰½‚ð¶¬‚·‚é‚©‚Ìƒ‚[ƒh‚ðŽw’è‚µ‚Ü‚·B‰¹º‚à“®‰æ‚à¶¬‚ÉŽžŠÔ‚ª‚©‚©‚é‚Ì‚ÅA‰æ–Ê‚ÌƒŒƒCƒAƒEƒg’²®Žž‚É `-m 1` ‚ð‚²—˜—p‚­‚¾‚³‚¢B</td></tr>
-<tr><td>-r</td><td>’†ŠÔ¶¬•¨‚ðíœ‚·‚é‚©‚ðŽw’è‚µ‚Ü‚·B‰¹º‚Ì˜b‘¬‚âBGM‰¹—Ê‚â‰æ‘œƒŒƒCƒAƒEƒg‚ð’²®‚·‚é‚Æ‚Ç‚ñ‚Ç‚ñ•s—v‚È’†ŠÔ¶¬•¨‚ª—­‚Ü‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Åíœ‚µ‚½‚¢‚Æ‚«‚ÉŽw’è‚µ‚Ä‚­‚¾‚³‚¢B•K—v‚È‡¬‰¹º‚Ü‚Åíœ‚·‚é‚ÆÄ¶¬‚ÉŽžŠÔ‚ª‚©‚©‚é‚Ì‚Å `-r 1` ‚ª‚æ‚¢‚Å‚·B‚½‚¾‚µí‚É `-r 1` ‚ðŽw’è‚·‚é‚Æu‚â‚Í‚è‚³‚Á‚«‚Ì˜b‘¬‚É–ß‚µ‚½‚¢vu•·‚«”ä‚×‚½‚¢v‚Æ‚¢‚Á‚½‚Æ‚«•s•Ö‚È‚Ì‚Å‰¹ºƒpƒ‰ƒ[ƒ^‚Ì fix Œã‚ÉŽw’è‚·‚é‚Ì‚ª‚æ‚¢‚Å‚·B</td></tr>
-</table>
+
+| option | description |
+| ---- | ---- |
+| `-m` |‰½‚ð¶¬‚·‚é‚©‚Ìƒ‚[ƒh‚ðŽw’è‚µ‚Ü‚·B‰¹º‚à“®‰æ‚à¶¬‚ÉŽžŠÔ‚ª‚©‚©‚é‚Ì‚ÅA‰æ–Ê‚ÌƒŒƒCƒAƒEƒg’²®Žž‚É `-m 1` ‚ð‚²—˜—p‚­‚¾‚³‚¢B|
+| `-r` |’†ŠÔ¶¬•¨‚ðíœ‚·‚é‚©‚ðŽw’è‚µ‚Ü‚·B‰¹º‚Ì˜b‘¬‚âBGM‰¹—Ê‚â‰æ‘œƒŒƒCƒAƒEƒg‚ð’²®‚·‚é‚Æ‚Ç‚ñ‚Ç‚ñ•s—v‚È’†ŠÔ¶¬•¨‚ª—­‚Ü‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Åíœ‚µ‚½‚¢‚Æ‚«‚ÉŽw’è‚µ‚Ä‚­‚¾‚³‚¢B•K—v‚È‡¬‰¹º‚Ü‚Åíœ‚·‚é‚ÆÄ¶¬‚ÉŽžŠÔ‚ª‚©‚©‚é‚Ì‚Å `-r 1` ‚ª‚æ‚¢‚Å‚·B‚½‚¾‚µí‚É `-r 1` ‚ðŽw’è‚·‚é‚Æu‚â‚Í‚è‚³‚Á‚«‚Ì˜b‘¬‚É–ß‚µ‚½‚¢vu•·‚«”ä‚×‚½‚¢v‚Æ‚¢‚Á‚½‚Æ‚«•s•Ö‚È‚Ì‚Å‰¹ºƒpƒ‰ƒ[ƒ^‚Ì fix Œã‚ÉŽw’è‚·‚é‚Ì‚ª‚æ‚¢‚Å‚·B|
 
 ### —˜—p”ÍˆÍ
 
@@ -43,10 +44,11 @@ materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚
 ### ƒTƒ“ƒvƒ‹‘ä–{‚Ì•â‘«
 
 - **resources/sample1/storyboard.toml**
-  - ~~ƒRƒ~ƒbƒg‚µ‚Ä‚ ‚éƒCƒ‰ƒXƒg‚µ‚©ŽQÆ‚µ‚Ä‚¢‚È‚¢‚Ì‚Å‚±‚Ì‚Ü‚Ü“®‰æ¶¬‚Å‚«‚Ü‚·~~ ‰æ–Ê‚ÉŽš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚é‚½‚ß‚ÉƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚ÈƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð—pˆÓ‚µ‘ä–{“à‚Ì .ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B¶¬‚µ‚½“®‰æ‚ðŒöŠJ‚³‚ê‚éê‡‚ÍŽQÆ‚µ‚½ƒtƒHƒ“ƒg‚Ì—˜—p‹K–ñ‚ð…Žç‚­‚¾‚³‚¢B
+  - ~~ƒRƒ~ƒbƒg‚µ‚Ä‚ ‚éƒCƒ‰ƒXƒg‚µ‚©ŽQÆ‚µ‚Ä‚¢‚È‚¢‚Ì‚Å‚±‚Ì‚Ü‚Ü“®‰æ¶¬‚Å‚«‚Ü‚·~~ ‰æ–Ê‚ÉŽš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚é‚½‚ß‚ÉƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚ÈƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð—pˆÓ‚µ‘ä–{“à‚Ì .ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B
+    - ‚È‚¨AƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ƒtƒHƒ“ƒg‚ðŽg—p‚·‚éê‡‚Í [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) ‚©‚ç—˜—p‹K–ñ‚ðŠm”F‚Ìã“üŽè‚µ‚Ä‚­‚¾‚³‚¢B
 - **resources/sample2/storyboard.toml**
-  - BGM ‚Ì‚½‚ß‚Ì mp3 ƒtƒ@ƒCƒ‹‚àŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚È BGM ‚ð—pˆÓ‚µ‘ä–{“à‚Ì mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B‚È‚¨AƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‚Ì‚Æ“¯‚¶ BGM ‚Å“®‰æ¶¬‚µ‚½‚¢ê‡‚ÍˆÈ‰º‚©‚ç“üŽè‚Å‚«‚Ü‚·B
-    - https://musmus.main.jp/music_img1_03.html
+  - BGM ‚Ì‚½‚ß‚Ì mp3 ƒtƒ@ƒCƒ‹‚àŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚È BGM ‚ð—pˆÓ‚µ‘ä–{“à‚Ì mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B
+    - ‚È‚¨AƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ BGM ‚ðŽg—p‚·‚éê‡‚Í [ƒtƒŠ[BGME‰¹Šy‘fÞ MusMus](https://musmus.main.jp/music_img1_03.html) ‚©‚ç—˜—p‹K–ñ‚ðŠm”F‚Ìã“üŽè‚µ‚Ä‚­‚¾‚³‚¢B
   - .mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‹ó•¶Žš—ñ‚É‚·‚ê‚Î BGM ‚È‚µ‚É‚È‚è‚Ü‚·B
   - BGM ‚ð•ÏX‚©íœ‚µ‚½ê‡‚Í resources/sample2/credit.png ‚ÌƒNƒŒƒWƒbƒg•\‹L‚à•ÏX‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
 
@@ -65,7 +67,8 @@ materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚
 
 #### Tips
 
+- Šeê–Ê‚É‚ÍuƒZƒŠƒtŒã–³‰¹•b”v‚µ‚©Ý’è‚Å‚«‚Ü‚¹‚ñBƒZƒŠƒt‘O‚É–³‰¹ŽžŠÔ‚ð‘}“ü‚µ‚½‚¢ê‡‚Í–³ƒZƒŠƒtê–Ê‚ð‘}“ü‚µ‚Ä‚­‚¾‚³‚¢B
 - ƒLƒƒƒ‰ƒNƒ^[‚Í2l‚Å‚ ‚é•K—v‚Í‚È‚­A”CˆÓ‚Ìl”‚É‚Å‚«‚Ü‚·B
-- Œ»óƒLƒƒƒ‰ƒNƒ^[‚Ì•\Ž¦ˆÊ’u‚Í‘Sê–Ê‚ð’Ê‚µ‚ÄŒÅ’è‚É‚È‚Á‚Ä‚¢‚Ü‚·‚ªAƒLƒƒƒ‰ƒNƒ^[‚ð‘S‰æ–Ê‚É“oê‚³‚¹‚é•K—v‚Í‚È‚­A‚±‚Ì‰æ–Ê‚Å‚Í‚±‚¿‚ç‚ÌƒLƒƒƒ‰ƒNƒ^[‚Í—£ÈA‚Æ‚¢‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚·B
+- ƒLƒƒƒ‰ƒNƒ^[‚Ì•\Ž¦ˆÊ’u‚Í‘Sê–Ê‚ð’Ê‚µ‚ÄŒÅ’è‚É‚È‚Á‚Ä‚¢‚Ü‚·‚ªAƒLƒƒƒ‰ƒNƒ^[‚ð‘S‰æ–Ê‚É“oê‚³‚¹‚é•K—v‚Í‚È‚­A‚±‚Ì‰æ–Ê‚Å‚Í‚±‚¿‚ç‚ÌƒLƒƒƒ‰ƒNƒ^[‚Í—£ÈA‚Æ‚¢‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚·B
 - ƒTƒ“ƒvƒ‹‘ä–{‚É‚ ‚é‚æ‚¤‚É VOICEVOX ‚Ì‰¹º‚ÌƒXƒ^ƒCƒ‹ ID ‚ÅƒLƒƒƒ‰ƒNƒ^[‚ðŠÇ—‚µ‚Ä‚¢‚Ü‚·‚ªA‚¸‚ñ‚¾‚à‚ñ‚Ì‚æ‚¤‚ÉƒXƒ^ƒCƒ‹ ID ‚ª•¡” (ƒm[ƒ}ƒ‹A‚³‚³‚â‚«‚È‚Ç) ‚ ‚éƒLƒƒƒ‰ƒNƒ^[‚à‚¢‚Ü‚·Bê–Ê‚É‚æ‚Á‚ÄƒLƒƒƒ‰ƒNƒ^[‚Ìº‚ÌƒXƒ^ƒCƒ‹‚ð•ª‚¯‚½‚¢ê‡‚ÍAu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚ð•ÊƒLƒƒƒ‰ƒNƒ^[‚Æ‚µ‚Ä“¯‚¶—§‚¿ŠGEƒXƒP[ƒ‹EÀ•W‚ÅÝ’è‚µA‚³‚³‚â‚­ê–Ê‚¾‚¯u‚¸‚ñ‚¾‚à‚ñv‚ðu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚É‚·‚°‚©‚¦‚ê‚ÎŽÀŒ»‚Å‚«‚Ü‚· (‚¨‚»‚ç‚­)B
 

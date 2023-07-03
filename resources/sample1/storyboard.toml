@@ -21,33 +21,40 @@ adjust = -10  # 音量調整
 # なければ同じファイルでよいです (が口パクしません)
 [[character_images]]
 speaker = 3
-scale = 0.59
-coordinate = [457, 286]
+scale = 0.63
+coordinate = [764, 330]
 normal = ["./materials/zundamon_10.png", "./materials/zundamon_11.png"]
 mattari = ["./materials/zundamon_20.png", "./materials/zundamon_21.png"]
 [[character_images]]
 speaker = 8
-scale = 0.555
-coordinate = [-27, 266]
+scale = 0.59
+coordinate = [-27, 313]
 normal = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
 mattari = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
 
 # 画面に描画するセリフテキスト (字幕) の設定を指定します
 [serifu_text_settings]
 display = true  # 字幕を表示するかしないか
-coordinate = [160, 320]
-font_size = 22
-font_path = '../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf'
-font_color = { 3 = [60, 148, 36], 8 = [164, 135, 55] }
-width = 15  # 字幕領域の横幅を文字数で指定してください
+coordinate = [180, 390]
+font_size = 30
+width = 21  # 字幕領域の横幅を文字数で指定してください
+spacing = 1  # 改行幅
+# font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-ExtraBold.ttf"
+# font_color = { 3 = [60, 148, 36], 8 = [164, 135, 55] }
+font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-ExtraBold.ttf"
+font_color = { 3 = [153, 213, 102], 8 = [233, 206, 118] }
+stroke_width = 3  # ふちどり幅 (optional)
+stroke_fill = "black"  # ふちどり色 (optional)
 
 # 画面に描画するフリーテキストの設定を指定します
 [free_text_settings]
-coordinate = [25, 25]
-font_size = 24
-font_path = '../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf'
+coordinate = [45, 45]
+font_size = 34
+# font_path = "../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
+font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
 font_color = [0, 0, 0]
 width = 24  # フリーテキスト領域の横幅を文字数で指定してください
+spacing = 5  # 改行幅
 
 # 場面のデフォルト設定を指定します
 # 各場面はこの設定への差分のみ指定します
@@ -57,7 +64,7 @@ speaker = -1  # 話者のスタイルID (誰も話さないなら -1)
 serifu = ""  # セリフ
 silence = 0  # セリフ後無音秒数
 back_img = ""  # 背景画像パス (これを指定しないときはこの下の2行必須)
-back_size = [640, 480]  # [960, 540]  # 背景サイズ (画像パス指定時は無視)
+back_size = [960, 540]  # 背景サイズ (画像パス指定時は無視)
 back_color = [204, 226, 229]  # 背景色 (画像パス指定時は無視)
 front_img = ""  # 前景画像パス (任意)
 front_img_coordinate = [20, 20]  # 前景画像座標
@@ -82,4 +89,4 @@ serifu = "あーそっかー。"
 [[shots]]
 silence = 5
 characters = { 3 = "mattari", 8 = "mattari" }
-free_text = "[声の出演]<br/>VOICEVOX:ずんだもん<br/>VOICEVOX:春日部つむぎ"
+free_text = "[声の出演]\nVOICEVOX:ずんだもん\nVOICEVOX:春日部つむぎ"

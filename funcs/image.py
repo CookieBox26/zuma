@@ -12,39 +12,33 @@ class ImageGenerator:
         self.free_text_settings = storyboard['free_text_settings']
         self.shots = storyboard['shots']
 
-    def _add_text(self, img, text, coord, size, font_path, color, width):
-        font = ImageFont.truetype(font_path, size)
+    def _add_text(self, img, text, color, settings):
+        font = ImageFont.truetype(settings['font_path'], settings['font_size'])
         draw = ImageDraw.Draw(img)
-        if '<br/>' in text:
-            text = text.split('<br/>')
-            for row, text_ in enumerate(text):
-                coord_ = (coord[0], coord[1] + row * int(size * 1.4))
-                draw.text(coord_, text_, color, font=font)
-            return
-        length = len(text)
-        for row, i in enumerate(range(0, length, width)):
-            coord_ = (coord[0], coord[1] + row * int(size * 1.4))
-            draw.text(coord_, text[i:(i + width)], color, font=font)
+        if '\n' not in text:
+            texts = []
+            length = len(text)
+            width = settings['width']
+            for row, i in enumerate(range(0, length, width)):
+                texts.append(text[i:(i + width)])
+            text = '\n'.join(texts)
+        draw.multiline_text(
+            settings['coordinate'], text, color,
+            font=font, spacing=settings['spacing'],
+            stroke_width=settings.get('stroke_width', 0),
+            stroke_fill=settings.get('stroke_fill', 'black'))
 
     def _add_serifu_text(self, img, text, speaker):
         """ 背景画像にセリフテキスト (字幕) を貼り付けます
         """
-        coord = self.serifu_text_settings['coordinate']
-        size = self.serifu_text_settings['font_size']
-        font_path = self.serifu_text_settings['font_path']
         color = tuple(self.serifu_text_settings['font_color'][str(speaker)])
-        width = self.serifu_text_settings['width']
-        self._add_text(img, text, coord, size, font_path, color, width)
+        self._add_text(img, text, color, self.serifu_text_settings)
 
     def _add_free_text(self, img, text):
         """ 背景画像にフリーテキストを貼り付けます
         """
-        coord = self.free_text_settings['coordinate']
-        size = self.free_text_settings['font_size']
-        font_path = self.free_text_settings['font_path']
         color = tuple(self.free_text_settings['font_color'])
-        width = self.free_text_settings['width']
-        self._add_text(img, text, coord, size, font_path, color, width)
+        self._add_text(img, text, color, self.free_text_settings)
 
     def _paste(self, img, additional_img_path, scale=1.0, coord=(0, 0)):
         img_ = Image.open(additional_img_path)
