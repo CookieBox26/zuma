@@ -69,6 +69,6 @@ materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚
 
 - Šeê–Ê‚É‚ÍuƒZƒŠƒtŒã–³‰¹•b”v‚µ‚©Ý’è‚Å‚«‚Ü‚¹‚ñBƒZƒŠƒt‘O‚É–³‰¹ŽžŠÔ‚ð‘}“ü‚µ‚½‚¢ê‡‚Í–³ƒZƒŠƒtê–Ê‚ð‘}“ü‚µ‚Ä‚­‚¾‚³‚¢B
 - ƒLƒƒƒ‰ƒNƒ^[‚Í2l‚Å‚ ‚é•K—v‚Í‚È‚­A”CˆÓ‚Ìl”‚É‚Å‚«‚Ü‚·B
-- ƒLƒƒƒ‰ƒNƒ^[‚Ì•\Ž¦ˆÊ’u‚Í‘Sê–Ê‚ð’Ê‚µ‚ÄŒÅ’è‚É‚È‚Á‚Ä‚¢‚Ü‚·‚ªAƒLƒƒƒ‰ƒNƒ^[‚ð‘S‰æ–Ê‚É“oê‚³‚¹‚é•K—v‚Í‚È‚­A‚±‚Ì‰æ–Ê‚Å‚Í‚±‚¿‚ç‚ÌƒLƒƒƒ‰ƒNƒ^[‚Í—£ÈA‚Æ‚¢‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚·B
+- ƒLƒƒƒ‰ƒNƒ^[‚Ì•\Ž¦ˆÊ’u‚Í‘Sê–Ê‚ð’Ê‚µ‚ÄŒÅ’è‚É‚È‚Á‚Ä‚¢‚Ü‚·‚ªAƒLƒƒƒ‰ƒNƒ^[‚ð‘Sê–Ê‚É“oê‚³‚¹‚é•K—v‚Í‚È‚­A‚±‚Ìê–Ê‚Å‚Í‚±‚¿‚ç‚ÌƒLƒƒƒ‰ƒNƒ^[‚Í—£ÈA‚Æ‚¢‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚·B
 - ƒTƒ“ƒvƒ‹‘ä–{‚É‚ ‚é‚æ‚¤‚É VOICEVOX ‚Ì‰¹º‚ÌƒXƒ^ƒCƒ‹ ID ‚ÅƒLƒƒƒ‰ƒNƒ^[‚ðŠÇ—‚µ‚Ä‚¢‚Ü‚·‚ªA‚¸‚ñ‚¾‚à‚ñ‚Ì‚æ‚¤‚ÉƒXƒ^ƒCƒ‹ ID ‚ª•¡” (ƒm[ƒ}ƒ‹A‚³‚³‚â‚«‚È‚Ç) ‚ ‚éƒLƒƒƒ‰ƒNƒ^[‚à‚¢‚Ü‚·Bê–Ê‚É‚æ‚Á‚ÄƒLƒƒƒ‰ƒNƒ^[‚Ìº‚ÌƒXƒ^ƒCƒ‹‚ð•ª‚¯‚½‚¢ê‡‚ÍAu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚ð•ÊƒLƒƒƒ‰ƒNƒ^[‚Æ‚µ‚Ä“¯‚¶—§‚¿ŠGEƒXƒP[ƒ‹EÀ•W‚ÅÝ’è‚µA‚³‚³‚â‚­ê–Ê‚¾‚¯u‚¸‚ñ‚¾‚à‚ñv‚ðu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚É‚·‚°‚©‚¦‚ê‚ÎŽÀŒ»‚Å‚«‚Ü‚· (‚¨‚»‚ç‚­)B
 

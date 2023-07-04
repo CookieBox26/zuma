@@ -1,5 +1,6 @@
 import hashlib
 import math
+import re
 
 
 # moviepy に浮動小数バグがあるので 1/2^n 秒を時間の最小単位とする
@@ -35,6 +36,24 @@ def format_duration(duration):
     return f'00:00:{sec:02}.{msec:03}'
 
 
+def prepare_serifu(serifu, flag='s'):  # s:字幕用, v:音声用
+    """
+    字幕用の文章と音声用の文章を微妙に変えたいときがあるので、
+    字幕専用箇所を <s></s> で囲み、
+    音声専用箇所を <v></v> で囲み、
+    この関数で前処理することにする。
+
+    例．聴かせてやるよ、<s>論理</s><v>ロジック</v>の<s>律動</s><v>リズム</v>を…
+    → [字幕] 聴かせてやるよ、論理の律動を…
+    → [音声] 聴かせてやるよ、ロジックのリズムを…
+
+    音声用の場合は改行も除去する。
+    """
+    if flag == 's':
+        return re.sub('<v>.*?</v>|<s>|</s>', '', serifu)  # 字幕用
+    return re.sub('<s>.*?</s>|<v>|</v>|\n', '', serifu)  # 音声用
+
+
 def get_image_filenames(out_dir_intermediate, shot, display_serifu):
     if shot['back_img'] != '':
         hash = file_to_hash(shot['back_img'])
@@ -44,7 +63,7 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
     filebody += hash + '_' + dict_to_str(shot['characters'])
     if display_serifu and shot['serifu'] != '':
         filebody += '_' + str(shot['speaker'])
-        filebody += str_to_hash(shot['serifu'])
+        filebody += str_to_hash(prepare_serifu(shot['serifu'], flag='s'))
     if shot['free_text'] != '':
         filebody += '_' + str_to_hash(shot['free_text'])
     front_img = shot.get('front_img', '')
@@ -65,5 +84,5 @@ def get_wav_filename(out_dir_intermediate, voice_settings, shot):
         s = dict_to_str(voice_setting)
         s = s.replace('.', 'p')
         out_file += '_' + s
-    out_file += '_' + str_to_hash(shot['serifu']) + '.wav'
+    out_file += '_' + str_to_hash(prepare_serifu(shot['serifu'], flag='v')) + '.wav'
     return out_file

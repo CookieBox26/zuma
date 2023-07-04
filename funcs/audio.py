@@ -2,7 +2,7 @@ import requests
 import json
 from retry import retry
 from pydub import AudioSegment
-from funcs import SPK, get_wav_filename, file_to_hash
+from funcs import SPK, get_wav_filename, prepare_serifu, file_to_hash
 import os
 import math
 
@@ -69,8 +69,7 @@ class AudioGenerator:
                 if not os.path.isfile(out_file):
                     print('未生成なので音声合成します: ',
                           shot['speaker'], shot['serifu'][:10])
-                    serifu = shot['serifu']
-                    serifu = serifu.replace('・', '')
+                    serifu = prepare_serifu(shot['serifu'], flag='v')
                     synthesize(
                         serifu, out_file, speaker=shot['speaker'],
                         options=self.voice_settings.get(str(shot['speaker'])))

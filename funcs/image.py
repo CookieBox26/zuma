@@ -1,5 +1,5 @@
 from PIL import Image, ImageFont, ImageDraw
-from funcs import get_image_filenames
+from funcs import get_image_filenames, prepare_serifu
 import os
 
 
@@ -32,7 +32,8 @@ class ImageGenerator:
         """ 背景画像にセリフテキスト (字幕) を貼り付けます
         """
         color = tuple(self.serifu_text_settings['font_color'][str(speaker)])
-        self._add_text(img, text, color, self.serifu_text_settings)
+        text_ = prepare_serifu(text, flag='s')
+        self._add_text(img, text_, color, self.serifu_text_settings)
 
     def _add_free_text(self, img, text):
         """ 背景画像にフリーテキストを貼り付けます
