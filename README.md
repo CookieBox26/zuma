@@ -1,17 +1,35 @@
 # zuma
 
-[VOICEVOX](https://voicevox.hiroshiba.jp/) ‚ð—˜—p‚µ‚Ä‘ä–{‚©‚ç“®‰æ‚ð¶¬‚·‚é Python ƒXƒNƒŠƒvƒg‚Å‚·Bƒ[ƒJƒ‹‚Ì VOICEVOX ‚ð‹N“®‚µ‚½ó‘Ô‚ÅˆÈ‰º‚ðŽÀs‚·‚é‚Æ resources/sample1/out.mp4 ‚ª¶¬‚³‚ê‚Ü‚·B
+[VOICEVOX](https://voicevox.hiroshiba.jp/) ‚ð—˜—p‚µ‚Ä‘ä–{‚©‚çƒVƒ“ƒvƒ‹‚È‰ðà“®‰æ‚ð¶¬‚·‚é Python ƒR[ƒh‚Å‚·Bƒ[ƒJƒ‹‚Ì VOICEVOX ‚ð‹N“®‚µ‚ÄˆÈ‰º‚ðŽÀs‚·‚é‚Æ storyboard.toml ‚Ì‰¡‚É out.mp4 ‚ª¶¬‚³‚ê‚Ü‚· **(‚½‚¾‚µŽÀs‘O‚É storyboard.toml “à‚Ì .ttf ƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX‚ð‚¨ŽèŒ³‚Ìƒ}ƒVƒ“‚É‚ ‚é“K“–‚È .ttf ‚Ö‚ÌƒpƒX‚ÉC³‚µ‚Ä‚­‚¾‚³‚¢)** B
 ```
 python run.py resources/sample1/storyboard.toml
 ```
+### –ÚŽŸ
 
+- [ŠÂ‹«€”õ](#env)
+- [ŽÀs•û–@](#run)
+- [‘ä–{‚Ì‹Lq•û–@](#storyboard)
+- [ƒTƒ“ƒvƒ‹‘ä–{](#sample)
+- [—˜—p”ÍˆÍ](#license)
+- [‚±‚ÌƒXƒNƒŠƒvƒg‚É‚Â‚¢‚Ä](#about)
+
+<a id="env"></a>
 ### ŠÂ‹«€”õ
 
-ŽèŒ³‚Ìƒ}ƒVƒ“‚É [VOICEVOX](https://voicevox.hiroshiba.jp/) ‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚¨‚«AŽèŒ³‚Ì Python ‚Å requests, retry, PIL, pydub, moviepy, toml ‚ð—˜—p‚Å‚«‚é‚æ‚¤‚É‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·B
+- ‚¨ŽèŒ³‚Ìƒ}ƒVƒ“‚É [VOICEVOX](https://voicevox.hiroshiba.jp/) ‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢B
+- ‚¨ŽèŒ³‚Ì Python ‚É requests, retry, PIL, pydub, moviepy, toml ‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢B
+  - pydub, moviepy ‚ÌƒoƒbƒNƒGƒ“ƒh‚Í FFmpeg ‚È‚Ì‚Å FFmpeg –{‘Ì‚ÌƒCƒ“ƒXƒg[ƒ‹‚à•K—v‚Å‚·BƒRƒ}ƒ“ƒh `ffmpeg -version` ‚ªŽÀs‚Å‚«‚é‚æ‚¤‚É‚µ‚Ä‚¨‚¢‚Ä‚­‚¾‚³‚¢BWindows ‚Ìê‡ Chocolatey ‚ð—˜—p‚µ‚½ƒCƒ“ƒXƒg[ƒ‹‚ª•Ö—˜‚¾‚ÆŽv‚¢‚Ü‚· (Ž„‚ÍˆÈ‰º‚ð‡‚É‚â‚Á‚ÄŽ¸”s‚µ‚Ü‚¹‚ñ‚Å‚µ‚½)B
+    - [Windows‚ÌƒpƒbƒP[ƒWƒ}ƒlƒWƒƒ“ƒgƒc[ƒ‹‚ÌChocolatey‚ðƒCƒ“ƒXƒg[ƒ‹‚·‚é - suzu6‚Ì‹ZpƒuƒƒO](https://www.suzu6.net/posts/297-chocolatey-windows/)
+    - [Builds - CODEX FFMPEG @ gyan.dev](https://www.gyan.dev/ffmpeg/builds/)
+- y”CˆÓz “K“–‚È .ttf ƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð‚²—pˆÓ‚­‚¾‚³‚¢B
+  - Žš–‹•\Ž¦ƒIƒvƒVƒ‡ƒ“‚ð true ‚É‚µ‚½ê‡‚âAƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚éê‡‚Í•K{‚Å‚·B
+  - Žš–‹‚àƒtƒŠ[ƒeƒLƒXƒg‚à“ü‚ê‚È‚¢‚È‚ç (‚à‚Á‚Ï‚ç‰¹º‚Æ”wŒi‘OŒi‰æ‘œ‚Å“`‚¦‚é‚È‚ç) •s—v‚Å‚·B
+  - ¶¬‚µ‚½“®‰æ‚ðŒöŠJ‚·‚é—\’è‚ª‚ ‚éê‡‚Í‚»‚Ì—p“r‚Å—˜—p‚Å‚«‚éƒtƒHƒ“ƒg‚É‚µ‚Ä‚­‚¾‚³‚¢B
 
+<a id="run"></a>
 ### ŽÀs•û–@
 
-`resources/sample1/storyboard.toml` ‚ðŽQl‚É TOML Œ`Ž®‚Å‘ä–{‚ð‹Lq‚µ‚Ä‚­‚¾‚³‚¢Bƒ[ƒJƒ‹‚Ì VOICEVOX ‚ð‹N“®‚µ‚½ó‘Ô‚ÅA‹Lq‚µ‚½‘ä–{‚ðŽw’è‚µ‚ÄˆÈ‰º‚Ì‚æ‚¤‚ÉŽÀs‚·‚é‚Æ resources/sample1/out.mp4 ‚ª¶¬‚³‚ê‚Ü‚·B
+`resources/sample1/storyboard.toml` ‚Ì‚æ‚¤‚É TOML Œ`Ž®‚Å‘ä–{‚ð‹Lq‚µ‚Ä‚­‚¾‚³‚¢Bƒ[ƒJƒ‹‚Ì VOICEVOX ‚ð‹N“®‚µ‚½ó‘Ô‚ÅA‹Lq‚µ‚½‘ä–{‚ðŽw’è‚µ‚ÄˆÈ‰º‚Ì‚æ‚¤‚ÉŽÀs‚·‚é‚Æ storyboard.toml ‚Ì‰¡‚É out.mp4 ‚ª¶¬‚³‚ê‚Ü‚· **(‚½‚¾‚µŽÀs‘O‚É storyboard.toml “à‚Ì .ttf ƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX‚ð‚¨ŽèŒ³‚Ìƒ}ƒVƒ“‚É‚ ‚é“K“–‚È .ttf ‚Ö‚ÌƒpƒX‚ÉC³‚µ‚Ä‚­‚¾‚³‚¢)** B
 ```
 python run.py resources/sample1/storyboard.toml
 ```
@@ -35,23 +53,53 @@ python run.py resources/sample1/storyboard.toml -r 1
 | `-m` |‰½‚ð¶¬‚·‚é‚©‚Ìƒ‚[ƒh‚ðŽw’è‚µ‚Ü‚·B‰¹º‚à“®‰æ‚à¶¬‚ÉŽžŠÔ‚ª‚©‚©‚é‚Ì‚ÅA‰æ–Ê‚ÌƒŒƒCƒAƒEƒg’²®Žž‚É `-m 1` ‚ð‚²—˜—p‚­‚¾‚³‚¢B|
 | `-r` |’†ŠÔ¶¬•¨‚ðíœ‚·‚é‚©‚ðŽw’è‚µ‚Ü‚·B‰¹º‚Ì˜b‘¬‚âBGM‰¹—Ê‚â‰æ‘œƒŒƒCƒAƒEƒg‚ð’²®‚·‚é‚Æ‚Ç‚ñ‚Ç‚ñ•s—v‚È’†ŠÔ¶¬•¨‚ª—­‚Ü‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Åíœ‚µ‚½‚¢‚Æ‚«‚ÉŽw’è‚µ‚Ä‚­‚¾‚³‚¢B•K—v‚È‡¬‰¹º‚Ü‚Åíœ‚·‚é‚ÆÄ¶¬‚ÉŽžŠÔ‚ª‚©‚©‚é‚Ì‚Å `-r 1` ‚ª‚æ‚¢‚Å‚·B‚½‚¾‚µí‚É `-r 1` ‚ðŽw’è‚·‚é‚Æu‚â‚Í‚è‚³‚Á‚«‚Ì˜b‘¬‚É–ß‚µ‚½‚¢vu•·‚«”ä‚×‚½‚¢v‚Æ‚¢‚Á‚½‚Æ‚«•s•Ö‚È‚Ì‚Å‰¹ºƒpƒ‰ƒ[ƒ^‚Ì fix Œã‚ÉŽw’è‚·‚é‚Ì‚ª‚æ‚¢‚Å‚·B|
 
+<a id="storyboard"></a>
+### ‘ä–{‚Ì‹Lq•û–@
+
+ƒTƒ“ƒvƒ‹‘ä–{“à‚Éà–¾ƒRƒƒ“ƒg‚ª‚ ‚è‚Ü‚·‚ªAuê–Ê (shot)v‚É‚Â‚¢‚Ä•â‘«‚µ‚Ü‚·B‚±‚ÌƒŠƒ|ƒWƒgƒŠ‚ÌƒR[ƒh‚Íê–Ê‚Ì‚Â‚È‚¬‡‚í‚¹‚Å“®‰æ‚ð\¬‚µ‚Ü‚·B1ê–Ê‚É‚Í1‚ÂˆÈ‰º‚ÌƒZƒŠƒtA1‚Â‚Ì”wŒi‰æ‘œ‚ª‘Î‰ž‚µ‚Ü‚·B‚È‚Ì‚ÅA˜bŽÒ‚©”wŒi‰æ‘œ‚Ì‚¢‚¸‚ê‚©‚ÌØ‚ê–Ú‚ªê–Ê‚ÌØ‚ê–Ú‚É‚È‚è‚Ü‚·Bê–Ê‚Ì\¬—v‘f‚ÍˆÈ‰º‚Å‚·BÅ‰‚Ì4—v‘f **(‘¾Žš)** ‚ð“K‹XŽw’è‚·‚ê‚Î‚¶‚ã‚¤‚Ô‚ñ‚Å‚·B
+
+| field | description |
+| ---- | ---- |
+| **speaker** | ‚»‚Ìê–Ê‚Ì˜bŽÒ‚ð VOICEVOX ‚ÌƒXƒ^ƒCƒ‹ID‚ÅŽw’è‚µ‚Ü‚· (–³‰¹ê–Ê‚È‚ç -1 ‚É‚µ‚Ä‚­‚¾‚³‚¢)BƒXƒ^ƒCƒ‹ID‚Í VOICEVOX ‹N“®’†‚É `http://localhost:50021/speakers` ‚ÉƒAƒNƒZƒX‚·‚é‚ÆŠm”F‚Å‚«‚Ü‚·B—á‚¦‚Îƒm[ƒ}ƒ‹‚¸‚ñ‚¾‚à‚ñ‚Í `3` ‚Å‚·B |
+| **serifu** | ƒZƒŠƒt•¶Í‚ð‹Lq‚µ‚Ü‚· (–³‰¹ê–Ê‚È‚ç–³Ž‹‚³‚ê‚Ü‚·)B[’1] [’2] |
+| **silence** | ƒZƒŠƒtŒã–³‰¹•b”‚ð 0 ˆÈã‚Ì”’l‚ÅŽw’è‚µ‚Ü‚·B‚½‚¾‚µ–³‰¹ê–Ê‚Ìê‡‚Í³‚Ì’l‚É‚µ‚È‚¢‚Æ‚»‚Ìê–Ê‚ÌŒp‘±ŽžŠÔ‚ª 0 ‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚¨‚»‚ç‚­‚¨‚©‚µ‚­‚È‚è‚Ü‚·B |
+| **back_img** | ”wŒi‰æ‘œ png ‚ÌƒpƒX‚ðŽw’è‚µ‚Ü‚·B‚±‚Ì‰æ‘œ‚ÌƒTƒCƒY‚ª“®‰æ‚ÌƒTƒCƒY‚ð‹K’è‚µ‚Ü‚·B‘S‚Ä‚Ìê–Ê‚Å“¯‚¶ƒTƒCƒY‚Ì‰æ‘œ‚É‚µ‚È‚¢‚Æ‚¨‚»‚ç‚­‚¨‚©‚µ‚­‚È‚è‚Ü‚·B–³’n‚Ì”wŒi‚Å‚æ‚¢ê‡‚Í‚±‚ê‚ð‹ó•¶Žš—ñ‚É‚µ back_size, back_color ‚É‚æ‚éŽw’è‚à‚Å‚«‚Ü‚·B |
+| back_size | ”wŒiƒTƒCƒY‚ðŽw’è‚µ‚Ü‚· (back_img Žw’èŽž‚Í–³Ž‹‚³‚ê‚Ü‚·)B |
+| back_color | ”wŒiF‚ðŽw’è‚µ‚Ü‚· (back_img Žw’èŽž‚Í–³Ž‹‚³‚ê‚Ü‚·)B |
+| front_img | ”CˆÓ‚Å‰æ‘œ‚ð‚à‚¤1–‡d‚Ë‚ç‚ê‚Ü‚·B‘å‚«‚È”wŒi‰æ‘œ‚Éˆê‰ñ‚è¬‚³‚Èà–¾ƒGƒŠƒA‚ðd‚Ë‚½‚¢‚Æ‚«‚È‚Ç‚É—˜—p‚Å‚«‚Ü‚· (—\‚ßd‚Ë‚½‰æ‘œ‚ð back_img ‚ÉŽw’è‚µ‚Ä‚à“¯‚¶‚Å‚·‚ª”wŒi‰æ‘œ‚ð·‚µ‘Ö‚¦‚â‚·‚¢‚Å‚·)B |
+| front_img<br/>_coordinate | front_img ‚ðd‚Ë‚é‚Æ‚«‚É‚»‚Ì•\Ž¦À•W‚ðŽw’è‚µ‚Ü‚·B |
+| characters | `{ ƒXƒ^ƒCƒ‹ID = •\î, ƒXƒ^ƒCƒ‹ID = •\î }` ‚ÌŒ`Ž®‚Åê–Ê‚É•\Ž¦‚·‚éƒLƒƒƒ‰ƒNƒ^[‚Æ‚»‚Ì•\î‚ðŽw’è‚µ‚Ü‚·B•\î‚Í `character_images` ‚Å’è‹`‚µ‚½ƒL[‚ÅŽw’è‚µ‚Ü‚·B[’3] |
+| free_text | ”CˆÓ‚Å‰æ–Ê‚ÉƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚ç‚ê‚Ü‚·B[’4] [’5] |
+
+- [’1] ’·‚¢ƒZƒŠƒt‚Í‰üs‚µ‚Ü‚· (1s‚Ì•¶Žš”‚Í serifu_text_settings ‚Ì width ‚ÅŽw’è)B‚½‚¾AŒ»Ý‚Í‹@ŠB“I‚É‰üs‚µ‚Ä‚¨‚è‹Ö‘¥ˆ—‚É–¢‘Î‰ž‚È‚Ì‚Ås“ª‚É‹å“Ç“_‚È‚Ç‚ª‚­‚é‚±‚Æ‚ª‚ ‚è‚Ü‚·B‚»‚ê‚ª‹C‚É‚È‚éê‡‚Í‚¨Žè”‚Å‚·‚ª“–ŠYƒZƒŠƒt‚É‰üs `\n` ‚ð–¾Ž¦“I‚É‹Lq‚µ‚Ä‚­‚¾‚³‚¢B‚»‚Ìê‡‚Í‚»‚ê‚É‚µ‚½‚ª‚¢‚Ü‚·B
+- [’2] ƒZƒŠƒt‚Ì“Ç‚Ý‚ªˆÓ}’Ê‚è‚É‚È‚ç‚È‚©‚Á‚½ê‡‚ÍŠî–{“I‚É‚Í VOICEVOX ‚Ì UI ‚©‚çŽ«‘“o˜^‚µ‚Ä‚­‚¾‚³‚¢B‚½‚¾‚µAˆêŽž“I‚É“ÁŽê‚È“Ç‚Ý•û‚ð‚µ‚½‚¢‚Æ‚«‚âAŽš–‹‚Ì‚Ý‚É•\Ž¦‚µ‚½‚¢‚Æ‚« (’¾–Ù‚Ì3“_ƒŠ[ƒ_Aº‚Éo‚³‚È‚¢S‚Ìº‚È‚Ç)A‹t‚É‰¹º‚Ì‚Ý‚É”½‰f‚µ‚½‚¢‚Æ‚«‚ÍˆÈ‰º‚Ìƒ^ƒO‚ð—˜—p‚­‚¾‚³‚¢B
+  - `<s></s>`: ‚±‚Ìƒ^ƒO‚ÅˆÍ‚ñ‚¾‰ÓŠ‚ÍŽš–‹‚Ì‚Ý‚É•\Ž¦‚µ‚Ü‚·B
+  - `<v></v>`: ‚±‚Ìƒ^ƒO‚ÅˆÍ‚ñ‚¾‰ÓŠ‚Í‰¹º‚Ì‚Ý‚É”½‰f‚µ‚Ü‚·B
+  - ‚½‚¾‚µAƒZƒŠƒt‚É‰üs‚ð–¾Ž¦“I‚É‹Lq‚µ‚Ä‚¢‚éê‡Aƒ^ƒO‚Í‰üs‚ð‚Ü‚½‚°‚Ü‚¹‚ñB‰üs‘O‚Éƒ^ƒO‚ðˆê’U•Â‚¶A‰üsŒã‚É‚Ü‚½ƒ^ƒO‚ðŠJŽn‚µ‚Ä‚­‚¾‚³‚¢B
+- [’3] ‚È‚¨A•K‚¸‚µ‚àƒLƒƒƒ‰ƒNƒ^[‚ð‘S‚Ä‚Ìê–Ê‚É•\Ž¦‚³‚¹‚é•K—v‚Í‚È‚­Acharacters ‚ÉŽw’è‚µ‚È‚¯‚ê‚Î•\Ž¦‚³‚ê‚Ü‚¹‚ñBƒXƒ^ƒCƒ‹ ID ‚É‘Î‰ž‚·‚é‰æ‘œƒpƒX‚ª `character_images` ‚ÉÝ’è‚³‚ê‚Ä‚¢‚È‚¢ê‡‚à—§‚¿ŠG‚Í•\Ž¦‚³‚ê‚Ü‚¹‚ñ (‚Å‚«‚Ü‚¹‚ñ)B
+- [’4] ‰üs‚É‚Â‚¢‚Ä‚ÍƒZƒŠƒt“¯—l‹@ŠB“I‚È‚Ì‚ÅA•K—v‚Å‚ ‚ê‚Î `\n` ‚ð–¾Ž¦“I‚É‹Lq‚µ‚Ä‚­‚¾‚³‚¢B
+- [’5] ƒtƒŠ[ƒeƒLƒXƒg‚Í‘Sê–Ê‚ð’Ê‚µ‚Ä•\Ž¦ˆÊ’uAƒtƒHƒ“ƒgƒTƒCƒYAƒtƒHƒ“ƒgF‚ÍŒÅ’è‚Å‚· (•ÏX‰Â”\‚É‚·‚é—\’è‚ÍŒ»ó‚È‚µ)B•¶Žš‚ð•\Ž¦‚·‚éê‡‚Í”wŒi (‘OŒi) ‰æ‘œ‚É•¶Žš“ü‚ê‚µ‚Ä‚¨‚­‘z’è‚Å‚·B‚½‚¾AƒtƒŠ[ƒeƒLƒXƒg‚ÅŽ–‘«‚è‚é‚Æ‚¢‚¤•û‚È‚ç”wŒi‰æ‘œ1–‡‚ð—pˆÓ‚·‚é‚¾‚¯‚Å (–³’n”wŒi‚È‚ç‚»‚ê‚·‚ç‚È‚­‚Ä‚à) “®‰æ‚ð¶¬‚Å‚«‚Ü‚·B
+
+<a id="sample"></a>
+### ƒTƒ“ƒvƒ‹‘ä–{
+
+- **resources/sample1/storyboard.toml**
+  - ‰æ‘œ‚ð—pˆÓ‚¹‚¸ (—§‚¿ŠGˆÈŠO)AŽš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚Å“WŠJ‚·‚é—á‚Å‚·B
+  - Žš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚Ì‚½‚ß‚ÉƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚ÈƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð—pˆÓ‚µ‘ä–{“à‚Ì .ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢BƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ƒtƒHƒ“ƒg‚ðŽg—p‚·‚éê‡‚Í [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) ‚©‚ç“üŽè‚µ‚Ä‚­‚¾‚³‚¢B
+- **resources/sample2/storyboard.toml**
+  - ‚±‚¿‚ç‚Íê–Ê‚²‚Æ‚Ì‰æ‘œ‚ÆŽš–‹‚Å“WŠJ‚·‚é—á‚Å‚·BBGM ‚à•t‚¯‚Ä‚¢‚Ü‚·B
+  - BGM ‚Ì‚½‚ß‚Ì mp3 ƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚È BGM ‚ð—pˆÓ‚µ‘ä–{“à‚Ì mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢BƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ BGM ‚ðŽg—p‚·‚éê‡‚Í [ƒtƒŠ[BGME‰¹Šy‘fÞ MusMus](https://musmus.main.jp/music_img1_03.html) ‚©‚ç“üŽè‚µ‚Ä‚­‚¾‚³‚¢B.mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‹ó•¶Žš—ñ‚É‚·‚ê‚Î BGM ‚È‚µ‚É‚È‚è‚Ü‚·B
+
+<a id="license"></a>
 ### —˜—p”ÍˆÍ
 
 ‚±‚ÌƒŠƒ|ƒWƒgƒŠ‚ÌƒR[ƒhŽ©‘Ì‚Í MIT ƒ‰ƒCƒZƒ“ƒX‚Å‚·‚ªAƒR[ƒh‚É‚æ‚Á‚Ä¶¬‚µ‚½“®‰æ‚Ì—˜—p”ÍˆÍ‚Í VOICEVOX ‚Ì—˜—p‹K–ñ‹y‚ÑŠeƒLƒƒƒ‰ƒNƒ^[‚Ì—˜—p‹K–ñ‚É‚µ‚½‚ª‚Á‚Ä‚­‚¾‚³‚¢B‚»‚êˆÈŠO‚Ì‘fÞ‚à—˜—p‚µ‚½ê‡‚Í‚»‚êˆÈŠO‚Ì‘fÞ‚Ì—˜—p‹K–ñ‚É‚à‚µ‚½‚ª‚Á‚Ä‚­‚¾‚³‚¢B
 
-materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚¦‚¸‚É—˜—p‚µ‚Ä‚à\‚¢‚Ü‚¹‚ñ (Œ³‚ÌƒLƒƒƒ‰ƒNƒ^[‚ÌƒKƒCƒhƒ‰ƒCƒ“‚É€‚¶‚Ä‚²—˜—p‚­‚¾‚³‚¢)B
+materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚¦‚¸‚É—˜—p‚µ‚Ä‚¢‚½‚¾‚¢‚Ä‚à\‚¢‚Ü‚¹‚ñ (—˜—p—p“r‚ÍŒ³‚ÌƒLƒƒƒ‰ƒNƒ^[‚ÌƒKƒCƒhƒ‰ƒCƒ“‚É€‚¶‚Ä‚­‚¾‚³‚¢)B
 
-### ƒTƒ“ƒvƒ‹‘ä–{‚Ì•â‘«
+---
 
-- **resources/sample1/storyboard.toml**
-  - ~~ƒRƒ~ƒbƒg‚µ‚Ä‚ ‚éƒCƒ‰ƒXƒg‚µ‚©ŽQÆ‚µ‚Ä‚¢‚È‚¢‚Ì‚Å‚±‚Ì‚Ü‚Ü“®‰æ¶¬‚Å‚«‚Ü‚·~~ ‰æ–Ê‚ÉŽš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚ð“ü‚ê‚é‚½‚ß‚ÉƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚ÈƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð—pˆÓ‚µ‘ä–{“à‚Ì .ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B
-    - ‚È‚¨AƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ƒtƒHƒ“ƒg‚ðŽg—p‚·‚éê‡‚Í [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) ‚©‚ç—˜—p‹K–ñ‚ðŠm”F‚Ìã“üŽè‚µ‚Ä‚­‚¾‚³‚¢B
-- **resources/sample2/storyboard.toml**
-  - BGM ‚Ì‚½‚ß‚Ì mp3 ƒtƒ@ƒCƒ‹‚àŽQÆ‚µ‚Ä‚¢‚Ü‚·B“K“–‚È BGM ‚ð—pˆÓ‚µ‘ä–{“à‚Ì mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢B
-    - ‚È‚¨AƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ BGM ‚ðŽg—p‚·‚éê‡‚Í [ƒtƒŠ[BGME‰¹Šy‘fÞ MusMus](https://musmus.main.jp/music_img1_03.html) ‚©‚ç—˜—p‹K–ñ‚ðŠm”F‚Ìã“üŽè‚µ‚Ä‚­‚¾‚³‚¢B
-  - .mp3 ƒtƒ@ƒCƒ‹ƒpƒX‚ð‹ó•¶Žš—ñ‚É‚·‚ê‚Î BGM ‚È‚µ‚É‚È‚è‚Ü‚·B
-  - BGM ‚ð•ÏX‚©íœ‚µ‚½ê‡‚Í resources/sample2/credit.png ‚ÌƒNƒŒƒWƒbƒg•\‹L‚à•ÏX‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
-
+<a id="about"></a>
 ### ‚±‚ÌƒXƒNƒŠƒvƒg‚É‚Â‚¢‚Ä
 
 ‚±‚ÌƒXƒNƒŠƒvƒg‚ª‚µ‚Ä‚¢‚é‚±‚Æ‚ÍˆÈ‰º‚Å‚·B
@@ -62,13 +110,12 @@ materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚
 
 #### ’†ŠÔ¶¬•¨‚É‚Â‚¢‚Ä
 
-- ’†ŠÔ¶¬•¨‚Å‚ ‚é png, wav, mp3 ‚ð’†ŠÔ¶¬•¨ƒtƒHƒ‹ƒ_‚ÉƒLƒƒƒbƒVƒ…‚µ‚Ä‚¢‚Ü‚·‚ªApng, mp3 ‚Í¶¬‚ÉŽžŠÔ‚ª‚©‚©‚ç‚È‚©‚Á‚½‚Ì‚ÅŒ‹‹Çí‚ÉÄ¶¬‚µ‚Ä‚¢‚Ü‚·B‡¬‰¹º wav ‚É‚Â‚¢‚Ä‚Í“¯‚¶‰¹ºÝ’èEƒZƒŠƒt‚Å‡¬Ï‚Ý‚Å‚ ‚ê‚Î‡¬‚ðƒXƒLƒbƒv‚µ‚Ü‚·B
+- ’†ŠÔ¶¬•¨‚Å‚ ‚é png, wav, mp3 ‚ð’†ŠÔ¶¬•¨ƒtƒHƒ‹ƒ_‚ÉƒLƒƒƒbƒVƒ…‚µ‚Ä‚¢‚Ü‚·‚ªApng, mp3 ‚Í‚ ‚Ü‚è¶¬‚ÉŽžŠÔ‚ª‚©‚©‚ç‚È‚©‚Á‚½‚Ì‚ÅŒ‹‹Çí‚ÉÄ¶¬‚µ‚Ä‚¢‚Ü‚·B‡¬‰¹º wav ‚É‚Â‚¢‚Ä‚Í“¯‚¶‰¹ºÝ’èEƒZƒŠƒt‚Å‡¬Ï‚Ý‚Å‚ ‚ê‚Î‡¬‚ðƒXƒLƒbƒv‚µ‚Ü‚·B
   - ‘OŒi‰æ‘œ‚âƒZƒŠƒt‚È‚Ç‚ð•ÏX‚·‚é‚ÆƒLƒƒƒbƒVƒ…ƒtƒ@ƒCƒ‹‚ª‚Ç‚ñ‚Ç‚ñ‘‚¦‚Ü‚·B`-r` ƒIƒvƒVƒ‡ƒ“‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
 
 #### Tips
 
-- Šeê–Ê‚É‚ÍuƒZƒŠƒtŒã–³‰¹•b”v‚µ‚©Ý’è‚Å‚«‚Ü‚¹‚ñBƒZƒŠƒt‘O‚É–³‰¹ŽžŠÔ‚ð‘}“ü‚µ‚½‚¢ê‡‚Í–³ƒZƒŠƒtê–Ê‚ð‘}“ü‚µ‚Ä‚­‚¾‚³‚¢B
 - ƒLƒƒƒ‰ƒNƒ^[‚Í2l‚Å‚ ‚é•K—v‚Í‚È‚­A”CˆÓ‚Ìl”‚É‚Å‚«‚Ü‚·B
-- ƒLƒƒƒ‰ƒNƒ^[‚Ì•\Ž¦ˆÊ’u‚Í‘Sê–Ê‚ð’Ê‚µ‚ÄŒÅ’è‚É‚È‚Á‚Ä‚¢‚Ü‚·‚ªAƒLƒƒƒ‰ƒNƒ^[‚ð‘Sê–Ê‚É“oê‚³‚¹‚é•K—v‚Í‚È‚­A‚±‚Ìê–Ê‚Å‚Í‚±‚¿‚ç‚ÌƒLƒƒƒ‰ƒNƒ^[‚Í—£ÈA‚Æ‚¢‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚·B
-- ƒTƒ“ƒvƒ‹‘ä–{‚É‚ ‚é‚æ‚¤‚É VOICEVOX ‚Ì‰¹º‚ÌƒXƒ^ƒCƒ‹ ID ‚ÅƒLƒƒƒ‰ƒNƒ^[‚ðŠÇ—‚µ‚Ä‚¢‚Ü‚·‚ªA‚¸‚ñ‚¾‚à‚ñ‚Ì‚æ‚¤‚ÉƒXƒ^ƒCƒ‹ ID ‚ª•¡” (ƒm[ƒ}ƒ‹A‚³‚³‚â‚«‚È‚Ç) ‚ ‚éƒLƒƒƒ‰ƒNƒ^[‚à‚¢‚Ü‚·Bê–Ê‚É‚æ‚Á‚ÄƒLƒƒƒ‰ƒNƒ^[‚Ìº‚ÌƒXƒ^ƒCƒ‹‚ð•ª‚¯‚½‚¢ê‡‚ÍAu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚ð•ÊƒLƒƒƒ‰ƒNƒ^[‚Æ‚µ‚Ä“¯‚¶—§‚¿ŠGEƒXƒP[ƒ‹EÀ•W‚ÅÝ’è‚µA‚³‚³‚â‚­ê–Ê‚¾‚¯u‚¸‚ñ‚¾‚à‚ñv‚ðu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚É‚·‚°‚©‚¦‚ê‚ÎŽÀŒ»‚Å‚«‚Ü‚· (‚¨‚»‚ç‚­)B
+- Šeê–Ê‚É‚ÍuƒZƒŠƒtŒã–³‰¹•b”v‚µ‚©Ý’è‚Å‚«‚Ü‚¹‚ñBƒZƒŠƒt‘O‚É–³‰¹ŽžŠÔ‚ð‘}“ü‚µ‚½‚¢ê‡‚Í“¯‚¶”wŒi‰æ‘œ‚Ì–³‰¹ê–Ê‚ð’¼‘O‚É‘}“ü‚µ‚Ä‚­‚¾‚³‚¢B–³‰¹ê–Ê‚ÉŽš–‹‚¾‚¯‚Í•\Ž¦‚³‚¹‚½‚¢ê‡‚Íƒ^ƒO (‘ä–{‚Ì‹Lq•û–@‚Ì [’2] ŽQÆ)‚ð—˜—p‚­‚¾‚³‚¢B
+- VOICEVOX ‚Ì‰¹º‚ÌƒXƒ^ƒCƒ‹ ID ‚ÅƒLƒƒƒ‰ƒNƒ^[‚ðŠÇ—‚µ‚Ä‚¢‚Ü‚·‚ªA‚¸‚ñ‚¾‚à‚ñ‚Ì‚æ‚¤‚ÉƒXƒ^ƒCƒ‹ ID ‚ª•¡” (ƒm[ƒ}ƒ‹A‚³‚³‚â‚«‚È‚Ç) ‚ ‚éƒLƒƒƒ‰ƒNƒ^[‚à‚¢‚Ü‚·Bê–Ê‚É‚æ‚Á‚ÄƒLƒƒƒ‰ƒNƒ^[‚Ìº‚ÌƒXƒ^ƒCƒ‹‚ð•ª‚¯‚½‚¢ê‡‚ÍAu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚ð•ÊƒLƒƒƒ‰ƒNƒ^[‚Æ‚µ‚Ä“¯‚¶—§‚¿ŠGEƒXƒP[ƒ‹EÀ•W‚ÅÝ’è‚µA‚³‚³‚â‚­ê–Ê‚¾‚¯u‚¸‚ñ‚¾‚à‚ñv‚ðu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚É‚·‚°‚©‚¦‚ê‚ÎŽÀŒ»‚Å‚«‚Ü‚· (‚¨‚»‚ç‚­)B
 

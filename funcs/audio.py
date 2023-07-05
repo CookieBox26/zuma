@@ -37,7 +37,9 @@ def synthesize(text, filename, speaker=1, options=None):
 class AudioGenerator:
     def __init__(self, storyboard):
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
-        self.voice_settings = storyboard['voice_settings']
+        self.voice_settings = {}
+        if 'voice_settings' in storyboard:
+            self.voice_settings = storyboard['voice_settings']
         self.bgm_file = ''
         self.bgm_adjust = 0
         if 'bgm_settings' in storyboard:
@@ -63,15 +65,19 @@ class AudioGenerator:
             komasu = 0
             silent_komasu = 0
             audio = None
-            if shot['speaker'] > -1:  # 話者がいればセリフ音声を合成する
+            serifu_ = prepare_serifu(shot['serifu'], flag='v')
+
+            # セリフがあればセリフ音声を合成する
+            # ※ 字幕と音声を変えることに対応したので、
+            #    話者があり字幕があっても無声な場面がありうるので話者では判定しない
+            if serifu_ != '':
                 out_file = get_wav_filename(self.out_dir_intermediate,
                                             self.voice_settings, shot)
                 if not os.path.isfile(out_file):
                     print('未生成なので音声合成します: ',
-                          shot['speaker'], shot['serifu'][:10])
-                    serifu = prepare_serifu(shot['serifu'], flag='v')
+                          shot['speaker'], serifu_[:10])
                     synthesize(
-                        serifu, out_file, speaker=shot['speaker'],
+                        serifu_, out_file, speaker=shot['speaker'],
                         options=self.voice_settings.get(str(shot['speaker'])))
                 else:
                     print('音声合成済みです: ', shot['speaker'], shot['serifu'][:10])

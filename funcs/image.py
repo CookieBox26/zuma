@@ -6,10 +6,11 @@ import os
 class ImageGenerator:
     def __init__(self, storyboard):
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
+        character_images = storyboard.get('character_images', [])
         self.character_images = {str(c['speaker']): c for c
                                  in storyboard['character_images']}
         self.serifu_text_settings = storyboard['serifu_text_settings']
-        self.free_text_settings = storyboard['free_text_settings']
+        self.free_text_settings = storyboard.get('free_text_settings', {})
         self.shots = storyboard['shots']
 
     def _add_text(self, img, text, color, settings):
@@ -31,7 +32,10 @@ class ImageGenerator:
     def _add_serifu_text(self, img, text, speaker):
         """ 背景画像にセリフテキスト (字幕) を貼り付けます
         """
-        color = tuple(self.serifu_text_settings['font_color'][str(speaker)])
+        color = self.serifu_text_settings['font_color'].get(str(speaker))
+        if color is None:
+            color = self.serifu_text_settings['font_color_default']
+        color = tuple(color)
         text_ = prepare_serifu(text, flag='s')
         self._add_text(img, text_, color, self.serifu_text_settings)
 
@@ -51,9 +55,13 @@ class ImageGenerator:
     def _paste_character(self, img, chara_id, mode, mouse=0):
         """ 背景画像に立ち絵を貼り付けます
         """
-        self._paste(img, self.character_images[chara_id][mode][mouse],
-                    self.character_images[chara_id]['scale'],
-                    self.character_images[chara_id]['coordinate'])
+        character_image = self.character_images.get(chara_id)
+        if character_image is None:
+            print(f'[WARNING] ID:{chara_id} の立ち絵が設定されていません')
+            return
+        self._paste(img, character_image[mode][mouse],
+                    character_image['scale'],
+                    character_image['coordinate'])
 
     def _generate_back_image(self, shot):
         """ 背景画像を読み込むか生成します

@@ -1,14 +1,14 @@
-# mp4 を出力するフォルダを指定します
+# [必須] mp4 を出力するフォルダを指定します
 # パスの最後にはスラッシュを付けてください
 # 空文字列にした場合この台本ファイルがあるフォルダに出力します
 out_dir = ""
 
-# BGM を指定します
+# [任意] BGM を指定します
 [bgm_settings]
 mp3_path = ""  # BGM なしなら空文字列に
-adjust = -10  # 音量調整
+adjust = -10  # BGM の音量調整
 
-# VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
+# [任意] VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
 # キーは VOICEVOX のスタイルIDです
 # ここではずんだもんの話速を速めて抑揚を抑え、
 # またずんだもんもつむぎも音高を落ち着かせています
@@ -16,7 +16,7 @@ adjust = -10  # 音量調整
 3 = { speedScale = 1.2, intonationScale = 0.9, pitchScale = -0.025 }
 8 = { pitchScale = -0.025 }
 
-# 立ち絵の画像ファイルパスと縮尺と表示座標を指定します
+# [任意] 立ち絵の画像ファイルパスと縮尺と表示座標を指定します
 # 画像ファイルは各表情タイプに「口閉じ、口開き」の2ファイルを指定します
 # なければ同じファイルでよいです (が口パクしません)
 [[character_images]]
@@ -32,32 +32,31 @@ coordinate = [-27, 275]
 normal = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
 mattari = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
 
-# 画面に描画するセリフテキスト (字幕) の設定を指定します
+# [必須] 画面に描画するセリフテキスト (字幕) の設定を指定します
 [serifu_text_settings]
-display = true  # 字幕を表示するかしないか
+display = true  # 字幕を表示するかしないか (false ならこれ以下のキーは全部無視)
 coordinate = [167, 345]
 font_size = 26
 width = 21  # 字幕領域の横幅を文字数で指定してください
 spacing = 1  # 改行幅
-# font_color = { 3 = [60, 148, 36], 8 = [164, 135, 55] }
 font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
-font_color = { 3 = [153, 213, 102], 8 = [233, 206, 118] }
-stroke_width = 2  # ふちどり幅 (optional)
+font_color = { 3 = [153, 213, 102], 8 = [233, 206, 118] }  # フォント色を話者ごとに指定
+font_color_default = [255, 255, 255]  # 1行上で指定されなかった話者のフォント色
+stroke_width = 3  # ふちどり幅 (optional)
 stroke_fill = "black"  # ふちどり色 (optional)
 
-# 画面に描画するフリーテキストの設定を指定します
+# [フリーテキスト使用時のみ必須] 画面に描画するフリーテキストの設定を指定します
 [free_text_settings]
 coordinate = [35, 33]
 font_size = 30
-# font_path = "../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
 font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
 font_color = [0, 0, 0]
 width = 24  # フリーテキスト領域の横幅を文字数で指定してください
 spacing = 5  # 改行幅
+# ふちどり幅, ふちどり色も任意で指定できます
 
-# 場面のデフォルト設定を指定します
+# [必須] 場面のデフォルト設定を指定します
 # 各場面はこの設定への差分のみ指定します
-# 立ち絵の座標調整時にもこの設定を使用します
 [shot_default]
 speaker = -1  # 話者のスタイルID (誰も話さないなら -1)
 serifu = ""  # セリフ
@@ -68,9 +67,9 @@ back_color = [204, 226, 229]  # 背景色 (画像パス指定時は無視)
 front_img = ""  # 前景画像パス (任意)
 front_img_coordinate = [20, 20]  # 前景画像座標
 characters = { 3 = "normal", 8 = "normal" }  # 場面の登場人物及びその表情タイプ
-free_text = ""  # フリーテキスト
+free_text = "自己共分散関数:\nC(k) = E[(y_{n} - mu)(y_{n-k} - mu)]"  # フリーテキスト
 
-# 各場面のセリフや背景画像や表情などを指定していきます
+# [必須] 各場面のセリフや背景画像や表情などを指定していきます
 [[shots]]
 silence = 1
 [[shots]]
@@ -82,9 +81,11 @@ serifu = "定常時系列じゃないとだめなのー？"
 [[shots]]
 speaker = 3
 serifu = "時系列が定常でない場合自己共分散はラグkのみでは決まらないのだ。時間ステップによって変わっていってしまうかもしれないのだ。"
+free_text = "自己共分散関数:\nC(k) = E[(y_{n} - mu)(y_{n-k} - mu)]\n\n定常時系列:\n平均と分散が時刻に依存しない\n自己共分散が時刻に依存せずラグのみに依存する"
 [[shots]]
 speaker = 8
 serifu = "あーそっかー。"
+free_text = "自己共分散関数:\nC(k) = E[(y_{n} - mu)(y_{n-k} - mu)]\n\n定常時系列:\n平均と分散が時刻に依存しない\n自己共分散が時刻に依存せずラグのみに依存する"
 [[shots]]
 silence = 5
 characters = { 3 = "mattari", 8 = "mattari" }

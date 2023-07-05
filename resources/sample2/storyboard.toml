@@ -1,14 +1,14 @@
-# mp4 を出力するフォルダを指定します
+# [必須] mp4 を出力するフォルダを指定します
 # パスの最後にはスラッシュを付けてください
 # 空文字列にした場合この台本ファイルがあるフォルダに出力します
 out_dir = ""
 
-# BGM を指定します
+# [任意] BGM を指定します
 [bgm_settings]
 mp3_path = "./materials/MusMus-BGM-097.mp3"  # BGM なしなら空文字列に
-adjust = -11  # 音量調整
+adjust = -11  # BGM の音量調整
 
-# VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
+# [任意] VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
 # キーは VOICEVOX のスタイルIDです
 # ここではずんだもんの話速を速めて抑揚を抑え、
 # またずんだもんもつむぎも音高を落ち着かせています
@@ -16,8 +16,7 @@ adjust = -11  # 音量調整
 3 = { speedScale = 1.2, intonationScale = 0.9, pitchScale = -0.025 }
 8 = { pitchScale = -0.025 }
 
-# 立ち絵の画像ファイルパスと縮尺と表示座標を指定します
-# 縮尺と表示座標は試行錯誤するまでわからないので最初は適当にします
+# [任意] 立ち絵の画像ファイルパスと縮尺と表示座標を指定します
 # 画像ファイルは各表情タイプに「口閉じ、口開き」の2ファイルを指定します
 # なければ同じファイルでよいです (が口パクしません)
 [[character_images]]
@@ -33,59 +32,105 @@ coordinate = [-27, 275]
 normal = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
 mattari = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
 
-# 画面に描画するセリフテキスト (字幕) の設定を指定します
+# [必須] 画面に描画するセリフテキスト (字幕) の設定を指定します
 [serifu_text_settings]
-display = true  # 字幕を表示するかしないか
+display = true  # 字幕を表示するかしないか (false ならこれ以下のキーは全部無視)
 coordinate = [167, 345]
 font_size = 26
 width = 21  # 字幕領域の横幅を文字数で指定してください
 spacing = 1  # 改行幅
-# font_color = { 3 = [60, 148, 36], 8 = [164, 135, 55] }
 font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
-font_color = { 3 = [153, 213, 102], 8 = [233, 206, 118] }
+font_color = { 3 = [153, 213, 102], 8 = [233, 206, 118] }  # フォント色を話者ごとに指定
+font_color_default = [255, 255, 255]  # 1行上で指定されなかった話者のフォント色
 stroke_width = 3  # ふちどり幅 (optional)
 stroke_fill = "black"  # ふちどり色 (optional)
 
-# 画面に描画するフリーテキストの設定を指定します
+# [フリーテキスト使用時のみ必須] 画面に描画するフリーテキストの設定を指定します
 [free_text_settings]
 coordinate = [35, 33]
 font_size = 30
-# font_path = "../../Downloads/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
 font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
 font_color = [0, 0, 0]
 width = 24  # フリーテキスト領域の横幅を文字数で指定してください
 spacing = 5  # 改行幅
+# ふちどり幅, ふちどり色も任意で指定できます
 
-# 場面のデフォルト設定を指定します
+# [必須] 場面のデフォルト設定を指定します
 # 各場面はこの設定への差分のみ指定します
-# 立ち絵の座標調整時にもこの設定を使用します
 [shot_default]
 speaker = -1  # 話者のスタイルID (誰も話さないなら -1)
 serifu = ""  # セリフ
 silence = 0  # セリフ後無音秒数
 back_img = "./resources/sample2/back.png"  # 背景画像パス (これを指定しないときはこの下の2行必須)
-back_size = [960, 540]  # 背景サイズ (画像パス指定時は無視)
+back_size = [854, 480]  # 背景サイズ (画像パス指定時は無視)
 back_color = [230, 230, 230]  # 背景色 (画像パス指定時は無視)
-front_img = "./resources/sample2/credit.png"  # 前景画像パス (任意)
-front_img_coordinate = [60, 23]  # 前景画像座標
+front_img = ""  # 前景画像パス (任意)
+front_img_coordinate = [51, 23]  # 前景画像座標
 characters = { 3 = "normal", 8 = "normal" }  # 場面の登場人物及びその表情タイプ
 free_text = ""  # フリーテキスト
 
-# 各場面のセリフや背景画像や表情などを指定していきます
+# [必須] 各場面のセリフや背景画像や表情などを指定していきます
 [[shots]]
 silence = 1
 [[shots]]
+speaker = 8
+serifu = "グラフ同型性のWLテストってなにー？"
+front_img = "./resources/sample2/wlt.png" 
+[[shots]]
 speaker = 3
-serifu = "定常時系列のあるステップとkステップ前の共分散をラグkの関数と考えて自己共分散関数というのだ。"
+serifu = "WLテストは2つのグラフが同型かどうかを判定するアルゴリズムなのだ。"
+front_img = "./resources/sample2/wlt.png" 
+[[shots]]
+speaker = 3
+serifu = "2つのグラフが同型かどうかを判定する問題を多項式時間で解く方法は発見されていないそうなのだ。"
+front_img = "./resources/sample2/wlt.png" 
 [[shots]]
 speaker = 8
-serifu = "定常時系列じゃないとだめなのー？"
+serifu = "<s>……</s>"
+silence = 1
+front_img = "./resources/sample2/wlt.png" 
+[[shots]]
+speaker = 8
+serifu = "……2つのグラフが同型かどうかって、こっち\nの頂点からあっちの頂点への全単射であって、\n「こっちで2頂点間に枝が張られているならば、"
+front_img = "./resources/sample2/iso.png" 
+[[shots]]
+speaker = 8
+serifu = "かつそのときに限り、対応するあっちの2頂点でも枝が張られている」ものがあれば同型なんだよね？"
+front_img = "./resources/sample2/iso.png" 
 [[shots]]
 speaker = 3
-serifu = "時系列が定常でない場合自己共分散はラグkのみでは決まらないのだ。時間ステップによって変わっていってしまうかもしれないのだ。"
+serifu = "その通りなのだ。"
+front_img = "./resources/sample2/iso.png"
+[[shots]]
+speaker = 8
+serifu = "じゃあ頂点集合どうしの全単射を全部調べて枝と整合的なものがあるかみれば同型かわかるんじゃないの？"
+front_img = "./resources/sample2/iso.png" 
+[[shots]]
+speaker = 3
+serifu = "その調べ方は階乗オーダーなのだ。多項式時間じゃないのだ。"
+front_img = "./resources/sample2/iso.png"
+characters = { 3 = "mattari", 8 = "normal" }
 [[shots]]
 speaker = 8
 serifu = "あーそっかー。"
+front_img = "./resources/sample2/iso.png"
+characters = { 3 = "mattari", 8 = "mattari" }
+[[shots]]
+speaker = 3
+serifu = "でも1次元のWLテストなら線形時間で2つのグラフが同型でないことを判定できるそうなのだ。"
+front_img = "./resources/sample2/iso.png"
+[[shots]]
+speaker = 3
+serifu = "ただし誤って同型と判定してしまうこともあるのだ。それでも他のアルゴリズムより広いクラスのグラフの同型性を判定できるそうなのだ。"
+front_img = "./resources/sample2/iso.png" 
+[[shots]]
+speaker = 8
+serifu = "それはすごいねー。"
+front_img = "./resources/sample2/iso.png" 
+[[shots]]
+front_img = "./resources/sample2/iso.png" 
+silence = 1
 [[shots]]
 silence = 5
 characters = { 3 = "mattari", 8 = "mattari" }
+front_img = "./resources/sample2/credit.png" 
