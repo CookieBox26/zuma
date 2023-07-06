@@ -89,6 +89,8 @@ python run.py resources/sample1/storyboard.toml -r 1
 
 https://github.com/CookieBox26/zuma/assets/34176970/890dde44-4a70-405b-aa4e-256d64bd2421
 
+<div><video controls autoplay muted playsinline src="https://github.com/CookieBox26/zuma/assets/34176970/890dde44-4a70-405b-aa4e-256d64bd2421"></video></div>
+
 - 画像を使用せず (立ち絵以外)、字幕とフリーテキストで展開する例です。
 - 字幕とフリーテキスト用にフォントファイルを参照しているので、実行するには適当なフォントファイルを用意し台本内の .ttf ファイルパスを書き換えてください。コミットしてある台本と同じフォントを使用する場合は [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) から入手してください。
 
