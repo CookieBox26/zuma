@@ -85,7 +85,7 @@ python run.py resources/sample1/storyboard.toml -r 1
 
 #### resources/sample1/storyboard.toml
 
-<img src="https://github.com/CookieBox26/zuma/assets/34176970/9af8b0bd-e773-42df-9084-016a9705ef52" width="400px" />
+<video controls src="https://github.com/CookieBox26/zuma/assets/34176970/b878c9d7-7afb-4226-8550-57eccd2f3eb2" width="427px"></video>
 
 - ‰æ‘œ‚ðŽg—p‚¹‚¸ (—§‚¿ŠGˆÈŠO)AŽš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg‚Å“WŠJ‚·‚é—á‚Å‚·B
 - Žš–‹‚ÆƒtƒŠ[ƒeƒLƒXƒg—p‚ÉƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚Ä‚¢‚é‚Ì‚ÅAŽÀs‚·‚é‚É‚Í“K“–‚ÈƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹‚ð—pˆÓ‚µ‘ä–{“à‚Ì .ttf ƒtƒ@ƒCƒ‹ƒpƒX‚ð‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢BƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é‘ä–{‚Æ“¯‚¶ƒtƒHƒ“ƒg‚ðŽg—p‚·‚éê‡‚Í [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) ‚©‚ç“üŽè‚µ‚Ä‚­‚¾‚³‚¢B
@@ -93,7 +93,7 @@ python run.py resources/sample1/storyboard.toml -r 1
 
 #### resources/sample2/storyboard.toml
 
-<img src="https://github.com/CookieBox26/zuma/assets/34176970/e5a9b945-0c6f-4a49-8e17-fd17038a5b58" width="400px" />
+<video controls src="https://github.com/CookieBox26/zuma/assets/34176970/fc32d521-cf6d-434c-8554-2189565ca466" width="427px"></video>
 
 - ‚±‚¿‚ç‚Í‘OŒi‰æ‘œ (ã}‚Ì”’‚¢•”•ª) ‚ð•Ï‚¦‚Ä‚¢‚­—á‚Å‚·BBGM ‚à•t‚¯‚Ä‚¢‚Ü‚·B
   - **‚½‚¾‚µŒ»Ý BGM ‚ª’Z‚©‚Á‚½ê‡‚Éƒ‹[ƒv‚³‚¹‚é‚È‚Ç‚Ì‘Î‰ž‚ª‚È‚¢‚Å‚·B**
@@ -127,4 +127,3 @@ materials/ ˆÈ‰º‚ÉƒRƒ~ƒbƒg‚µ‚Ä‚ ‚é“ñŽŸƒCƒ‰ƒXƒg‚ÍŽ„‚ª•`‚¢‚½‚à‚Ì‚Å‚·B‚±‚ê‚ð·‚µ‘Ö‚
 - ƒLƒƒƒ‰ƒNƒ^[‚Í2l‚Å‚ ‚é•K—v‚Í‚È‚­A”CˆÓ‚Ìl”‚É‚Å‚«‚Ü‚·B
 - Šeê–Ê‚É‚ÍuƒZƒŠƒtŒã–³‰¹•b”v‚µ‚©Ý’è‚Å‚«‚Ü‚¹‚ñBƒZƒŠƒt‘O‚É–³‰¹ŽžŠÔ‚ð‘}“ü‚µ‚½‚¢ê‡‚Í“¯‚¶”wŒi‰æ‘œ‚Ì–³‰¹ê–Ê‚ð’¼‘O‚É‘}“ü‚µ‚Ä‚­‚¾‚³‚¢B–³‰¹ê–Ê‚ÉŽš–‹‚¾‚¯‚Í•\Ž¦‚³‚¹‚½‚¢ê‡‚Íƒ^ƒO (‘ä–{‚Ì‹Lq•û–@‚Ì [’2] ŽQÆ)‚ð—˜—p‚­‚¾‚³‚¢B
 - VOICEVOX ‚Ì‰¹º‚ÌƒXƒ^ƒCƒ‹ ID ‚ÅƒLƒƒƒ‰ƒNƒ^[‚ðŠÇ—‚µ‚Ä‚¢‚Ü‚·‚ªA‚¸‚ñ‚¾‚à‚ñ‚Ì‚æ‚¤‚ÉƒXƒ^ƒCƒ‹ ID ‚ª•¡” (ƒm[ƒ}ƒ‹A‚³‚³‚â‚«‚È‚Ç) ‚ ‚éƒLƒƒƒ‰ƒNƒ^[‚à‚¢‚Ü‚·Bê–Ê‚É‚æ‚Á‚ÄƒLƒƒƒ‰ƒNƒ^[‚Ìº‚ÌƒXƒ^ƒCƒ‹‚ð•ª‚¯‚½‚¢ê‡‚ÍAu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚ð•ÊƒLƒƒƒ‰ƒNƒ^[‚Æ‚µ‚Ä“¯‚¶—§‚¿ŠGEƒXƒP[ƒ‹EÀ•W‚ÅÝ’è‚µA‚³‚³‚â‚­ê–Ê‚¾‚¯u‚¸‚ñ‚¾‚à‚ñv‚ðu‚³‚³‚â‚«‚Ì‚¸‚ñ‚¾‚à‚ñv‚É‚·‚°‚©‚¦‚ê‚ÎŽÀŒ»‚Å‚«‚Ü‚· (‚¨‚»‚ç‚­)B
-
