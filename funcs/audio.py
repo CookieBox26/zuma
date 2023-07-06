@@ -2,7 +2,8 @@ import requests
 import json
 from retry import retry
 from pydub import AudioSegment
-from funcs import SPK, get_wav_filename, prepare_serifu, file_to_hash
+from funcs import SPF, MOUTH_OPEN_RATIO, \
+    get_wav_filename, prepare_serifu, file_to_hash
 import os
 import math
 
@@ -59,11 +60,11 @@ class AudioGenerator:
     def generate(self):
         """各場面の台詞を wav に出力し全体を通した mp3 を出力しておきます
         """
-        komas = []  # 各場面の「有音コマ数、無音コマ数」を格納しておく
+        durations = []
         audio_concat = None
         for shot in self.shots:
-            komasu = 0
-            silent_komasu = 0
+            voice_durations = []
+            silent_duration = 0
             audio = None
             serifu_ = prepare_serifu(shot['serifu'], flag='v')
 
@@ -82,16 +83,33 @@ class AudioGenerator:
                 else:
                     print('音声合成済みです: ', shot['speaker'], shot['serifu'][:10])
                 audio = AudioSegment.from_wav(out_file)
-                komasu = math.ceil(audio.duration_seconds / SPK)
-                adjust_duration = komasu * SPK - audio.duration_seconds
+                komasu_ = math.ceil(audio.duration_seconds / SPF)
+                adjust_duration = komasu_ * SPF - audio.duration_seconds
                 audio += AudioSegment.silent(duration=adjust_duration * 1000)
+
+                volumes = []
+                for i_koma in range(komasu_):
+                    seg = audio[(i_koma * SPF * 1000):((i_koma + 1) * SPF * 1000)]
+                    volumes.append(seg.rms)
+                threshold = list(reversed(sorted(volumes)))[int(MOUTH_OPEN_RATIO * komasu_)]
+                last_mouth = -1
+                for i_koma in range(komasu_):
+                    mouth = 1 if (volumes[i_koma] > threshold) else 0
+                    if mouth != last_mouth:
+                        voice_durations.append((mouth, SPF))
+                    else:
+                        last = voice_durations.pop(-1)
+                        voice_durations.append((mouth, last[1] + SPF))
+                    last_mouth = mouth
+
             if shot['silence'] > 0:  # セリフ後無音秒数があれば無音を足す
-                silent_komasu = math.ceil(float(shot['silence']) / SPK)
+                silent_komasu = math.ceil(float(shot['silence']) / SPF)
+                silent_duration = silent_komasu * SPF
                 if audio is None:
-                    audio = AudioSegment.silent(duration=silent_komasu * SPK * 1000)
+                    audio = AudioSegment.silent(duration=silent_duration * 1000)
                 else:
-                    audio += AudioSegment.silent(duration=silent_komasu * SPK * 1000)
-            komas.append((komasu, silent_komasu))
+                    audio += AudioSegment.silent(duration=silent_duration * 1000)
+            durations.append((voice_durations, silent_duration))
             if audio_concat is None:
                 audio_concat = audio
             else:
@@ -110,4 +128,4 @@ class AudioGenerator:
             audio.export(mp3_file_with_bgm, format='mp3')
             mp3_file = mp3_file_with_bgm
 
-        return mp3_file, komas
+        return mp3_file, durations

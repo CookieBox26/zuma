@@ -52,14 +52,14 @@ class ImageGenerator:
         img_ = img_.resize(size_new)
         img.paste(img_, coord.copy(), img_)  # 座標はコピーしないと変更される
 
-    def _paste_character(self, img, chara_id, mode, mouse=0):
+    def _paste_character(self, img, chara_id, mode, mouth=0):
         """ 背景画像に立ち絵を貼り付けます
         """
         character_image = self.character_images.get(chara_id)
         if character_image is None:
             print(f'[WARNING] ID:{chara_id} の立ち絵が設定されていません')
             return
-        self._paste(img, character_image[mode][mouse],
+        self._paste(img, character_image[mode][mouth],
                     character_image['scale'],
                     character_image['coordinate'])
 
@@ -78,7 +78,7 @@ class ImageGenerator:
         # その場面で必要な画像ファイル名を取得します
         filenames = get_image_filenames(self.out_dir_intermediate, shot,
             self.serifu_text_settings['display'])
-        for speaker, filename in filenames:
+        for i_file, filename in enumerate(filenames):
             # 既にあればスキップします
             if (not regenerate) and os.path.isfile(filename):
                 continue
@@ -90,8 +90,10 @@ class ImageGenerator:
                 self._paste(img, front_img, coord=shot['front_img_coordinate'])
             # キャラクターがいれば立ち絵を貼ります
             for chara_id, mode in shot['characters'].items():
-                mouse = 1 if (chara_id == str(speaker)) else 0
-                self._paste_character(img, chara_id, mode, mouse)
+                mouth = 0
+                if (i_file == 1) and (chara_id == str(shot['speaker'])):
+                    mouth = 1
+                self._paste_character(img, chara_id, mode, mouth)
             # セリフを表示する設定であってセリフがあれば貼ります
             if self.serifu_text_settings['display'] and shot['serifu'] != '':
                 self._add_serifu_text(img, shot['serifu'], shot['speaker'])

@@ -71,11 +71,11 @@ def main():
 
     # 各場面の台詞 wav を生成し全体を通した mp3 を出力します
     if mode in [2, 3]:
-        mp3_file, komas = ag.generate()
+        mp3_file, durations = ag.generate()
 
     # 動画を生成します
     if mode == 3:
-        mg.generate(komas, mp3_file)
+        mg.generate(durations, mp3_file)
 
 
 if __name__ == '__main__':

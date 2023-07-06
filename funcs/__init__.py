@@ -3,9 +3,17 @@ import math
 import re
 
 
-# moviepy に浮動小数バグがあるので 1/2^n 秒を時間の最小単位とする
+FPS = 24  # Seconds Per Frame
+SPF = 1.0 / float(FPS)  # 0.125  # Frames Per Second
+# SPF は各場面をフレーム単位に切り上げるためにつかう
+# フレーム単位で口を開閉するのでそれにもつかう
+# 各場面を 1 / 2^n 秒単位にしないとバグると思っていたが
+# 1 / 24 でも OK だったので思い込みだったかもしれない
+# 動画出力時に IndexError: list index out of range が出たら SPF を戻してみること
 # https://github.com/Zulko/moviepy/issues/646
-SPK = 0.125  # Seconds Per Koma
+
+# セリフ音声を SPF で区切ったコマのうち音量が大きい何割で口を開くか
+MOUTH_OPEN_RATIO = 0.5
 
 
 def str_to_hash(s):
@@ -70,10 +78,11 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
     if front_img != '':
         filebody += '_' + file_to_hash(front_img)
         filebody += '_' + list_to_str(shot['front_img_coordinate'])
-    filenames = [(-1, filebody + '.png')]
-    speaker = shot['speaker']
-    if speaker > -1:  # 話者がいる場面にいは口開き版画像も必要
-        filenames.append((speaker, filebody + f'_{speaker}.png'))
+    filenames = [filebody + '.png']
+    serifu_ = prepare_serifu(shot['serifu'], flag='v')
+    if serifu_ != '':  # 有声セリフがある場面には口開き版画像も必要
+        speaker = shot['speaker']
+        filenames.append(filebody + f'_{speaker}.png')
     return filenames
 
 
