@@ -1,129 +1,131 @@
 # zuma
 
-[VOICEVOX](https://voicevox.hiroshiba.jp/) �𗘗p���đ�{����V���v���ȉ������𐶐����� Python �R�[�h�ł��B���[�J���� VOICEVOX ���N�����Ĉȉ������s����� storyboard.toml �̉��� out.mp4 ����������܂� **(���������s�O�� storyboard.toml ���� .ttf �t�H���g�t�@�C���ւ̃p�X�����茳�̃}�V���ɂ���K���� .ttf �ւ̃p�X�ɏC�����Ă�������)** �B
+[VOICEVOX](https://voicevox.hiroshiba.jp/) を利用して台本からシンプルな解説動画を生成する Python コードです。ローカルの VOICEVOX を起動して以下を実行すると storyboard.toml の横に out.mp4 が生成されます **(ただし実行前に storyboard.toml 内の .ttf フォントファイルへのパスをお手元のマシンにある適当な .ttf へのパスに修正してください)** 。
 ```
 python run.py resources/sample1/storyboard.toml
 ```
-### �ڎ�
+### 目次
 
-- [������](#env)
-- [���s���@](#run)
-- [��{�̋L�q���@](#storyboard)
-- [�T���v����{](#sample)
-- [���p�͈�](#license)
-- [���̃X�N���v�g�ɂ���](#about)
+- [環境準備](#env)
+- [実行方法](#run)
+- [台本の記述方法](#storyboard)
+- [サンプル台本](#sample)
+- [利用範囲](#license)
+- [このスクリプトについて](#about)
 
 <a id="env"></a>
-### ������
+### 環境準備
 
-- ���茳�̃}�V���� [VOICEVOX](https://voicevox.hiroshiba.jp/) ���C���X�g�[�����Ă��������B
-- ���茳�� Python �� requests, retry, PIL, pydub, moviepy, toml ���C���X�g�[�����Ă��������B
-  - pydub, moviepy �̃o�b�N�G���h�� FFmpeg �Ȃ̂� FFmpeg �{�̂̃C���X�g�[�����K�v�ł��B�R�}���h `ffmpeg -version` �����s�ł���悤�ɂ��Ă����Ă��������BWindows �̏ꍇ Chocolatey �𗘗p�����C���X�g�[�����֗����Ǝv���܂� (���͈ȉ������ɂ���Ď��s���܂���ł���)�B
-    - [Windows�̃p�b�P�[�W�}�l�W�����g�c�[����Chocolatey���C���X�g�[������ - suzu6�̋Z�p�u���O](https://www.suzu6.net/posts/297-chocolatey-windows/)
+- お手元のマシンに [VOICEVOX](https://voicevox.hiroshiba.jp/) をインストールしてください。
+- お手元の Python に requests, retry, PIL, pydub, moviepy, toml をインストールしてください。
+  - pydub, moviepy のバックエンドは FFmpeg なので FFmpeg 本体のインストールも必要です。コマンド `ffmpeg -version` が実行できるようにしておいてください。Windows の場合 Chocolatey を利用したインストールが便利だと思います (私は以下を順にやって失敗しませんでした)。
+    - [WindowsのパッケージマネジメントツールのChocolateyをインストールする - suzu6の技術ブログ](https://www.suzu6.net/posts/297-chocolatey-windows/)
     - [Builds - CODEX FFMPEG @ gyan.dev](https://www.gyan.dev/ffmpeg/builds/)
-- �y�C�Ӂz �K���� .ttf �t�H���g�t�@�C�������p�ӂ��������B
-  - �����\���I�v�V������ true �ɂ����ꍇ��A�t���[�e�L�X�g������ꍇ�͕K�{�ł��B
-  - �������t���[�e�L�X�g������Ȃ��Ȃ� (�����ς特���Ɣw�i�O�i�摜�œ`����Ȃ�) �s�v�ł��B
-  - ����������������J����\�肪����ꍇ�͂��̗p�r�ŗ��p�ł���t�H���g�ɂ��Ă��������B
+- 【任意】 適当な .ttf フォントファイルをご用意ください。
+  - 字幕表示オプションを true にした場合や、フリーテキストを入れる場合は必須です。
+  - 字幕もフリーテキストも入れないなら (もっぱら音声と背景前景画像で伝えるなら) 不要です。
+  - 生成した動画を公開する予定がある場合はその用途で利用できるフォントにしてください。
 
 <a id="run"></a>
-### ���s���@
+### 実行方法
 
-`resources/sample1/storyboard.toml` �̂悤�� TOML �`���ő�{���L�q���Ă��������B���[�J���� VOICEVOX ���N��������ԂŁA�L�q������{���w�肵�Ĉȉ��̂悤�Ɏ��s����� storyboard.toml �̉��� out.mp4 ����������܂� **(���������s�O�� storyboard.toml ���� .ttf �t�H���g�t�@�C���ւ̃p�X�����茳�̃}�V���ɂ���K���� .ttf �ւ̃p�X�ɏC�����Ă�������)** �B
+`resources/sample1/storyboard.toml` のように TOML 形式で台本を記述してください。ローカルの VOICEVOX を起動した状態で、記述した台本を指定して以下のように実行すると storyboard.toml の横に out.mp4 が生成されます **(ただし実行前に storyboard.toml 内の .ttf フォントファイルへのパスをお手元のマシンにある適当な .ttf へのパスに修正してください)** 。
 ```
 python run.py resources/sample1/storyboard.toml
 ```
 
-�ȉ��̃I�v�V�������w��ł��܂��B
+以下のオプションも指定できます。
 
 ```
 python run.py resources/sample1/storyboard.toml -m 1
-# -m 1  �摜�̂ݐ���
-# -m 2  �����̂ݐ���
-# -m 3  ����܂Ő��� (�f�t�H���g)
+# -m 1  画像のみ生成
+# -m 2  音声のみ生成
+# -m 3  動画まで生成 (デフォルト)
 
 python run.py resources/sample1/storyboard.toml -r 1
-# -r 0  �\�ߒ��Ԑ��������폜���Ȃ� (�f�t�H���g)
-# -r 1  �\�ߒ��Ԑ��������폜; ���݂̑�{��K�v�ȍ��������͎c��
-# -r 2  �\�ߒ��Ԑ��������폜; ���ׂĂ̒��Ԑ��������폜����
+# -r 0  予め中間生成物を削除しない (デフォルト)
+# -r 1  予め中間生成物を削除; 現在の台本上必要な合成音声は残す
+# -r 2  予め中間生成物を削除; すべての中間生成物を削除する
 ```
 
 | option | description |
 | ---- | ---- |
-| `-m` |���𐶐����邩�̃��[�h���w�肵�܂��B��ʂ̃��C�A�E�g���������������Ƃ��Ȃǂ� `-m 1` ��t���Ď��s�����Ԑ����t�H���_���̉摜���݂�Ƃ悢�ł� (�����Ɠ���͐����Ɏ��Ԃ�������̂�)�B|
-| `-r` |���搶���O�Ɋ����̒��Ԑ��������폜���邩���w�肵�܂��B�����̘b����BGM���ʂ�摜���C�A�E�g�𒲐�����Ƃǂ�ǂ�s�v�Ȓ��Ԑ����������܂��Ă��܂��̂ō폜�������Ƃ��Ɏw�肵�Ă��������B�K�v�ȍ��������܂ō폜����ƍč����Ɏ��Ԃ�������̂� `-r 1` ���悢�ł��B��������� `-r 1` ���w�肷��Ɓu��͂肳�����̘b���ɖ߂������v�u������ׂ����v�Ƃ������Ƃ��s�ւȂ̂ŉ����p�����[�^�� fix ��Ɏw�肷��̂��悢�ł��B|
+| `-m` |何を生成するかのモードを指定します。画面のレイアウトだけ調整したいときなどに `-m 1` を付けて実行し中間生成フォルダ内の画像をみるとよいです (音声と動画は生成に時間がかかるので)。|
+| `-r` |動画生成前に既存の中間生成物を削除するかを指定します。音声の話速やBGM音量や画像レイアウトを調整するとどんどん不要な中間生成物が溜まってしまうので削除したいときに指定してください。必要な合成音声まで削除すると再合成に時間がかかるので `-r 1` がよいです。ただし常に `-r 1` を指定すると「やはりさっきの話速に戻したい」「聞き比べたい」といったとき不便なので音声パラメータの fix 後に指定するのがよいです。|
 
 <a id="storyboard"></a>
-### ��{�̋L�q���@
+### 台本の記述方法
 
-�T���v����{���ɐ����R�����g������܂����A�u��� (shot)�v�ɂ��ĕ⑫���܂��B���̃��|�W�g���̃R�[�h�͏�ʂ̂Ȃ����킹�œ�����\�����܂��B1��ʂɂ�1�ȉ��̃Z���t�A1�̔w�i�摜���Ή����܂��B�Ȃ̂ŁA�b�҂��w�i�摜�̂����ꂩ�̐؂�ڂ���ʂ̐؂�ڂɂȂ�܂��B��ʂ̍\���v�f�͈ȉ��ł��B�ŏ���4�v�f **(����)** ��K�X�w�肷��΂��イ�Ԃ�ł��B
+サンプル台本内に説明コメントがありますが、「場面 (shot)」について補足します。このリポジトリのコードは場面のつなぎ合わせで動画を構成します。1場面には1つ以下のセリフ、1つの背景画像が対応します。なので、話者か背景画像のいずれかの切れ目が場面の切れ目になります。場面の構成要素は以下です。最初の4要素 **(太字)** を適宜指定すればじゅうぶんです。
 
 | field | description |
 | ---- | ---- |
-| **speaker** | ���̏�ʂ̘b�҂� VOICEVOX �̃X�^�C��ID�Ŏw�肵�܂� (������ʂȂ� -1 �ɂ��Ă�������)�B�X�^�C��ID�� VOICEVOX �N������ `http://localhost:50021/speakers` �ɃA�N�Z�X����Ɗm�F�ł��܂��B�Ⴆ�΃m�[�}�����񂾂���� `3` �ł��B |
-| **serifu** | �Z���t���͂��L�q���܂� (������ʂȂ疳������܂�)�B[��1] [��2] |
-| **silence** | �Z���t�㖳���b���� 0 �ȏ�̐��l�Ŏw�肵�܂��B������������ʂ̏ꍇ�͐��̒l�ɂ��Ȃ��Ƃ��̏�ʂ̌p�����Ԃ� 0 �ɂȂ��Ă��܂������炭���������Ȃ�܂��B |
-| **back_img** | �w�i�摜 png �̃p�X���w�肵�܂��B���̉摜�̃T�C�Y������̃T�C�Y���K�肵�܂��B�S�Ă̏�ʂœ����T�C�Y�̉摜�ɂ��Ȃ��Ƃ����炭���������Ȃ�܂��B���n�̔w�i�ł悢�ꍇ�͂�����󕶎���ɂ� back_size, back_color �ɂ��w����ł��܂��B |
-| back_size | �w�i�T�C�Y���w�肵�܂� (back_img �w�莞�͖�������܂�)�B |
-| back_color | �w�i�F���w�肵�܂� (back_img �w�莞�͖�������܂�)�B |
-| front_img | �C�ӂŉ摜������1���d�˂��܂��B�傫�Ȕw�i�摜�Ɉ��菬���Ȑ����G���A���d�˂����Ƃ��Ȃǂɗ��p�ł��܂� (�\�ߏd�˂��摜�� back_img �Ɏw�肵�Ă������ł����w�i�摜�������ւ��₷���ł�)�B |
-| front_img<br/>_coordinate | front_img ���d�˂�Ƃ��ɂ��̕\�����W���w�肵�܂��B |
-| characters | `{ �X�^�C��ID = �\��, �X�^�C��ID = �\�� }` �̌`���ŏ�ʂɕ\������L�����N�^�[�Ƃ��̕\����w�肵�܂��B�\��� `character_images` �Œ�`�����L�[�Ŏw�肵�܂��B[��3] |
-| free_text | �C�ӂŉ�ʂɃt���[�e�L�X�g�������܂��B[��4] [��5] |
+| **speaker** | その場面の話者を VOICEVOX のスタイルIDで指定します (無音場面なら -1 にしてください)。スタイルIDは VOICEVOX 起動中に `http://localhost:50021/speakers` にアクセスすると確認できます。例えばノーマルずんだもんは `3` です。 |
+| **serifu** | セリフ文章を記述します (無音場面なら無視されます)。[注1] [注2] |
+| **silence** | セリフ後無音秒数を 0 以上の数値で指定します。ただし無音場面の場合は正の値にしないとその場面の継続時間が 0 になってしまいおそらくおかしくなります。 |
+| **back_img** | 背景画像 png のパスを指定します。この画像のサイズが動画のサイズを規定します。全ての場面で同じサイズの画像にしないとおそらくおかしくなります。無地の背景でよい場合はこれを空文字列にし back_size, back_color による指定もできます。 |
+| back_size | 背景サイズを指定します (back_img 指定時は無視されます)。 |
+| back_color | 背景色を指定します (back_img 指定時は無視されます)。 |
+| front_img | 任意で画像をもう1枚重ねられます。大きな背景画像に一回り小さな説明エリアを重ねたいときなどに利用できます (予め重ねた画像を back_img に指定しても同じですが背景画像を差し替えやすいです)。 |
+| front_img<br/>_coordinate | front_img を重ねるときにその表示座標を指定します。 |
+| characters | `{ スタイルID = 表情, スタイルID = 表情 }` の形式で場面に表示するキャラクターとその表情を指定します。表情は `character_images` で定義したキーで指定します。[注3] |
+| free_text | 任意で画面にフリーテキストを入れられます。[注4] [注5] |
 
-- [��1] �����Z���t�͉��s���܂� (1�s�̕������� serifu_text_settings �� width �Ŏw��)�B�����A���݂͋@�B�I�ɉ��s���Ă���֑������ɖ��Ή��Ȃ̂ōs���ɋ�Ǔ_�Ȃǂ����邱�Ƃ�����܂��B���ꂪ�C�ɂȂ�ꍇ�͂��萔�ł������Y�Z���t�ɉ��s `\n` �𖾎��I�ɋL�q���Ă��������B���̏ꍇ�͂���ɂ��������܂��B
-- [��2] �Z���t�̓ǂ݂��Ӑ}�ʂ�ɂȂ�Ȃ������ꍇ�͊�{�I�ɂ� VOICEVOX �� UI ���玫���o�^���Ă��������B�������A�ꎞ�I�ɓ���ȓǂݕ����������Ƃ���A�����݂̂ɕ\���������Ƃ� (���ق�3�_���[�_�A���ɏo���Ȃ��S�̐��Ȃ�)�A�t�ɉ����݂̂ɔ��f�������Ƃ��͈ȉ��̃^�O�𗘗p���������B
-  - `<s></s>`: ���̃^�O�ň͂񂾉ӏ��͎����݂̂ɕ\�����܂��B
-  - `<v></v>`: ���̃^�O�ň͂񂾉ӏ��͉����݂̂ɔ��f���܂��B
-  - �������A�Z���t�ɉ��s�𖾎��I�ɋL�q���Ă���ꍇ�A�^�O�͉��s���܂����܂���B���s�O�Ƀ^�O����U���A���s��ɂ܂��^�O���J�n���Ă��������B
-- [��3] �Ȃ��A�K�������L�����N�^�[��S�Ă̏�ʂɕ\��������K�v�͂Ȃ��Acharacters �Ɏw�肵�Ȃ���Ε\������܂���B�X�^�C�� ID �ɑΉ�����摜�p�X�� `character_images` �ɐݒ肳��Ă��Ȃ��ꍇ�������G�͕\������܂��� (�ł��܂���)�B
-- [��4] ���s�ɂ��Ă̓Z���t���l�@�B�I�Ȃ̂ŁA�K�v�ł���� `\n` �𖾎��I�ɋL�q���Ă��������B
-- [��5] �t���[�e�L�X�g�͑S��ʂ�ʂ��ĕ\���ʒu�A�t�H���g�T�C�Y�A�t�H���g�F�͌Œ�ł� (�ύX�\�ɂ���\��͌��󂠂�܂���)�B������\������ꍇ�͔w�i (�O�i) �摜�ɕ������ꂵ�Ă����z��ł��B�����A�t���[�e�L�X�g�Ŏ������Ƃ������Ȃ�w�i�摜1����p�ӂ��邾���� (���n�w�i�Ȃ炻�ꂷ��Ȃ��Ă�) ����𐶐��ł��܂��B
+- [注1] 長いセリフは改行します (1行の文字数は serifu_text_settings の width で指定)。ただ、現在は機械的に改行しており禁則処理に未対応なので行頭に句読点などがくることがあります。それが気になる場合はお手数ですが当該セリフに改行 `\n` を明示的に記述してください。その場合はそれにしたがいます。
+- [注2] セリフの読みが意図通りにならなかった場合は基本的には VOICEVOX の UI から辞書登録してください。ただし、一時的に特殊な読み方をしたいときや、字幕のみに表示したいとき (沈黙の3点リーダ、声に出さない心の声など)、逆に音声のみに反映したいときは以下のタグを利用ください。
+  - `<s></s>`: このタグで囲んだ箇所は字幕のみに表示します。
+  - `<v></v>`: このタグで囲んだ箇所は音声のみに反映します。
+  - ただし、セリフに改行を明示的に記述している場合、タグは改行をまたげません。改行前にタグを一旦閉じ、改行後にまたタグを開始してください。
+- [注3] なお、必ずしもキャラクターを全ての場面に表示させる必要はなく、characters に指定しなければ表示されません。スタイル ID に対応する画像パスが `character_images` に設定されていない場合も立ち絵は表示されません (できません)。
+- [注4] 改行についてはセリフ同様機械的なので、必要であれば `\n` を明示的に記述してください。
+- [注5] フリーテキストは全場面を通して表示位置、フォントサイズ、フォント色は固定です (変更可能にする予定は現状ありません)。文字を表示する場合は背景 (前景) 画像に文字入れしておく想定です。ただ、フリーテキストで事足りるという方なら背景画像1枚を用意するだけで (無地背景ならそれすらなくても) 動画を生成できます。
 
 <a id="sample"></a>
-### �T���v����{
+### サンプル台本
+
+※ 埋め込んである動画は縦横それぞれ半分にリサイズ済みです。
 
 #### resources/sample1/storyboard.toml
 
-<video controls src="https://github.com/CookieBox26/zuma/assets/34176970/b878c9d7-7afb-4226-8550-57eccd2f3eb2" width="427px"></video>
+https://github.com/CookieBox26/zuma/assets/34176970/890dde44-4a70-405b-aa4e-256d64bd2421
 
-- �摜���g�p���� (�����G�ȊO)�A�����ƃt���[�e�L�X�g�œW�J�����ł��B
-- �����ƃt���[�e�L�X�g�p�Ƀt�H���g�t�@�C�����Q�Ƃ��Ă���̂ŁA���s����ɂ͓K���ȃt�H���g�t�@�C����p�ӂ���{���� .ttf �t�@�C���p�X�����������Ă��������B�R�~�b�g���Ă����{�Ɠ����t�H���g���g�p����ꍇ�� [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) ������肵�Ă��������B
+- 画像を使用せず (立ち絵以外)、字幕とフリーテキストで展開する例です。
+- 字幕とフリーテキスト用にフォントファイルを参照しているので、実行するには適当なフォントファイルを用意し台本内の .ttf ファイルパスを書き換えてください。コミットしてある台本と同じフォントを使用する場合は [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) から入手してください。
 
 
 #### resources/sample2/storyboard.toml
 
-<video controls src="https://github.com/CookieBox26/zuma/assets/34176970/fc32d521-cf6d-434c-8554-2189565ca466" width="427px"></video>
+https://github.com/CookieBox26/zuma/assets/34176970/bc654de8-635b-4899-9ef8-2a63535faf15
 
-- ������͑O�i�摜 (��}�̔�������) ��ς��Ă�����ł��BBGM ���t���Ă��܂��B
-  - **���������� BGM ���Z�������ꍇ�Ƀ��[�v������Ȃǂ̑Ή����Ȃ��ł��B**
-- �����p�t�H���g�ɉ��� BGM �̂��߂� mp3 �t�@�C�����Q�Ƃ��Ă���̂ŁA���s����ɂ͓K���� BGM ��p�ӂ���{���� .mp3 �t�@�C���p�X�����������Ă��������B�R�~�b�g���Ă����{�Ɠ��� BGM ���g�p����ꍇ�� [�t���[BGM�E���y�f�� MusMus](https://musmus.main.jp/music_img1_03.html) ������肵�Ă��������BBGM �s�v�ł���� .mp3 �t�@�C���p�X���󕶎���ɂ��Ă��������B
+- こちらは前景画像 (上図の白い部分) を変えていく例です。BGM も付けています。
+  - **ただし現在 BGM が短かった場合にループさせるなどの対応がないです。**
+- 字幕用フォントに加え BGM のための mp3 ファイルも参照しているので、実行するには適当な BGM を用意し台本内の .mp3 ファイルパスを書き換えてください。コミットしてある台本と同じ BGM を使用する場合は [フリーBGM・音楽素材 MusMus](https://musmus.main.jp/music_img1_03.html) から入手してください。BGM 不要であれば .mp3 ファイルパスを空文字列にしてください。
 
 <a id="license"></a>
-### ���p�͈�
+### 利用範囲
 
-���̃��|�W�g���̃R�[�h���̂� MIT ���C�Z���X�ł����A�R�[�h�ɂ���Đ�����������̗��p�͈͂� VOICEVOX �̗��p�K��y�ъe�L�����N�^�[�̗��p�K��ɂ��������Ă��������B����ȊO�̑f�ނ����p�����ꍇ�͂���ȊO�̑f�ނ̗��p�K��ɂ����������Ă��������B
+このリポジトリのコード自体は MIT ライセンスですが、コードによって生成した動画の利用範囲は VOICEVOX の利用規約及び各キャラクターの利用規約にしたがってください。それ以外の素材も利用した場合はそれ以外の素材の利用規約にもしたがってください。
 
-materials/ �ȉ��ɃR�~�b�g���Ă���񎟃C���X�g�͎����`�������̂ł��B����������ւ����ɗ��p���Ă��������Ă��\���܂��� (���p�p�r�͌��̃L�����N�^�[�̃K�C�h���C���ɏ����Ă�������)�B
+materials/ 以下にコミットしてある二次イラストは私が描いたものです。これを差し替えずに利用していただいても構いません (利用用途は元のキャラクターのガイドラインに準じてください)。
 
 ---
 
 <a id="about"></a>
-### ���̃X�N���v�g�ɂ���
+### このスクリプトについて
 
-���̃X�N���v�g�����Ă��邱�Ƃ͈ȉ��ł��B
+このスクリプトがしていることは以下です。
 
-- �e��ʂŕK�v�� png ���������� (�b�҂����Ȃ���ʂ�1���A�����ʂ͌����J���̂�2��)�B
-- �e��ʂ̃Z���t�� wav �� VOICEVOX �ō������A�S��ʂŘA������ mp3 �ɂ���B
-- �e��ʂ� png ���瓮��N���b�v���쐬���A�S��ʂŘA������ mp3 ������t���� mp4 �t�@�C���ɏo�͂���B
+- 各場面で必要な png を合成する (話者がいない場面は1枚、いる場面は口を開くので2枚)。
+- 各場面のセリフの wav を VOICEVOX で合成し、全場面で連結して mp3 にする。
+- 各場面の png から動画クリップを作成し、全場面で連結して mp3 音声を付けて mp4 ファイルに出力する。
 
-#### ���Ԑ������ɂ���
+#### 中間生成物について
 
-- ���Ԑ������ł��� png, wav, mp3 �𒆊Ԑ������t�H���_�ɃL���b�V�����Ă��܂����Apng, mp3 �͂��܂萶���Ɏ��Ԃ�������Ȃ������̂Ō��Ǐ�ɍĐ������Ă��܂��B�������� wav �ɂ��Ă͓��������ݒ�E�Z���t�ō����ς݂ł���΍������X�L�b�v���܂��B
-  - �O�i�摜��Z���t�Ȃǂ�ύX����ƃL���b�V���t�@�C�����ǂ�ǂ񑝂��܂��B`-r` �I�v�V�������Q�Ƃ��Ă��������B
+- 中間生成物である png, wav, mp3 を中間生成物フォルダにキャッシュしていますが、png, mp3 はあまり生成に時間がかからなかったので結局常に再生成しています。合成音声 wav については同じ音声設定・セリフで合成済みであれば合成をスキップします。
+  - 前景画像やセリフなどを変更するとキャッシュファイルがどんどん増えます。`-r` オプションを参照してください。
 
 #### Tips
 
-- �L�����N�^�[��2�l�ł���K�v�͂Ȃ��A�C�ӂ̐l���ɂł��܂��B
-- �e��ʂɂ́u�Z���t�㖳���b���v�����ݒ�ł��܂���B�Z���t�O�ɖ������Ԃ�}���������ꍇ�͓����w�i�摜�̖�����ʂ𒼑O�ɑ}�����Ă��������B������ʂɎ��������͕\�����������ꍇ�̓^�O (��{�̋L�q���@�� [��2] �Q��)�𗘗p���������B
-- VOICEVOX �̉����̃X�^�C�� ID �ŃL�����N�^�[���Ǘ����Ă��܂����A���񂾂���̂悤�ɃX�^�C�� ID ������ (�m�[�}���A�����₫�Ȃ�) ����L�����N�^�[�����܂��B��ʂɂ���ăL�����N�^�[�̐��̃X�^�C���𕪂������ꍇ�́A�u�����₫�̂��񂾂���v��ʃL�����N�^�[�Ƃ��ē��������G�E�X�P�[���E���W�Őݒ肵�A�����₭��ʂ����u���񂾂���v���u�����₫�̂��񂾂���v�ɂ���������Ύ����ł��܂� (�����炭)�B
+- キャラクターは2人である必要はなく、任意の人数にできます。
+- 各場面には「セリフ後無音秒数」しか設定できません。セリフ前に無音時間を挿入したい場合は同じ背景画像の無音場面を直前に挿入してください。無音場面に字幕だけは表示させたい場合はタグ (台本の記述方法の [注2] 参照)を利用ください。
+- VOICEVOX の音声のスタイル ID でキャラクターを管理していますが、ずんだもんのようにスタイル ID が複数 (ノーマル、ささやきなど) あるキャラクターもいます。場面によってキャラクターの声のスタイルを分けたい場合は、「ささやきのずんだもん」を別キャラクターとして同じ立ち絵・スケール・座標で設定し、ささやく場面だけ「ずんだもん」を「ささやきのずんだもん」にすげかえれば実現できます (おそらく)。
