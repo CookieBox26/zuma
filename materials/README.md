@@ -1,3 +1,5 @@
+もしこのフォルダの非公式立ち絵を利用されたい場合、動画素材用途でもその他の用途でも利用・改変いただけますが、元キャラクターの利用範囲・利用目的を遵守してください。私のクレジットの表記は任意ですが、表記される場合は「CookieBox26」「クッキー」などでどうぞ。ずんだもん立ち絵は[東北ずん子ガイドライン](https://zunko.jp/guideline.html)に準拠します。各画像は修正・削除することがあります。
+
 <table>
   <tr>
     <td>zundamon_00.png<br/><img width="180" src="https://raw.githubusercontent.com/CookieBox26/zuma/main/materials/zundamon_00.png"/></td>
