@@ -9,7 +9,7 @@ class MovieGenerator:
         self.serifu_text_settings = storyboard['serifu_text_settings']
         self.shots = storyboard['shots']
 
-    def generate(self, durations, mp3_file):
+    def generate(self, durations, audio_file):
         # 各場面のコマ数に応じて動画クリップを作成していく
         clips = []
         for (duration, shot) in zip(durations, self.shots):
@@ -28,4 +28,8 @@ class MovieGenerator:
         video = concatenate_videoclips(clips)
         print(f'動画の解像度: {video.size}')
         print(f'動画の再生時間: {video.duration}')
-        video.write_videofile(f'{self.out_dir}out.mp4', fps=FPS, audio=mp3_file)
+        video.write_videofile(
+            f'{self.out_dir}out.mp4', codec='libx264', fps=FPS,
+            audio=audio_file, audio_codec='aac',
+            temp_audiofile='temp-audio.m4a',
+            remove_temp=True)

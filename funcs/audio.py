@@ -58,7 +58,7 @@ class AudioGenerator:
         return wav_files
 
     def generate(self):
-        """各場面の台詞を wav に出力し全体を通した mp3 を出力しておきます
+        """各場面の台詞を wav に出力し全体を通した音声ファイルを出力しておきます
         """
         durations = []
         audio_concat = None
@@ -115,17 +115,20 @@ class AudioGenerator:
             else:
                 audio_concat += audio
 
-        mp3_file = f'{self.out_dir_intermediate}concat.mp3'
-        audio_concat.export(mp3_file, format='mp3')
+        # 全場面の音声をエクスポートするが
+        # 音声圧縮方式は mp3 (拡張子 m4a) ではなく aac (拡張子 m4a) にする
+        # mp3 にエクスポートしても動画はできるが iPhone から再生できないためである
+        audio_file = f'{self.out_dir_intermediate}concat.m4a'
+        audio_concat.export(audio_file, format='ipod', codec='aac')
 
         if self.bgm_file != '':
-            audio = AudioSegment.from_mp3(mp3_file)
+            audio = AudioSegment.from_file(audio_file, 'm4a')
             bgm = AudioSegment.from_mp3(self.bgm_file) + self.bgm_adjust
             audio = audio.overlay(bgm)
-            mp3_file_with_bgm = f'{self.out_dir_intermediate}' \
+            audio_file_with_bgm = f'{self.out_dir_intermediate}' \
                 + f'concat_{file_to_hash(self.bgm_file)}' \
-                + f'_{str(self.bgm_adjust)}.mp3'
-            audio.export(mp3_file_with_bgm, format='mp3')
-            mp3_file = mp3_file_with_bgm
+                + f'_{str(self.bgm_adjust)}.m4a'
+            audio.export(audio_file_with_bgm, format='ipod', codec='aac')
+            audio_file = audio_file_with_bgm
 
-        return mp3_file, durations
+        return audio_file, durations

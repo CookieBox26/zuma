@@ -69,13 +69,13 @@ def main():
     if mode in [1, 3]:
         ig.generate()
 
-    # 各場面の台詞 wav を生成し全体を通した mp3 を出力します
+    # 各場面の台詞 wav を生成し全体を通した音声ファイルを出力します
     if mode in [2, 3]:
-        mp3_file, durations = ag.generate()
+        audio_file, durations = ag.generate()
 
     # 動画を生成します
     if mode == 3:
-        mg.generate(durations, mp3_file)
+        mg.generate(durations, audio_file)
 
 
 if __name__ == '__main__':
