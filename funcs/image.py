@@ -1,10 +1,12 @@
 from PIL import Image, ImageFont, ImageDraw
 from funcs import get_image_filenames, prepare_serifu
+from funcs.text import split_text
 import os
 
 
 class ImageGenerator:
     def __init__(self, storyboard):
+        self.out_dir = storyboard['out_dir']
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
         character_images = storyboard.get('character_images', [])
         self.character_images = {str(c['speaker']): c for c
@@ -17,12 +19,8 @@ class ImageGenerator:
         font = ImageFont.truetype(settings['font_path'], settings['font_size'])
         draw = ImageDraw.Draw(img)
         if '\n' not in text:
-            texts = []
-            length = len(text)
-            width = settings['width']
-            for row, i in enumerate(range(0, length, width)):
-                texts.append(text[i:(i + width)])
-            text = '\n'.join(texts)
+            text = split_text(text, settings['width'],
+                              settings.get('max_rows', 100))
         draw.multiline_text(
             settings['coordinate'], text, color,
             font=font, spacing=settings['spacing'],
@@ -101,7 +99,19 @@ class ImageGenerator:
             if shot['free_text'] != '':
                 self._add_free_text(img, shot['free_text'])
             img.save(filename)
+        return filenames
 
     def generate(self, regenerate=True):
-        for shot in self.shots:
-            self.generate_shot(shot, regenerate)
+        """ 
+        全場面用の画像を合成します
+        ついでに便利用に合成した画像を一覧表示する images.html をかき出します
+        """
+        f = open(self.out_dir + 'images.html', mode='w')
+        f.write(f'<html><head></head><body style="background: #ccc">\n')
+        for i_shot, shot in enumerate(self.shots):
+            filenames = self.generate_shot(shot, regenerate)
+            f.write(f'<h4>{i_shot + 1}</h4>\n')
+            filename = filenames[0].replace(self.out_dir_intermediate, '')
+            f.write(f'<img src="intermediate/{filename}"/>\n')
+        f.write(f'</br></br></br></body></html>\n')
+        f.close()

@@ -55,11 +55,11 @@ def prepare_serifu(serifu, flag='s'):  # s:字幕用, v:音声用
     → [字幕] 聴かせてやるよ、論理の律動を…
     → [音声] 聴かせてやるよ、ロジックのリズムを…
 
-    音声用の場合は改行も除去する。
+    音声用の場合は空白と改行も除去する。
     """
     if flag == 's':
         return re.sub('<v>.*?</v>|<s>|</s>', '', serifu)  # 字幕用
-    return re.sub('<s>.*?</s>|<v>|</v>|\n', '', serifu)  # 音声用
+    return re.sub('<s>.*?</s>|<v>|</v>|\s|\n', '', serifu)  # 音声用
 
 
 def get_image_filenames(out_dir_intermediate, shot, display_serifu):
