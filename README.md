@@ -87,7 +87,7 @@ python run.py resources/sample1/storyboard.toml -r 1
 
 #### resources/sample1/storyboard.toml
 
-https://github.com/CookieBox26/zuma/assets/34176970/890dde44-4a70-405b-aa4e-256d64bd2421
+https://github.com/CookieBox26/zuma/assets/34176970/02480f4d-8fe2-4887-8bc2-32a145e3bbea
 
 - 画像を使用せず (立ち絵以外)、字幕とフリーテキストで展開する例です。
 - 字幕とフリーテキスト用にフォントファイルを参照しているので、実行するには適当なフォントファイルを用意し台本内の .ttf ファイルパスを書き換えてください。コミットしてある台本と同じフォントを使用する場合は [M PLUS 2](https://fonts.google.com/specimen/M+PLUS+2) から入手してください。
@@ -95,7 +95,7 @@ https://github.com/CookieBox26/zuma/assets/34176970/890dde44-4a70-405b-aa4e-256d
 
 #### resources/sample2/storyboard.toml
 
-https://github.com/CookieBox26/zuma/assets/34176970/bc654de8-635b-4899-9ef8-2a63535faf15
+https://github.com/CookieBox26/zuma/assets/34176970/f75cb05d-1896-444a-a352-200b40370b93
 
 - こちらは前景画像 (上図の白い部分) を変えていく例です。BGM も付けています。
   - **ただし現在 BGM が短かった場合にループさせるなどの対応がないです。**

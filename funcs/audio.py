@@ -83,28 +83,36 @@ class AudioGenerator:
                 else:
                     print('音声合成済みです: ', shot['speaker'], shot['serifu'][:10])
                 audio = AudioSegment.from_wav(out_file)
-                komasu_ = math.ceil(audio.duration_seconds / SPF)
-                adjust_duration = komasu_ * SPF - audio.duration_seconds
+                n_frames = math.ceil(audio.duration_seconds / SPF)
+                adjust_duration = n_frames * SPF - audio.duration_seconds
                 audio += AudioSegment.silent(duration=adjust_duration * 1000)
 
-                volumes = []
-                for i_koma in range(komasu_):
-                    seg = audio[(i_koma * SPF * 1000):((i_koma + 1) * SPF * 1000)]
+                # 口の開閉指示
+                fix = 2  # フレームごとに開閉すると細かいので 2 倍する (フレームレートによる)
+                volumes = []  # セグメントごとの平均音量を記録する
+                for i_frame in range(0, n_frames, fix):
+                    seg = audio[(i_frame * SPF * 1000):((i_frame + fix) * SPF * 1000)]
                     volumes.append(seg.rms)
-                threshold = list(reversed(sorted(volumes)))[int(MOUTH_OPEN_RATIO * komasu_)]
+                # Xパーセンタイル点を閾値として口を開くか閉じるかにする
+                n = len(volumes)
+                threshold = list(reversed(sorted(volumes)))[int(MOUTH_OPEN_RATIO * n)]
                 last_mouth = -1
-                for i_koma in range(komasu_):
-                    mouth = 1 if (volumes[i_koma] > threshold) else 0
-                    if mouth != last_mouth:
-                        voice_durations.append((mouth, SPF))
+                for i_block, i_frame in enumerate(range(0, n_frames, fix)):
+                    if i_frame + fix - 1 < n_frames:
+                        duration = fix * SPF
                     else:
+                        duration = (n_frames - i_frame) * SPF
+                    mouth = 1 if (volumes[i_block] > threshold) else 0
+                    if mouth != last_mouth:  # 開き (閉じ) が変化したとき
+                        voice_durations.append((mouth, duration))
+                    else:  # 開き (閉じ) が変化していないときは継続時間だけのばす
                         last = voice_durations.pop(-1)
-                        voice_durations.append((mouth, last[1] + SPF))
+                        voice_durations.append((mouth, last[1] + duration))
                     last_mouth = mouth
 
             if shot['silence'] > 0:  # セリフ後無音秒数があれば無音を足す
-                silent_komasu = math.ceil(float(shot['silence']) / SPF)
-                silent_duration = silent_komasu * SPF
+                silent_frames = math.ceil(float(shot['silence']) / SPF)
+                silent_duration = silent_frames * SPF
                 if audio is None:
                     audio = AudioSegment.silent(duration=silent_duration * 1000)
                 else:

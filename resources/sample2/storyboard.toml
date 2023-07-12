@@ -23,14 +23,16 @@ adjust = -11  # BGM の音量調整
 speaker = 3
 scale = 0.58
 coordinate = [675, 290]
-normal = ["./materials/zundamon_10.png", "./materials/zundamon_11.png"]
-mattari = ["./materials/zundamon_20.png", "./materials/zundamon_21.png"]
+eyes_closed = ["./materials/zundamon_00.png", "./materials/zundamon_01.png"]
+eyes_open = ["./materials/zundamon_10.png", "./materials/zundamon_11.png"]
+smile = ["./materials/zundamon_20.png", "./materials/zundamon_21.png"]
 [[character_images]]
 speaker = 8
 scale = 0.555
 coordinate = [-27, 275]
-normal = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
-mattari = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
+eyes_closed = ["./materials/tsumugi_00.png", "./materials/tsumugi_01.png"]
+eyes_open = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
+smile = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
 
 # [必須] 画面に描画するセリフテキスト (字幕) の設定を指定します
 [serifu_text_settings]
@@ -66,7 +68,7 @@ back_size = [854, 480]  # 背景サイズ (画像パス指定時は無視)
 back_color = [230, 230, 230]  # 背景色 (画像パス指定時は無視)
 front_img = ""  # 前景画像パス (任意)
 front_img_coordinate = [51, 23]  # 前景画像座標
-characters = { 3 = "normal", 8 = "normal" }  # 場面の登場人物及びその表情タイプ
+characters = { 3 = "eyes_open", 8 = "eyes_open" }  # 場面の登場人物及びその表情タイプ
 free_text = ""  # フリーテキスト
 
 # [必須] 各場面のセリフや背景画像や表情などを指定していきます
@@ -88,7 +90,8 @@ front_img = "./resources/sample2/wlt.png"
 speaker = 8
 serifu = "<s>……</s>"
 silence = 1
-front_img = "./resources/sample2/wlt.png" 
+front_img = "./resources/sample2/wlt.png"
+characters = { 3 = "eyes_open", 8 = "eyes_closed" }
 [[shots]]
 speaker = 8
 serifu = "……2つのグラフが同型かどうかって、こっち\nの頂点からあっちの頂点への全単射であって、\n「こっちで2頂点間に枝が張られているならば、"
@@ -109,12 +112,12 @@ front_img = "./resources/sample2/iso.png"
 speaker = 3
 serifu = "その調べ方は階乗オーダーなのだ。多項式時間じゃないのだ。"
 front_img = "./resources/sample2/iso.png"
-characters = { 3 = "mattari", 8 = "normal" }
+characters = { 3 = "smile", 8 = "eyes_open" }
 [[shots]]
 speaker = 8
 serifu = "あーそっかー。"
 front_img = "./resources/sample2/iso.png"
-characters = { 3 = "mattari", 8 = "mattari" }
+characters = { 3 = "smile", 8 = "smile" }
 [[shots]]
 speaker = 3
 serifu = "でも1次元のWLテストなら線形時間で2つのグラフが同型でないことを判定できるそうなのだ。"
@@ -132,5 +135,5 @@ front_img = "./resources/sample2/iso.png"
 silence = 1
 [[shots]]
 silence = 5
-characters = { 3 = "mattari", 8 = "mattari" }
+characters = { 3 = "smile", 8 = "smile" }
 front_img = "./resources/sample2/credit.png" 
