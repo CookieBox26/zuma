@@ -66,8 +66,8 @@ python run.py resources/sample1/storyboard.toml -r 1
 | **back_img** | 背景画像 png のパスを指定します。この画像のサイズが動画のサイズを規定します。全ての場面で同じサイズの画像にしないとおそらくおかしくなります。無地の背景でよい場合はこれを空文字列にし back_size, back_color による指定もできます。 |
 | back_size | 背景サイズを指定します (back_img 指定時は無視されます)。 |
 | back_color | 背景色を指定します (back_img 指定時は無視されます)。 |
-| front_img | 任意で画像をもう1枚重ねられます。大きな背景画像に一回り小さな説明エリアを重ねたいときなどに利用できます (予め重ねた画像を back_img に指定しても同じですが背景画像を差し替えやすいです)。 |
-| front_img<br/>_coordinate | front_img を重ねるときにその表示座標を指定します。 |
+| front_img_paths | 任意で追加の画像を重ねられます (予め重ねた画像を back_img に指定しても同じですがこちらを利用する方が画像を管理しやすい場合にどうぞ)。画像パスの配列を指定してください。場面によって表示しない画像があるときは配列の要素を空文字列にできます。front_img_coordinates とインデックスを対応させてください。 ※ 元は front_img であったのを複数枚対応しました。 |
+| front_img<br/>_coordinates | front_img_paths を指定したときにその表示座標を指定します。 ※ 元は front_img_coordinate であったのを複数枚対応しました。 |
 | characters | `{ スタイルID = 表情, スタイルID = 表情 }` の形式で場面に表示するキャラクターとその表情を指定します。表情は `character_images` で定義したキーで指定します。[注3] |
 | free_text | 任意で画面にフリーテキストを入れられます。[注4] [注5] |
 

@@ -8,9 +8,7 @@ class ImageGenerator:
     def __init__(self, storyboard):
         self.out_dir = storyboard['out_dir']
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
-        character_images = storyboard.get('character_images', [])
-        self.character_images = {str(c['speaker']): c for c
-                                 in storyboard['character_images']}
+        self.character_images = storyboard['character_images']
         self.serifu_text_settings = storyboard['serifu_text_settings']
         self.free_text_settings = storyboard.get('free_text_settings', {})
         self.shots = storyboard['shots']
@@ -83,9 +81,11 @@ class ImageGenerator:
             # 背景画像を読み込むか生成します
             img = self._generate_back_image(shot)
             # 前景画像があれば貼ります
-            front_img = shot.get('front_img', '')
-            if front_img != '':
-                self._paste(img, front_img, coord=shot['front_img_coordinate'])
+            front_img_paths = shot.get('front_img_paths', [])
+            for i_front_img, front_img_path in enumerate(front_img_paths):
+                if front_img_path != '':
+                    self._paste(img, front_img_path,
+                                coord=shot['front_img_coordinates'][i_front_img])
             # キャラクターがいれば立ち絵を貼ります
             for chara_id, mode in shot['characters'].items():
                 mouth = 0
@@ -111,7 +111,7 @@ class ImageGenerator:
         for i_shot, shot in enumerate(self.shots):
             filenames = self.generate_shot(shot, regenerate)
             f.write(f'<h4>{i_shot + 1}</h4>\n')
-            filename = filenames[0].replace(self.out_dir_intermediate, '')
+            filename = filenames[-1].replace(self.out_dir_intermediate, '')
             f.write(f'<img src="intermediate/{filename}"/>\n')
         f.write(f'</br></br></br></body></html>\n')
         f.close()

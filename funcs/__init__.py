@@ -74,10 +74,11 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
         filebody += str_to_hash(prepare_serifu(shot['serifu'], flag='s'))
     if shot['free_text'] != '':
         filebody += '_' + str_to_hash(shot['free_text'])
-    front_img = shot.get('front_img', '')
-    if front_img != '':
-        filebody += '_' + file_to_hash(front_img)
-        filebody += '_' + list_to_str(shot['front_img_coordinate'])
+    front_img_paths = shot.get('front_img_paths', [])
+    for i_front_img, front_img_path in enumerate(front_img_paths):
+        if front_img_path != '':
+            filebody += '_' + file_to_hash(front_img_path)
+            filebody += '_' + list_to_str(shot['front_img_coordinates'][i_front_img])
     filenames = [filebody + '.png']
     serifu_ = prepare_serifu(shot['serifu'], flag='v')
     if serifu_ != '':  # 有声セリフがある場面には口開き版画像も必要

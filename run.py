@@ -19,9 +19,13 @@ def main():
         '-r', '--refresh', choices=['0', '1', '2'], default='0',
         help='出力済み中間生成物を: 0.削除しない(デフォルト), ' \
              + '1.現在の台本上必要な合成音声のみ残す, 2.全削除する')
+    parser.add_argument(
+        '-n', '--n_shots', type=int, default=0,
+        help='正数を指定した場合にn場面目までで打ち切る')
     args = parser.parse_args()
     mode = int(args.mode)
     refresh = int(args.refresh)
+    n_shots = args.n_shots
 
     # 台本tomlファイルを読み込みます
     with open(args.path, encoding='utf-8') as f:
@@ -37,12 +41,22 @@ def main():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(out_dir_intermediate, exist_ok=True)
 
+    # 立ち絵画像設定をスタイル ID をキーにした辞書にしておきます
+    storyboard['character_images'] = {str(c['speaker']): c for c
+                                      in storyboard['character_images']}
     # 各場面はデフォルトとの差分だけ指定してあるので完全にしておきます
     shots_ = []
-    for shot in storyboard['shots']:
+    for i_shot, shot in enumerate(storyboard['shots']):
         shot_ = storyboard['shot_default'].copy()
         shot_.update(shot)
+        # 後方互換性のための処理
+        if ('front_img_paths' not in shot_) and ('front_img' in shot_):
+            shot_['front_img_paths'] = [shot_['front_img']]
+            shot_['front_img_coordinates'] = [shot_['front_img_coordinate']]
+            del shot_['front_img'], shot_['front_img_coordinate']
         shots_.append(shot_)
+        if i_shot + 1 == n_shots:
+            break
     storyboard['shots'] = shots_
 
     # 各ジェネレータを用意します
