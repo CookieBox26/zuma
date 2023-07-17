@@ -81,7 +81,8 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
             filebody += '_' + list_to_str(shot['front_img_coordinates'][i_front_img])
     filenames = [filebody + '.png']
     serifu_ = prepare_serifu(shot['serifu'], flag='v')
-    if serifu_ != '':  # 有声セリフがある場面には口開き版画像も必要
+    # 有声セリフがある場面であって話者が登場している場面には口開き版画像も必要
+    if (serifu_ != '') and (str(shot['speaker']) in shot['characters']):
         speaker = shot['speaker']
         filenames.append(filebody + f'_{speaker}.png')
     return filenames

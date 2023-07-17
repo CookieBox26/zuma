@@ -55,6 +55,8 @@ class ImageGenerator:
         if character_image is None:
             print(f'[WARNING] ID:{chara_id} の立ち絵が設定されていません')
             return
+        if (mouth == 1) and (len(character_image[mode]) == 1):
+            mouth = 0  # 口開きを指定されたのにそのモードの画像が1つしかない
         self._paste(img, character_image[mode][mouth],
                     character_image['scale'],
                     character_image['coordinate'])
