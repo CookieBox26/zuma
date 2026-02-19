@@ -1,7 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw
 from zuma.utils import get_image_filenames, prepare_serifu
 from zuma.utils.text import split_text
-import os
 
 
 class ImageGenerator:
@@ -74,11 +73,11 @@ class ImageGenerator:
         """ ある場面用の画像を合成します
         """
         # その場面で必要な画像ファイル名を取得します
-        filenames = get_image_filenames(self.out_dir_intermediate, shot,
-            self.serifu_text_settings['display'])
+        filenames = get_image_filenames(shot, self.serifu_text_settings['display'])
         for i_file, filename in enumerate(filenames):
             # 既にあればスキップします
-            if (not regenerate) and os.path.isfile(filename):
+            filepath = self.out_dir_intermediate / filename
+            if (not regenerate) and filepath.is_file():
                 continue
             # 背景画像を読み込むか生成します
             img = self._generate_back_image(shot)
@@ -100,7 +99,7 @@ class ImageGenerator:
             # フリーテキストがあれば貼ります
             if ('free_text' in shot) and (shot['free_text'] != ''):
                 self._add_free_text(img, shot['free_text'])
-            img.save(filename)
+            img.save(filepath)
         return filenames
 
     def generate(self, regenerate=True):
@@ -108,12 +107,12 @@ class ImageGenerator:
         全場面用の画像を合成します
         ついでに便利用に合成した画像を一覧表示する images.html をかき出します
         """
-        f = open(self.out_dir + 'images.html', mode='w')
+        f = open(self.out_dir / 'images.html', mode='w')
         f.write(f'<html><head></head><body style="background: #ccc">\n')
         for i_shot, shot in enumerate(self.shots):
             filenames = self.generate_shot(shot, regenerate)
             f.write(f'<h4>{i_shot + 1}</h4>\n')
-            filename = filenames[-1].replace(self.out_dir_intermediate, '')
+            filename = filenames[-1]
             f.write(f'<img src="intermediate/{filename}"/>\n')
         f.write(f'</br></br></br></body></html>\n')
         f.close()

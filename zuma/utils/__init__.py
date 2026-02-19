@@ -62,13 +62,12 @@ def prepare_serifu(serifu, flag='s'):  # s:字幕用, v:音声用
     return re.sub('<s>.*?</s>|<v>|</v>|\s|\n', '', serifu)  # 音声用
 
 
-def get_image_filenames(out_dir_intermediate, shot, display_serifu):
+def get_image_filenames(shot, display_serifu):
     if shot['back_img'] != '':
         hash = file_to_hash(shot['back_img'])
     else:
         hash = list_to_str(shot['back_size'] + shot['back_color'])
-    filebody = out_dir_intermediate
-    filebody += hash + '_' + dict_to_str(shot['characters'])
+    filebody = hash + '_' + dict_to_str(shot['characters'])
     if display_serifu and shot['serifu'] != '':
         filebody += '_' + str(shot['speaker'])
         filebody += str_to_hash(prepare_serifu(shot['serifu'], flag='s'))
@@ -86,14 +85,3 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
         speaker = shot['speaker']
         filenames.append(filebody + f'_{speaker}.png')
     return filenames
-
-
-def get_wav_filename(out_dir_intermediate, voice_settings, shot):
-    voice_setting = voice_settings.get(str(shot['speaker']))
-    out_file = out_dir_intermediate + str(shot['speaker'])
-    if voice_setting is not None:
-        s = dict_to_str(voice_setting)
-        s = s.replace('.', 'p')
-        out_file += '_' + s
-    out_file += '_' + str_to_hash(prepare_serifu(shot['serifu'], flag='v')) + '.wav'
-    return out_file

@@ -1,6 +1,6 @@
+from pathlib import Path
 import argparse
 import toml
-import os
 import glob
 import shutil
 from zuma.audio import AudioGenerator
@@ -10,40 +10,44 @@ from zuma.movie import MovieGenerator
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', help='台本tomlファイルのパス')
+    parser.add_argument('path', help='台本ファイル(があるディレクトリ)のパス')
     parser.add_argument(
         '-m', '--mode', choices=['0', '1', '2', '3'], default='3',
         help='何を生成するか指定する: ' \
-             + '0.何も生成しない, 1.画像のみ, 2.音声のみ, 3.動画(デフォルト)')
+             + '0.何も生成しない, 1.画像のみ, 2.音声のみ, 3.動画(デフォルト)',
+    )
     parser.add_argument(
         '-r', '--refresh', choices=['0', '1', '2'], default='0',
         help='出力済み中間生成物を: 0.削除しない(デフォルト), ' \
-             + '1.現在の台本上必要な合成音声のみ残す, 2.全削除する')
+             + '1.現在の台本上必要な合成音声のみ残す, 2.全削除する',
+    )
     parser.add_argument(
         '-n', '--n_shots', type=int, default=0,
-        help='正数を指定した場合にn場面目までで打ち切る')
+        help='正数を指定した場合に n 場面目までで打ち切る',
+    )
     args = parser.parse_args()
     mode = int(args.mode)
     refresh = int(args.refresh)
     n_shots = args.n_shots
 
     # 台本tomlファイルを読み込みます
-    with open(args.path, encoding='utf-8') as f:
-        storyboard = toml.load(f)
-    out_dir = storyboard['out_dir']
-    if out_dir == '':  # 出力パスが空文字列の場合台本ファイルがあるパスにする
-        out_dir = os.path.dirname(args.path) + '/'
-        storyboard['out_dir'] = out_dir
-    out_dir_intermediate = out_dir + 'intermediate/'  # 中間生成物用
-    storyboard['out_dir_intermediate'] = out_dir_intermediate
+    p = Path(args.path)
+    if p.is_dir():
+        p = p / 'storyboard.toml'
+    storyboard = toml.loads(p.read_text(encoding='utf8'))
 
     # 最終生成物、中間生成物用フォルダを作成します
-    os.makedirs(out_dir, exist_ok=True)
-    os.makedirs(out_dir_intermediate, exist_ok=True)
+    out_dir = storyboard.get('out_dir', '')
+    storyboard['out_dir'] = Path(out_dir) if out_dir else p.parent
+    storyboard['out_dir'].mkdir(exist_ok=True, parents=True)
+    storyboard['out_dir_intermediate'] = storyboard['out_dir'] / 'intermediate'
+    storyboard['out_dir_intermediate'].mkdir(exist_ok=True)
 
     # 立ち絵画像設定をスタイル ID をキーにした辞書にしておきます
-    storyboard['character_images'] = {str(c['speaker']): c for c
-                                      in storyboard['character_images']}
+    storyboard['character_images'] = {
+        str(c['speaker']): c for c in storyboard['character_images']
+    }
+
     # 各場面はデフォルトとの差分だけ指定してあるので完全にしておきます
     shots_ = []
     for i_shot, shot in enumerate(storyboard['shots']):
@@ -66,18 +70,15 @@ def main():
 
     if refresh == 1:  # 不要な中間生成物を削除する場合は削除します
         required_wav_files = ag.get_required_wav_files()
-        intermediates = glob.glob(out_dir_intermediate + '*')
-        for intermediate_ in intermediates:
-            intermediate = intermediate_.replace('\\', '/')  # for win
-            _, ext = os.path.splitext(intermediate)
-            if intermediate in required_wav_files:
+        for intermediate in storyboard['out_dir_intermediate'].glob('*'):
+            if intermediate.suffix not in ['.png', '.wav', '.mp3']:
                 continue
-            if ext not in ['.png', '.wav', '.mp3']:
+            if intermediate.name in required_wav_files:
                 continue
-            os.remove(intermediate)
+            intermediate.unlink()
     elif refresh == 2:  # 中間生成物を全削除する場合は全削除します
-        shutil.rmtree(out_dir_intermediate)
-        os.makedirs(out_dir_intermediate, exist_ok=True)
+        shutil.rmtree(storyboard['out_dir_intermediate'])
+        storyboard['out_dir_intermediate'].mkdir(exist_ok=True)
 
     # 各場面で必要な画像を合成し出力します
     if mode in [1, 3]:

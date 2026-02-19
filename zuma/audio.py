@@ -2,30 +2,35 @@ import requests
 import json
 from retry import retry
 from pydub import AudioSegment
-from zuma.utils import SPF, MOUTH_OPEN_RATIO, \
-    get_wav_filename, prepare_serifu, file_to_hash
-import os
+from zuma.utils import (
+    SPF, MOUTH_OPEN_RATIO,
+    str_to_hash, dict_to_str, prepare_serifu, file_to_hash,
+)
 import math
 
 
 @retry(tries=3, delay=1)
 def get_audio_query(text, speaker):
-    r = requests.post("http://localhost:50021/audio_query", 
-                      params={"text": text, "speaker": speaker},
-                      timeout=(10.0, 300.0))
+    r = requests.post(
+        "http://localhost:50021/audio_query", 
+        params={"text": text, "speaker": speaker},
+        timeout=(10.0, 300.0),
+    )
     r.raise_for_status()
     return r.json()
 
 
 @retry(tries=3, delay=1)
 def audio_query_to_wav(query_data, speaker, filename):
-    r = requests.post("http://localhost:50021/synthesis",
-                      data=json.dumps(query_data),
-                      params={"speaker": speaker},
-                      timeout=(10.0, 300.0))
+    r = requests.post(
+        "http://localhost:50021/synthesis",
+        data=json.dumps(query_data),
+        params={"speaker": speaker},
+        timeout=(10.0, 300.0),
+    )
     r.raise_for_status()
     with open(filename, "wb") as fp:
-                fp.write(r.content)
+        fp.write(r.content)
 
 
 def synthesize(text, filename, speaker=1, options=None):
@@ -33,6 +38,17 @@ def synthesize(text, filename, speaker=1, options=None):
     if options is not None:
         query_data.update(options)
     audio_query_to_wav(query_data, speaker, filename)
+
+
+def get_wav_filename(voice_settings, shot):
+    voice_setting = voice_settings.get(str(shot['speaker']))
+    out_file = str(shot['speaker'])
+    if voice_setting is not None:
+        s = dict_to_str(voice_setting)
+        s = s.replace('.', 'p')
+        out_file += '_' + s
+    out_file += '_' + str_to_hash(prepare_serifu(shot['serifu'], flag='v')) + '.wav'
+    return out_file
 
 
 class AudioGenerator:
@@ -53,8 +69,7 @@ class AudioGenerator:
         for shot in self.shots:
             if shot['speaker'] == -1:
                 continue
-            wav_files.append(get_wav_filename(self.out_dir_intermediate,
-                                              self.voice_settings, shot))
+            wav_files.append(get_wav_filename(self.voice_settings, shot))
         return wav_files
 
     def generate(self):
@@ -72,9 +87,9 @@ class AudioGenerator:
             # ※ 字幕と音声を変えることに対応したので、
             #    話者があり字幕があっても無声な場面がありうるので話者では判定しない
             if serifu_ != '':
-                out_file = get_wav_filename(self.out_dir_intermediate,
-                                            self.voice_settings, shot)
-                if not os.path.isfile(out_file):
+                wav_filename = get_wav_filename(self.voice_settings, shot)
+                out_file = self.out_dir_intermediate / wav_filename
+                if not out_file.is_file():
                     print('未生成なので音声合成します: ',
                           shot['speaker'], serifu_[:10])
                     synthesize(
@@ -126,7 +141,7 @@ class AudioGenerator:
         # 全場面の音声をエクスポートするが
         # 音声圧縮方式は mp3 (拡張子 m4a) ではなく aac (拡張子 m4a) にする
         # mp3 にエクスポートしても動画はできるが iPhone から再生できないためである
-        audio_file = f'{self.out_dir_intermediate}concat.m4a'
+        audio_file = self.out_dir_intermediate / 'concat.m4a'
         audio_concat.export(audio_file, format='ipod', codec='aac')
 
         if self.bgm_file != '':
