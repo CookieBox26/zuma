@@ -116,3 +116,5 @@ class ImageGenerator:
             f.write(f'<img src="intermediate/{filename}"/>\n')
         f.write(f'</br></br></br></body></html>\n')
         f.close()
+        print('画像一覧 HTML を生成しました')
+        print((self.out_dir / 'images.html').as_posix())

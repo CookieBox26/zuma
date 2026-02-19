@@ -1,6 +1,8 @@
 # zuma
 [VOICEVOX](https://voicevox.hiroshiba.jp/) を利用して台本からシンプルな解説動画を生成する Python パッケージです。
 
+https://github.com/CookieBox26/zuma/assets/34176970/02480f4d-8fe2-4887-8bc2-32a145e3bbea
+
 ### 目次
 
 - [環境準備](#環境準備)
@@ -36,34 +38,40 @@
 
 ### 実行方法
 
-**ローカルの VOICEVOX を起動した状態で、** 台本 TOML ファイルを指定して以下のように実行すると、台本 TOML ファイルに指定したディレクトリ (未指定なら台本 TOML ファイルと同じディレクトリ) に `out.mp4` が生成されます。
+**VOICEVOX を起動した状態で、** 台本 TOML ファイルを指定して以下のように実行します。
 ```sh
+# サンプル台本 TOML の実行例 (TOML 内の .ttf ファイルパスを適宜修正のこと)
 python -m zuma resources/sample1/storyboard.toml
 
+# 台本 TOML 名が storyboard.toml であるなら省略も可能:
+# python -m zuma resources/sample1
+
 # uv をお使いの場合は以下:
-# uv run python -m zuma resources/sample1/storyboard.toml
+# uv run python -m zuma resources/sample1
 ```
-
-以下のオプションも指定できます (`-m` と `-r` を同時指定もできます)。
-
+そうすると、台本 TOML ファイルに指定したディレクトリ (未指定なら台本 TOML ファイルと同じディレクトリ) に `out.mp4` が生成されます。
 ```sh
-python -m zuma resources/sample1/storyboard.toml -m 1
-python -m zuma resources/sample1/storyboard.toml -m 0
-# -m 1  画像のみ生成
-# -m 2  音声のみ生成
-# -m 3  動画まで生成 (デフォルト)
-
-python -m zuma resources/sample1/storyboard.toml -r 1
-python -m zuma resources/sample1/storyboard.toml -r 2
-# -r 0  予め中間生成物を削除しない (デフォルト)
-# -r 1  予め中間生成物を削除; 現在の台本上必要な合成音声は残す
-# -r 2  予め中間生成物を削除; すべての中間生成物を削除する
+resources/sample1/
+├─ storyboard.toml  # 元々指定したサンプル台本 TOML
+├─ out.mp4  # 生成された動画
+├─ images.html  # 画像一覧 HTML
+└─ intermediate/  # 中間生成物
+    ├─ *.png  # 各場面用の画像
+    ├─ *.wav  # 各場面の音声
+    └─ concat.m4a  # 連結済み音声
 ```
+
+以下のオプションも指定できます。
 
 | option | description |
 | ---- | ---- |
-| `-m` |何を生成するかのモードを指定します。まず画面のレイアウトだけ調整したいときなどに `-m 1` を付けて実行し、生成される images.html から画像一覧を確認するとよいです (音声と動画は生成に時間がかかるので)。|
-| `-r` |動画生成前に既存の中間生成物を削除するかを指定します。音声の話速やBGM音量や画像レイアウトを調整するとどんどん不要な中間生成物が溜まってしまうので削除したいときに指定してください。必要な合成音声まで削除すると再合成に時間がかかるので `-r 1` がよいです。ただし常に `-r 1` を指定すると「やはりさっきの話速に戻したい」「聞き比べたい」といったとき不便なので音声パラメータの fix 後に指定するのがよいです。|
+| `--image` |画像のみ生成します。<br/>まずは画面のみ作成していくのが便利です。|
+| `--audio` |音声のみ生成します (ユースケースはあまりないと思います)。|
+| `--dryrun` |何も生成しません。<br/>台本 TOML へのプレ処理・(指定があれば) 中間生成物削除まではします。|
+| `--refresh 1` |予め中間生成物を削除しますが、台本上必要な合成音声だけは残します。<br/>話速や抑揚や音高等のパラメータ調整中は指定しないでください。<br/>パラメータを戻す場合に合成がやり直しになります。|
+| `--refresh 2` |予め中間生成物を削除します。|
+| `--n_shots n` |n 場面目までのみ生成します (正数のときのみ有効)。|
+
 ### 台本の記述方法
 
 サンプル台本内に説明コメントがありますが、「場面 (shot)」について補足します。このリポジトリのコードは場面のつなぎ合わせで動画を構成します。1場面には1つ以下のセリフ、1つの背景画像が対応します。なので、話者か背景画像のいずれかの切れ目が場面の切れ目になります。場面の構成要素は以下です。最初の4要素 **(太字)** を適宜指定すればじゅうぶんです。

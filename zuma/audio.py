@@ -7,6 +7,7 @@ from zuma.utils import (
     str_to_hash, dict_to_str, prepare_serifu, file_to_hash,
 )
 import math
+import toml
 
 
 @retry(tries=3, delay=1)
@@ -97,6 +98,7 @@ class AudioGenerator:
                         options=self.voice_settings.get(str(shot['speaker'])))
                 else:
                     print('音声合成済みです: ', shot['speaker'], shot['serifu'][:10])
+
                 audio = AudioSegment.from_wav(out_file)
                 n_frames = math.ceil(audio.duration_seconds / SPF)
                 adjust_duration = n_frames * SPF - audio.duration_seconds
@@ -119,10 +121,10 @@ class AudioGenerator:
                         duration = (n_frames - i_frame) * SPF
                     mouth = 1 if (volumes[i_block] > threshold) else 0
                     if mouth != last_mouth:  # 開き (閉じ) が変化したとき
-                        voice_durations.append((mouth, duration))
+                        voice_durations.append({'mouth': mouth, 'duration': duration})
                     else:  # 開き (閉じ) が変化していないときは継続時間だけのばす
                         last = voice_durations.pop(-1)
-                        voice_durations.append((mouth, last[1] + duration))
+                        voice_durations.append({'mouth': mouth, 'duration': last['duration'] + duration})
                     last_mouth = mouth
 
             if shot['silence'] > 0:  # セリフ後無音秒数があれば無音を足す
@@ -132,11 +134,17 @@ class AudioGenerator:
                     audio = AudioSegment.silent(duration=silent_duration * 1000)
                 else:
                     audio += AudioSegment.silent(duration=silent_duration * 1000)
-            durations.append((voice_durations, silent_duration))
+            durations.append({
+                'voice_durations': voice_durations,
+                'silent_duration': silent_duration,
+            })
             if audio_concat is None:
                 audio_concat = audio
             else:
                 audio_concat += audio
+        (self.out_dir_intermediate / 'duration.toml').write_text(
+            toml.dumps({'durations': durations}), newline='\n', encoding='utf8',
+        )
 
         # 全場面の音声をエクスポートするが
         # 音声圧縮方式は mp3 (拡張子 m4a) ではなく aac (拡張子 m4a) にする
@@ -148,10 +156,4 @@ class AudioGenerator:
             audio = AudioSegment.from_file(audio_file, 'm4a')
             bgm = AudioSegment.from_mp3(self.bgm_file) + self.bgm_adjust
             audio = audio.overlay(bgm)
-            audio_file_with_bgm = f'{self.out_dir_intermediate}' \
-                + f'concat_{file_to_hash(self.bgm_file)}' \
-                + f'_{str(self.bgm_adjust)}.m4a'
-            audio.export(audio_file_with_bgm, format='ipod', codec='aac')
-            audio_file = audio_file_with_bgm
-
-        return audio_file, durations
+            audio.export(audio_file, format='ipod', codec='aac')
