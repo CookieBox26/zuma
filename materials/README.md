@@ -4,32 +4,30 @@
   <tr>
     <td>zundamon2_00.png<br/><img width="120" src="zundamon2_00.png"/></td>
     <td>zundamon2_01.png<br/><img width="120" src="zundamon2_01.png"/></td>
-    <td>zundamon2_02.png<br/><img width="120" src="zundamon2_02.png"/></td>
     <td>zundamon2_10.png<br/><img width="120" src="zundamon2_10.png"/></td>
     <td>zundamon2_11.png<br/><img width="120" src="zundamon2_11.png"/></td>
-    <td>zundamon2_12.png<br/><img width="120" src="zundamon2_12.png"/></td>
   </tr>
   <tr>
     <td>zundamon2_20.png<br/><img width="120" src="zundamon2_20.png"/></td>
     <td>zundamon2_21.png<br/><img width="120" src="zundamon2_21.png"/></td>
-    <td>zundamon2_22.png<br/><img width="120" src="zundamon2_22.png"/></td>
     <td>zundamon2_30.png<br/><img width="120" src="zundamon2_30.png"/></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>metan_10.png<br/><img width="120" src="metan_10.png"/></td>
+    <td>metan_11.png<br/><img width="120" src="metan_11.png"/></td>
     <td></td>
     <td></td>
   </tr>
   <tr>
     <td>tsumugi2_00.png<br/><img width="120" src="tsumugi2_00.png"/></td>
     <td>tsumugi2_01.png<br/><img width="120" src="tsumugi2_01.png"/></td>
-    <td>tsumugi2_02.png<br/><img width="120" src="tsumugi2_02.png"/></td>
     <td>tsumugi2_10.png<br/><img width="120" src="tsumugi2_10.png"/></td>
     <td>tsumugi2_11.png<br/><img width="120" src="tsumugi2_11.png"/></td>
-    <td>tsumugi2_12.png<br/><img width="120" src="tsumugi2_12.png"/></td>
   </tr>
   <tr>
     <td>whitecul2_10.png<br/><img width="120" src="whitecul2_10.png"/></td>
     <td>whitecul2_11.png<br/><img width="120" src="whitecul2_11.png"/></td>
-    <td>whitecul2_12.png<br/><img width="120" src="whitecul2_12.png"/></td>
-    <td></td>
     <td></td>
     <td></td>
   </tr>
@@ -41,22 +39,28 @@
     <td>zundamon_01.png<br/><img width="120" src="zundamon_01.png"/></td>
     <td>zundamon_10.png<br/><img width="120" src="zundamon_10.png"/></td>
     <td>zundamon_11.png<br/><img width="120" src="zundamon_11.png"/></td>
+  </tr>
+  <tr>
     <td>zundamon_20.png<br/><img width="120" src="zundamon_20.png"/></td>
     <td>zundamon_21.png<br/><img width="120" src="zundamon_21.png"/></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
     <td>tsumugi_00.png<br/><img width="120" src="tsumugi_00.png"/></td>
     <td>tsumugi_01.png<br/><img width="120" src="tsumugi_01.png"/></td>
     <td>tsumugi_10.png<br/><img width="120" src="tsumugi_10.png"/></td>
     <td>tsumugi_11.png<br/><img width="120" src="tsumugi_11.png"/></td>
+  </tr>
+  <tr>
     <td>tsumugi_20.png<br/><img width="120" src="tsumugi_20.png"/></td>
     <td>tsumugi_21.png<br/><img width="120" src="tsumugi_21.png"/></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
     <td>whitecul_10.png<br/><img width="120" src="whitecul_10.png"/></td>
     <td>whitecul_11.png<br/><img width="120" src="whitecul_11.png"/></td>
-    <td></td>
-    <td></td>
     <td></td>
     <td></td>
   </tr>
