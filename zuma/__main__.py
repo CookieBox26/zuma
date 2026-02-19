@@ -3,9 +3,9 @@ import toml
 import os
 import glob
 import shutil
-from funcs.audio import AudioGenerator
-from funcs.image import ImageGenerator
-from funcs.movie import MovieGenerator
+from zuma.audio import AudioGenerator
+from zuma.image import ImageGenerator
+from zuma.movie import MovieGenerator
 
 
 def main():

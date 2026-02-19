@@ -72,7 +72,7 @@ def get_image_filenames(out_dir_intermediate, shot, display_serifu):
     if display_serifu and shot['serifu'] != '':
         filebody += '_' + str(shot['speaker'])
         filebody += str_to_hash(prepare_serifu(shot['serifu'], flag='s'))
-    if shot['free_text'] != '':
+    if ('free_text' in shot) and (shot['free_text'] != ''):
         filebody += '_' + str_to_hash(shot['free_text'])
     front_img_paths = shot.get('front_img_paths', [])
     for i_front_img, front_img_path in enumerate(front_img_paths):

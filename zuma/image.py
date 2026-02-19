@@ -1,6 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw
-from funcs import get_image_filenames, prepare_serifu
-from funcs.text import split_text
+from zuma.utils import get_image_filenames, prepare_serifu
+from zuma.utils.text import split_text
 import os
 
 
@@ -98,7 +98,7 @@ class ImageGenerator:
             if self.serifu_text_settings['display'] and shot['serifu'] != '':
                 self._add_serifu_text(img, shot['serifu'], shot['speaker'])
             # フリーテキストがあれば貼ります
-            if shot['free_text'] != '':
+            if ('free_text' in shot) and (shot['free_text'] != ''):
                 self._add_free_text(img, shot['free_text'])
             img.save(filename)
         return filenames

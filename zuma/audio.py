@@ -2,7 +2,7 @@ import requests
 import json
 from retry import retry
 from pydub import AudioSegment
-from funcs import SPF, MOUTH_OPEN_RATIO, \
+from zuma.utils import SPF, MOUTH_OPEN_RATIO, \
     get_wav_filename, prepare_serifu, file_to_hash
 import os
 import math

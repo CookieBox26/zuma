@@ -1,48 +1,60 @@
 # zuma
+[VOICEVOX](https://voicevox.hiroshiba.jp/) を利用して台本からシンプルな解説動画を生成する Python パッケージです。
 
-[VOICEVOX](https://voicevox.hiroshiba.jp/) を利用して台本からシンプルな解説動画を生成する Python コードです。ローカルの VOICEVOX を起動して以下を実行すると storyboard.toml の横に out.mp4 が生成されます **(ただし実行前に storyboard.toml 内の .ttf フォントファイルへのパスをお手元のマシンにある適当な .ttf へのパスに修正してください)** 。
-```
-python run.py resources/sample1/storyboard.toml
-```
 ### 目次
 
-- [環境準備](#env)
-- [実行方法](#run)
-- [台本の記述方法](#storyboard)
-- [サンプル台本](#sample)
-- [利用範囲](#license)
-- [このスクリプトについて](#about)
+- [環境準備](#環境準備)
+- [実行方法](#実行方法)
+- [台本の記述方法](#台本の記述方法)
+- [サンプル台本](#サンプル台本)
+- [利用範囲](#利用範囲)
+- [このスクリプトについて](#このスクリプトについて)
 
-<a id="env"></a>
 ### 環境準備
 
-- お手元のマシンに [VOICEVOX](https://voicevox.hiroshiba.jp/) をインストールしてください。
-- お手元の Python に requests, retry, PIL, pydub, moviepy, toml をインストールしてください。
-  - pydub, moviepy のバックエンドは FFmpeg なので FFmpeg 本体のインストールも必要です。コマンド `ffmpeg -version` が実行できるようにしておいてください。Windows の場合 Chocolatey を利用したインストールが便利だと思います (私は以下を順にやって失敗しませんでした)。
-    - [WindowsのパッケージマネジメントツールのChocolateyをインストールする - suzu6の技術ブログ](https://www.suzu6.net/posts/297-chocolatey-windows/)
-    - [Builds - CODEX FFMPEG @ gyan.dev](https://www.gyan.dev/ffmpeg/builds/)
-- 【任意】 適当な .ttf フォントファイルをご用意ください。
-  - 字幕表示オプションを true にした場合や、フリーテキストを入れる場合は必須です。
-  - 字幕もフリーテキストも入れないなら (もっぱら音声と背景前景画像で伝えるなら) 不要です。
-  - 生成した動画を公開する予定がある場合はその用途で利用できるフォントにしてください。
+> [!WARNING]
+> 2026 年 2 月現在、下記の点に留意ください。
+> - moviepy==1.0.3 を前提としています (2 系では動きません)。
+> - pydub==0.25.1 に audioop-lts が必要なため依存関係に記述しています。
 
-<a id="run"></a>
+- **[VOICEVOX](https://voicevox.hiroshiba.jp/) をインストールしてください。**
+- **[FFmpeg](https://www.ffmpeg.org/) をインストールしてください。**
+  - コマンド `ffmpeg -version` が通るようにしておいてください。
+  - Windows の場合は以下の記事が参考になります。
+    - 参考: [WindowsにFFmpegをインストールする方法 - Qiita](https://qiita.com/Tadataka_Takahashi/items/9dcb0cf308db6f5dc31b)
+- **Python 環境に本パッケージを取得ください。**
+  - このリポジトリを `clone` (または Download ZIP) で取得し、そこの仮想環境に `pyproject.toml` をインストールしてください **(推奨)**。
+    - [uv](https://docs.astral.sh/uv/) を使う場合は `uv sync` でインストールできます。
+    - システム環境に直接入れる場合は `pip install .`  でインストールできます。こちらの場合は別ディレクトリでも動画生成が可能ですが、別プロジェクトとの依存関係の衝突に注意ください (特に moviepy)。
+  - または、本リポジトリの URL を指定してインストールすることもできます。ただし、サンプル台本・立ち絵は今のところパッケージに同梱していないので、もし必要なら別途ダウンロードください。
+- (動画に字幕やテキストを入れる場合) .ttf フォントファイルを用意ください。
+  - 動画に字幕やテキストを入れる場合はパスを指定する必要があります。
+  - Windows の場合、既存のフォントは以下のようなパスにあるので、これを指定してもよいです (フォント名とユーザ名は手元のものに修正ください)。 
+    - `"C:\\Windows\\Fonts\\MPLUS2-Black.ttf"` (すべてのユーザにインストールしたフォント)
+    - `"C:\\Users\\Cookie\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Armata-Regular.ttf"` (現在のユーザのみにインストールしたフォント)
+  - 生成した動画を公開する場合はその用途で利用できるフォントにしてください。
+
 ### 実行方法
 
-`resources/sample1/storyboard.toml` のように TOML 形式で台本を記述してください。ローカルの VOICEVOX を起動した状態で、記述した台本を指定して以下のように実行すると storyboard.toml の横に out.mp4 が生成されます **(ただし実行前に storyboard.toml 内の .ttf フォントファイルへのパスをお手元のマシンにある適当な .ttf へのパスに修正してください)** 。
-```
-python run.py resources/sample1/storyboard.toml
+**ローカルの VOICEVOX を起動した状態で、** 台本 TOML ファイルを指定して以下のように実行すると、台本 TOML ファイルに指定したディレクトリ (未指定なら台本 TOML ファイルと同じディレクトリ) に `out.mp4` が生成されます。
+```sh
+python -m zuma resources/sample1/storyboard.toml
+
+# uv をお使いの場合は以下:
+# uv run python -m zuma resources/sample1/storyboard.toml
 ```
 
-以下のオプションも指定できます。
+以下のオプションも指定できます (`-m` と `-r` を同時指定もできます)。
 
-```
-python run.py resources/sample1/storyboard.toml -m 1
+```sh
+python -m zuma resources/sample1/storyboard.toml -m 1
+python -m zuma resources/sample1/storyboard.toml -m 0
 # -m 1  画像のみ生成
 # -m 2  音声のみ生成
 # -m 3  動画まで生成 (デフォルト)
 
-python run.py resources/sample1/storyboard.toml -r 1
+python -m zuma resources/sample1/storyboard.toml -r 1
+python -m zuma resources/sample1/storyboard.toml -r 2
 # -r 0  予め中間生成物を削除しない (デフォルト)
 # -r 1  予め中間生成物を削除; 現在の台本上必要な合成音声は残す
 # -r 2  予め中間生成物を削除; すべての中間生成物を削除する
@@ -52,8 +64,6 @@ python run.py resources/sample1/storyboard.toml -r 1
 | ---- | ---- |
 | `-m` |何を生成するかのモードを指定します。まず画面のレイアウトだけ調整したいときなどに `-m 1` を付けて実行し、生成される images.html から画像一覧を確認するとよいです (音声と動画は生成に時間がかかるので)。|
 | `-r` |動画生成前に既存の中間生成物を削除するかを指定します。音声の話速やBGM音量や画像レイアウトを調整するとどんどん不要な中間生成物が溜まってしまうので削除したいときに指定してください。必要な合成音声まで削除すると再合成に時間がかかるので `-r 1` がよいです。ただし常に `-r 1` を指定すると「やはりさっきの話速に戻したい」「聞き比べたい」といったとき不便なので音声パラメータの fix 後に指定するのがよいです。|
-
-<a id="storyboard"></a>
 ### 台本の記述方法
 
 サンプル台本内に説明コメントがありますが、「場面 (shot)」について補足します。このリポジトリのコードは場面のつなぎ合わせで動画を構成します。1場面には1つ以下のセリフ、1つの背景画像が対応します。なので、話者か背景画像のいずれかの切れ目が場面の切れ目になります。場面の構成要素は以下です。最初の4要素 **(太字)** を適宜指定すればじゅうぶんです。
@@ -80,7 +90,6 @@ python run.py resources/sample1/storyboard.toml -r 1
 - [注4] 改行についてはセリフ同様 `\n` を明示的に記述することもできます。
 - [注5] フリーテキストは全場面を通して表示位置、フォントサイズ、フォント色は固定です (変更可能にする予定は現状ありません)。文字を表示する場合は背景 (前景) 画像に文字入れしておく想定です。ただ、フリーテキストで事足りるという方なら背景画像1枚を用意するだけで (無地背景ならそれすらなくても) 動画を生成できます。
 
-<a id="sample"></a>
 ### サンプル台本
 
 ※ 埋め込んである動画は縦横それぞれ半分にリサイズ済みです。
@@ -101,7 +110,6 @@ https://github.com/CookieBox26/zuma/assets/34176970/f75cb05d-1896-444a-a352-200b
   - **ただし現在 BGM が短かった場合にループさせるなどの対応がないです。**
 - 字幕用フォントに加え BGM のための mp3 ファイルも参照しているので、実行するには適当な BGM を用意し台本内の .mp3 ファイルパスを書き換えてください。コミットしてある台本と同じ BGM を使用する場合は [フリーBGM・音楽素材 MusMus](https://musmus.main.jp/music_img1_03.html) から入手してください。BGM 不要であれば .mp3 ファイルパスを空文字列にしてください。
 
-<a id="license"></a>
 ### 利用範囲
 
 このリポジトリのコード自体は MIT ライセンスですが、コードによって生成した動画の利用範囲は VOICEVOX の利用規約及び各キャラクターの利用規約にしたがってください。それ以外の素材も利用した場合はそれ以外の素材の利用規約にもしたがってください。
@@ -110,7 +118,6 @@ materials/ 以下にコミットしてある二次イラストは私が描いた
 
 ---
 
-<a id="about"></a>
 ### このスクリプトについて
 
 このスクリプトがしていることは以下です。

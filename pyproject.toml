@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zuma"
+version = "0.0.1"
+description = "A Python package for generating simple explanatory videos using VOICEVOX."
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+  { name = "CookieBox26", email = "cookie-box@cookie-box.info" },
+]
+dependencies = [
+  "toml==0.10.2",
+  "retry==0.9.2",
+  "requests==2.32.5",
+  "pydub==0.25.1",
+  "audioop-lts==0.2.2",
+  "moviepy==1.0.3",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]

@@ -1,5 +1,12 @@
 from moviepy.editor import ImageClip, concatenate_videoclips, VideoFileClip
-from funcs import FPS, get_image_filenames, format_duration
+from zuma.utils import FPS, get_image_filenames, format_duration
+import warnings
+
+
+warnings.filterwarnings(  # moviepy 実装由来の警告の抑制
+    'ignore', message='invalid escape sequence',
+    category=SyntaxWarning, module='moviepy'
+)
 
 
 class MovieGenerator:
