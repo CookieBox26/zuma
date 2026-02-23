@@ -3,8 +3,8 @@ import math
 import re
 
 
-FPS = 24  # Seconds Per Frame
-SPF = 1.0 / float(FPS)  # 0.125  # Frames Per Second
+FPS = 32  # Seconds Per Frame
+SPF = 1.0 / float(FPS)  # Frames Per Second
 # SPF は各場面をフレーム単位に切り上げるためにつかう
 # フレーム単位で口を開閉するのでそれにもつかう
 # 各場面を 1 / 2^n 秒単位にしないとバグると思っていたが
@@ -59,29 +59,4 @@ def prepare_serifu(serifu, flag='s'):  # s:字幕用, v:音声用
     """
     if flag == 's':
         return re.sub('<v>.*?</v>|<s>|</s>', '', serifu)  # 字幕用
-    return re.sub('<s>.*?</s>|<v>|</v>|\s|\n', '', serifu)  # 音声用
-
-
-def get_image_filenames(shot, display_serifu):
-    if shot['back_img'] != '':
-        hash = file_to_hash(shot['back_img'])
-    else:
-        hash = list_to_str(shot['back_size'] + shot['back_color'])
-    filebody = hash + '_' + dict_to_str(shot['characters'])
-    if display_serifu and shot['serifu'] != '':
-        filebody += '_' + str(shot['speaker'])
-        filebody += str_to_hash(prepare_serifu(shot['serifu'], flag='s'))
-    if ('free_text' in shot) and (shot['free_text'] != ''):
-        filebody += '_' + str_to_hash(shot['free_text'])
-    front_img_paths = shot.get('front_img_paths', [])
-    for i_front_img, front_img_path in enumerate(front_img_paths):
-        if front_img_path != '':
-            filebody += '_' + file_to_hash(front_img_path)
-            filebody += '_' + list_to_str(shot['front_img_coordinates'][i_front_img])
-    filenames = [filebody + '.png']
-    serifu_ = prepare_serifu(shot['serifu'], flag='v')
-    # 有声セリフがある場面であって話者が登場している場面には口開き版画像も必要
-    if (serifu_ != '') and (str(shot['speaker']) in shot['characters']):
-        speaker = shot['speaker']
-        filenames.append(filebody + f'_{speaker}.png')
-    return filenames
+    return re.sub('<s>.*?</s>|<v>|</v>| |\n', '', serifu)  # 音声用

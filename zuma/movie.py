@@ -1,5 +1,5 @@
 from moviepy.editor import ImageClip, concatenate_videoclips, VideoFileClip
-from zuma.utils import FPS, get_image_filenames, format_duration
+from zuma.utils import FPS, SPF, format_duration
 import toml
 import warnings
 
@@ -26,16 +26,16 @@ class MovieGenerator:
 
         clips = []
         for (duration, shot) in zip(durations, self.shots):
-            img_files = get_image_filenames(shot, self.serifu_text_settings['display'])
+            img_files = [d['filename'] for d in shot['image_files']]
             if len(duration['voice_durations']) > 0:
                 for d_ in duration['voice_durations']:
-                    img_file = (self.out_dir_intermediate / img_files[d_['mouth']]).as_posix()
-                    clip = ImageClip(img_file).set_duration(format_duration(d_['duration']))
+                    img_file = (self.out_dir_intermediate / img_files[d_[0]]).as_posix()
+                    clip = ImageClip(img_file).set_duration(format_duration(d_[1] * SPF))
                     clips.append(clip)
             if duration['silent_duration'] > 0:
                 clip = ImageClip(
                     (self.out_dir_intermediate / img_files[0]).as_posix()
-                ).set_duration(format_duration(duration['silent_duration']))
+                ).set_duration(format_duration(duration['silent_duration'] * SPF))
                 clips.append(clip)
 
         # mp4 に出力する
@@ -46,4 +46,5 @@ class MovieGenerator:
             (self.out_dir / 'out.mp4').as_posix(), codec='libx264', fps=FPS,
             audio=audio_file.as_posix(), audio_codec='aac',
             temp_audiofile='temp-audio.m4a',
-            remove_temp=True)
+            remove_temp=True,
+        )

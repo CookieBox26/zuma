@@ -1,5 +1,4 @@
 from PIL import Image, ImageFont, ImageDraw
-from zuma.utils import get_image_filenames, prepare_serifu
 from zuma.utils.text import split_text
 
 
@@ -19,7 +18,7 @@ class ImageGenerator:
             text = split_text(text, settings['width'],
                               settings.get('max_rows', 100))
         draw.multiline_text(
-            settings['coordinate'], text, color,
+            settings['coord'], text, color,
             font=font, spacing=settings['spacing'],
             stroke_width=settings.get('stroke_width', 0),
             stroke_fill=settings.get('stroke_fill', 'black'))
@@ -27,12 +26,11 @@ class ImageGenerator:
     def _add_serifu_text(self, img, text, speaker):
         """ 背景画像にセリフテキスト (字幕) を貼り付けます
         """
-        color = self.serifu_text_settings['font_color'].get(str(speaker))
+        color = self.serifu_text_settings['font_color'].get(speaker)
         if color is None:
             color = self.serifu_text_settings['font_color_default']
         color = tuple(color)
-        text_ = prepare_serifu(text, flag='s')
-        self._add_text(img, text_, color, self.serifu_text_settings)
+        self._add_text(img, text, color, self.serifu_text_settings)
 
     def _add_free_text(self, img, text):
         """ 背景画像にフリーテキストを貼り付けます
@@ -40,79 +38,56 @@ class ImageGenerator:
         color = tuple(self.free_text_settings['font_color'])
         self._add_text(img, text, color, self.free_text_settings)
 
-    def _paste(self, img, additional_img_path, scale=1.0, coord=(0, 0)):
-        img_ = Image.open(additional_img_path)
+    def _paste(self, img, path, coord=(0, 0), scale=1.0):
+        img_ = Image.open(path)
         img_ = img_.convert('RGBA')  # 念のため確実に RGBA にします
         size_new = (int(scale * img_.width), int(scale * img_.height))
         img_ = img_.resize(size_new)
         img.paste(img_, coord.copy(), img_)  # 座標はコピーしないと変更される
-
-    def _paste_character(self, img, chara_id, mode, mouth=0):
-        """ 背景画像に立ち絵を貼り付けます
-        """
-        character_image = self.character_images.get(chara_id)
-        if character_image is None:
-            print(f'[WARNING] ID:{chara_id} の立ち絵が設定されていません')
-            return
-        if (mouth == 1) and (len(character_image[mode]) == 1):
-            mouth = 0  # 口開きを指定されたのにそのモードの画像が1つしかない
-        self._paste(img, character_image[mode][mouth],
-                    character_image['scale'],
-                    character_image['coordinate'])
 
     def _generate_back_image(self, shot):
         """ 背景画像を読み込むか生成します
         """
         if shot['back_img'] != '':
             return Image.open(shot['back_img']).convert('RGBA')
-        else:
-            return Image.new('RGBA', tuple(shot['back_size']),
-                             tuple(shot['back_color']))
+        return Image.new('RGBA', tuple(shot['back_size']), tuple(shot['back_color']))
 
-    def generate_shot(self, shot, regenerate=True):
+    def generate_shot(self, shot):
         """ ある場面用の画像を合成します
         """
-        # その場面で必要な画像ファイル名を取得します
-        filenames = get_image_filenames(shot, self.serifu_text_settings['display'])
-        for i_file, filename in enumerate(filenames):
-            # 既にあればスキップします
-            filepath = self.out_dir_intermediate / filename
-            if (not regenerate) and filepath.is_file():
-                continue
-            # 背景画像を読み込むか生成します
-            img = self._generate_back_image(shot)
-            # 前景画像があれば貼ります
-            front_img_paths = shot.get('front_img_paths', [])
-            for i_front_img, front_img_path in enumerate(front_img_paths):
-                if front_img_path != '':
-                    self._paste(img, front_img_path,
-                                coord=shot['front_img_coordinates'][i_front_img])
+        # 背景画像を読み込むか生成します
+        img = self._generate_back_image(shot)
+        # 前景画像があれば貼ります
+        for front_img in shot['front_imgs']:
+            self._paste(img, **front_img)
+        # フリーテキストがあれば貼ります
+        if ('free_text' in shot) and (shot['free_text'] != ''):
+            self._add_free_text(img, shot['free_text'])
+
+        imgs = [img]
+        if len(shot['image_files']) == 2:
+            imgs = [img, img.copy()]
+        for d, img_ in zip(shot['image_files'], imgs):
+            filepath = self.out_dir_intermediate / d['filename']
             # キャラクターがいれば立ち絵を貼ります
-            for chara_id, mode in shot['characters'].items():
-                mouth = 0
-                if (i_file == 1) and (chara_id == str(shot['speaker'])):
-                    mouth = 1
-                self._paste_character(img, chara_id, mode, mouth)
+            for chara_img in d['chara_imgs'].values():
+                self._paste(img_, **chara_img)
             # セリフを表示する設定であってセリフがあれば貼ります
-            if self.serifu_text_settings['display'] and shot['serifu'] != '':
-                self._add_serifu_text(img, shot['serifu'], shot['speaker'])
-            # フリーテキストがあれば貼ります
-            if ('free_text' in shot) and (shot['free_text'] != ''):
-                self._add_free_text(img, shot['free_text'])
-            img.save(filepath)
-        return filenames
+            if self.serifu_text_settings['display'] and shot['serifu_show'] != '':
+                self._add_serifu_text(img_, shot['serifu_show'], shot['speaker'])
+            img_.save(filepath)
 
     def generate(self, regenerate=True):
         """ 
-        全場面用の画像を合成します
-        ついでに便利用に合成した画像を一覧表示する images.html をかき出します
+        全場面の画像を合成します
+        合成した画像を一覧表示する images.html も生成します
         """
         f = open(self.out_dir / 'images.html', mode='w')
         f.write(f'<html><head></head><body style="background: #ccc">\n')
-        for i_shot, shot in enumerate(self.shots):
-            filenames = self.generate_shot(shot, regenerate)
-            f.write(f'<h4>{i_shot + 1}</h4>\n')
-            filename = filenames[-1]
+        for shot in self.shots:
+            self.generate_shot(shot)
+            f.write(f'<h4>{shot["shot_id"]}</h4>\n')
+            filename = shot['image_files'][-1]['filename']
             f.write(f'<img src="intermediate/{filename}"/>\n')
         f.write(f'</br></br></br></body></html>\n')
         f.close()

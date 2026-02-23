@@ -1,4 +1,5 @@
 __pycache__/
+speaker_ids.toml
 intermediate/
 images.html
 out.mp4

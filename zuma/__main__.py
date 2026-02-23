@@ -3,6 +3,7 @@ import argparse
 import toml
 import shutil
 import copy
+from zuma.utils import prepare_serifu
 from zuma.audio import AudioGenerator
 from zuma.image import ImageGenerator
 from zuma.movie import MovieGenerator
@@ -44,21 +45,62 @@ def main():
     storyboard['out_dir_intermediate'] = storyboard['out_dir'] / 'intermediate'
     storyboard['out_dir_intermediate'].mkdir(exist_ok=True)
 
-    # 立ち絵画像設定をスタイル ID をキーにした辞書にしておきます
-    storyboard['character_images'] = {
-        str(c['speaker']): c for c in storyboard['character_images']
-    }
+    # 立ち絵画像設定をキャラクター名をキーにした辞書にしておきます
+    character_images = storyboard.get('character_images', [])
+    storyboard['character_images'] = {c['name']: c for c in character_images}
 
-    # 各場面はデフォルトとの差分だけ指定してあるので完全にしておきます
+    # デフォルト場面に以下のキーがなければ設定しておきます
+    if 'front_imgs' not in storyboard['shot_default']:
+        storyboard['shot_default']['front_imgs'] = []
+    if 'characters' not in storyboard['shot_default']:
+        storyboard['shot_default']['characters'] = {}
+    if 'speaker' not in storyboard['shot_default']:
+        storyboard['shot_default']['speaker'] = ''
+    if 'style' not in storyboard['shot_default']:
+        storyboard['shot_default']['style'] = 'ノーマル'
+    if 'serifu' not in storyboard['shot_default']:
+        storyboard['shot_default']['serifu'] = ''
+    if 'silence' not in storyboard['shot_default']:
+        storyboard['shot_default']['silence'] = 0
+
+    # 各場面はデフォルト場面との差分だけ指定してあるので完全にしておきます
     shots_ = []
     for i_shot, shot in enumerate(storyboard['shots']):
         shot_ = copy.deepcopy(storyboard['shot_default'].copy())
         shot_.update(shot)
-        # 後方互換性のための処理
-        if ('front_img_paths' not in shot_) and ('front_img' in shot_):
-            shot_['front_img_paths'] = [shot_['front_img']]
-            shot_['front_img_coordinates'] = [shot_['front_img_coordinate']]
-            del shot_['front_img'], shot_['front_img_coordinate']
+
+        shot_['shot_id'] = f'{i_shot:04d}'
+        shot_['serifu_show'] = prepare_serifu(shot_['serifu'], flag='s')
+        shot_['serifu_voice'] = prepare_serifu(shot_['serifu'], flag='v')
+        shot_['image_files'] = [{
+            'filename': shot_['shot_id'] + '_0.png',
+            'chara_imgs': {},
+        }]
+        for chara_name, face in shot_['characters'].items():
+            character_image = storyboard['character_images'].get(chara_name)
+            if (
+                (not character_image)
+                or (len(character_image['faces']) < face + 1)
+                or (len(character_image['faces'][face]) == 0)
+            ):
+                print(f'[WARNING] 登場人物の立ち絵がないです (場面 {i_shot})')
+                continue
+            shot_['image_files'][0]['chara_imgs'][chara_name] = {
+                'path': character_image['faces'][face][0],
+                'coord': character_image['coord'],
+                'scale': character_image['scale'],
+            }
+        if (shot_['serifu_voice'] != '') and (shot_['speaker'] in shot_['characters']):
+            character_image = storyboard['character_images'].get(shot_['speaker'])
+            face = shot_['characters'][shot_['speaker']]
+            if len(character_image['faces'][face]) <= 1:
+                print(f'[WARNING] 話者の開口画像がないです (場面 {i_shot})')
+            else:
+                shot_['image_files'].append({'filename': shot_['shot_id'] + '_1.png'})
+                chara_imgs = copy.deepcopy(shot_['image_files'][0]['chara_imgs'])
+                chara_imgs[shot_['speaker']]['path'] = character_image['faces'][face][1]
+                shot_['image_files'][1]['chara_imgs'] = chara_imgs
+
         shots_.append(shot_)
         if i_shot + 1 == n_shots:
             break
