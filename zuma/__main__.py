@@ -9,18 +9,28 @@ from zuma.image import ImageGenerator
 from zuma.movie import MovieGenerator
 
 
+def _resolve(path_str, out_dir):
+    # もしファイルパスにファイルがないなら最終生成物以下のファイルとみなします
+    # (背景画像, 前景画像, BGM 用)
+    if not path_str:
+        return path_str
+    if Path(path_str).is_file():
+        return path_str
+    return out_dir / path_str
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('path', help='台本ファイル (があるディレクトリ) のパス')
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('--image', action='store_true', help='画像のみ生成')
-    group.add_argument('--audio', action='store_true', help='音声のみ生成')
-    group.add_argument('--dryrun', action='store_true', help='何も生成しない')
+    group.add_argument('-i', '--image', action='store_true', help='画像のみ生成')
+    group.add_argument('-a', '--audio', action='store_true', help='音声のみ生成')
+    group.add_argument('-d', '--dryrun', action='store_true', help='何も生成しない')
     parser.add_argument('-r', '--refresh', choices=['0', '1', '2'], default='0', help=(
         '出力済み中間生成物を: 0.削除しない(デフォルト), '
         '1.現在の台本上必要な合成音声のみ残す, 2.全削除する',
     ))
-    parser.add_argument('-n', '--n_shots', type=int, default=0, help='n 場面目までのみ生成')
+    parser.add_argument('-n', '--n_shots', type=int, default=0, help='n 場面目まで生成')
     args = parser.parse_args()
     refresh = int(args.refresh)
     gen_image, gen_audio, gen_movie = True, True, True
@@ -37,6 +47,8 @@ def main():
     if p.is_dir():
         p = p / 'storyboard.toml'
     storyboard = toml.loads(p.read_text(encoding='utf8'))
+    assert 'shot_default' in storyboard
+    assert 'shots' in storyboard
 
     # 最終生成物、中間生成物用フォルダを作成します
     out_dir = storyboard.get('out_dir', '')
@@ -49,19 +61,23 @@ def main():
     character_images = storyboard.get('character_images', [])
     storyboard['character_images'] = {c['name']: c for c in character_images}
 
+    # (あれば) BGM のパスを解決しておきます
+    if 'bgm_settings' in storyboard:
+        mp3_path = storyboard['bgm_settings']['mp3_path']
+        storyboard['bgm_settings']['mp3_path'] = _resolve(mp3_path, storyboard['out_dir'])
+
     # デフォルト場面に以下のキーがなければ設定しておきます
-    if 'front_imgs' not in storyboard['shot_default']:
-        storyboard['shot_default']['front_imgs'] = []
-    if 'characters' not in storyboard['shot_default']:
-        storyboard['shot_default']['characters'] = {}
-    if 'speaker' not in storyboard['shot_default']:
-        storyboard['shot_default']['speaker'] = ''
-    if 'style' not in storyboard['shot_default']:
-        storyboard['shot_default']['style'] = 'ノーマル'
-    if 'serifu' not in storyboard['shot_default']:
-        storyboard['shot_default']['serifu'] = ''
-    if 'silence' not in storyboard['shot_default']:
-        storyboard['shot_default']['silence'] = 0
+    storyboard['shot_default'].setdefault('front_imgs', [])
+    storyboard['shot_default'].setdefault('characters', {})
+    storyboard['shot_default'].setdefault('speaker', '')
+    storyboard['shot_default'].setdefault('style', 'ノーマル')
+    storyboard['shot_default'].setdefault('serifu', '')
+    storyboard['shot_default'].setdefault('silence', 0)
+
+    # (あれば) 前景画像のパスを解決しておきます
+    storyboard.setdefault('front_images', {})
+    for k, v in storyboard['front_images'].items():
+        storyboard['front_images'][k]['path'] = _resolve(v['path'], storyboard['out_dir'])
 
     # 各場面はデフォルト場面との差分だけ指定してあるので完全にしておきます
     shots_ = []
@@ -70,11 +86,12 @@ def main():
         shot_.update(shot)
 
         shot_['shot_id'] = f'{i_shot:04d}'
+        # 背景画像のパスを解決しておきます
+        shot_['back'] = _resolve(shot_['back'], storyboard['out_dir'])
         shot_['serifu_show'] = prepare_serifu(shot_['serifu'], flag='s')
         shot_['serifu_voice'] = prepare_serifu(shot_['serifu'], flag='v')
         shot_['image_files'] = [{
-            'filename': shot_['shot_id'] + '_0.png',
-            'chara_imgs': {},
+            'filename': shot_['shot_id'] + '_0.png', 'chara_imgs': {},
         }]
         for chara_name, face in shot_['characters'].items():
             character_image = storyboard['character_images'].get(chara_name)

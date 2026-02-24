@@ -3,3 +3,4 @@ speaker_ids.toml
 intermediate/
 images.html
 out.mp4
+*.mp3

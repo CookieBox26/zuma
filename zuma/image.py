@@ -6,6 +6,7 @@ class ImageGenerator:
     def __init__(self, storyboard):
         self.out_dir = storyboard['out_dir']
         self.out_dir_intermediate = storyboard['out_dir_intermediate']
+        self.front_images = storyboard['front_images']
         self.character_images = storyboard['character_images']
         self.serifu_text_settings = storyboard['serifu_text_settings']
         self.free_text_settings = storyboard.get('free_text_settings', {})
@@ -48,8 +49,8 @@ class ImageGenerator:
     def _generate_back_image(self, shot):
         """ 背景画像を読み込むか生成します
         """
-        if shot['back_img'] != '':
-            return Image.open(shot['back_img']).convert('RGBA')
+        if shot['back'] != '':
+            return Image.open(shot['back']).convert('RGBA')
         return Image.new('RGBA', tuple(shot['back_size']), tuple(shot['back_color']))
 
     def generate_shot(self, shot):
@@ -58,8 +59,8 @@ class ImageGenerator:
         # 背景画像を読み込むか生成します
         img = self._generate_back_image(shot)
         # 前景画像があれば貼ります
-        for front_img in shot['front_imgs']:
-            self._paste(img, **front_img)
+        for front_img_key in shot['front_imgs']:
+            self._paste(img, **self.front_images[front_img_key])
         # フリーテキストがあれば貼ります
         if ('free_text' in shot) and (shot['free_text'] != ''):
             self._add_free_text(img, shot['free_text'])

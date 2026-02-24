@@ -1,139 +1,165 @@
-# [必須] mp4 を出力するフォルダを指定します
+# [任意] mp4 を出力するフォルダを指定します
 # パスの最後にはスラッシュを付けてください
-# 空文字列にした場合この台本ファイルがあるフォルダに出力します
+# 未指定または空文字列にした場合この台本ファイルがあるフォルダに出力します
 out_dir = ""
 
-# [任意] BGM を指定します
-[bgm_settings]
-mp3_path = "./materials/MusMus-BGM-097.mp3"  # BGM なしなら空文字列に
-adjust = -11  # BGM の音量調整
 
-# [任意] VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
-# キーは VOICEVOX のスタイルIDです
-# ここではずんだもんの話速を速めて抑揚を抑え、
-# またずんだもんもつむぎも音高を落ち着かせています
-[voice_settings]
-3 = { speedScale = 1.2, intonationScale = 0.9, pitchScale = -0.025 }
-8 = { pitchScale = -0.025 }
-
-# [任意] 立ち絵の画像ファイルパスと縮尺と表示座標を指定します
-# 画像ファイルは各表情タイプに「口閉じ、口開き」の2ファイルを指定します
-# なければ同じファイルでよいです (が口パクしません)
+# =============== 画面設定 ===============
+# [任意] 立ち絵の画像ファイルパスと表示座標と縮尺を指定します
+# 画像ファイルは各表情の「口閉じ、口開き」の 2 ファイルのリストを指定します
+# なければ1ファイルのみのリストでもよいです (が口パクしません)
 [[character_images]]
-speaker = 3
+name = "ずんだもん"
+coord = [675, 290]
 scale = 0.58
-coordinate = [675, 290]
-eyes_closed = ["./materials/zundamon_00.png", "./materials/zundamon_01.png"]
-eyes_open = ["./materials/zundamon_10.png", "./materials/zundamon_11.png"]
-smile = ["./materials/zundamon_20.png", "./materials/zundamon_21.png"]
+faces = [  
+  ["./materials/zundamon_00.png", "./materials/zundamon_01.png"],  # 表情 0
+  ["./materials/zundamon_10.png", "./materials/zundamon_11.png"],  # 表情 1
+  ["./materials/zundamon_20.png", "./materials/zundamon_21.png"],  # 表情 2
+]
 [[character_images]]
-speaker = 8
+name = "春日部つむぎ"
+coord = [-27, 275]
 scale = 0.555
-coordinate = [-27, 275]
-eyes_closed = ["./materials/tsumugi_00.png", "./materials/tsumugi_01.png"]
-eyes_open = ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"]
-smile = ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"]
+faces = [
+  ["./materials/tsumugi_00.png", "./materials/tsumugi_01.png"],  # 表情 0
+  ["./materials/tsumugi_10.png", "./materials/tsumugi_11.png"],  # 表情 1
+  ["./materials/tsumugi_20.png", "./materials/tsumugi_21.png"],  # 表情 2
+]
 
 # [必須] 画面に描画するセリフテキスト (字幕) の設定を指定します
 [serifu_text_settings]
 display = true  # 字幕を表示するかしないか (false ならこれ以下のキーは全部無視)
-coordinate = [167, 345]
+coord = [167, 345]
 font_size = 26
 width = 21  # 字幕領域の横幅を文字数で指定してください
 spacing = 1  # 改行幅
-font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
-font_color = { 3 = [153, 213, 102], 8 = [233, 206, 118] }  # フォント色を話者ごとに指定
+font_path = "C:\\Windows\\Fonts\\MPLUS2-Black.ttf"
+# フォント色を話者ごとに指定してください
+font_color = { "ずんだもん" = [153, 213, 102], "春日部つむぎ" = [233, 206, 118] }
 font_color_default = [255, 255, 255]  # 1行上で指定されなかった話者のフォント色
 stroke_width = 3  # ふちどり幅 (optional)
 stroke_fill = "black"  # ふちどり色 (optional)
 
 # [フリーテキスト使用時のみ必須] 画面に描画するフリーテキストの設定を指定します
 [free_text_settings]
-coordinate = [35, 33]
+coord = [35, 33]
 font_size = 30
-font_path = "../../Downloads/MPLUS_FONTS-master/fonts/ttf/Mplus2-Black.ttf"
+font_path = "C:\\Windows\\Fonts\\MPLUS2-Black.ttf"
 font_color = [0, 0, 0]
 width = 24  # フリーテキスト領域の横幅を文字数で指定してください
 spacing = 5  # 改行幅
 # ふちどり幅, ふちどり色も任意で指定できます
 
+
+# =============== 音声設定 ===============
+# [任意] VOICEVOX FastAPI の /synthesis に渡すオプションを指定します
+# ここではずんだもんの話速を速めて抑揚を抑え、
+# またずんだもんもつむぎも音高を落ち着かせています
+[[voice_settings]]
+speaker_style = "ずんだもん:ノーマル"
+options = { speedScale = 1.2, intonationScale = 0.9, pitchScale = -0.025 }
+[[voice_settings]]
+speaker_style = "春日部つむぎ:ノーマル"
+options = { pitchScale = -0.025 }
+
+# [任意] BGM を指定します
+[bgm_settings]
+mp3_path = "MusMus-BGM-097.mp3"
+adjust = -11  # BGM の音量調整
+
+
+# =============== 台本 ===============
 # [必須] 場面のデフォルト設定を指定します
 # 各場面はこの設定への差分のみ指定します
 [shot_default]
-speaker = -1  # 話者のスタイルID (誰も話さないなら -1)
-serifu = ""  # セリフ
-silence = 0  # セリフ後無音秒数
-back_img = "./resources/sample2/back.png"  # 背景画像パス (これを指定しないときはこの下の2行必須)
-back_size = [854, 480]  # 背景サイズ (画像パス指定時は無視)
-back_color = [230, 230, 230]  # 背景色 (画像パス指定時は無視)
-front_img = ""  # 前景画像パス (任意)
-front_img_coordinate = [51, 23]  # 前景画像座標
-characters = { 3 = "eyes_open", 8 = "eyes_open" }  # 場面の登場人物及びその表情タイプ
-free_text = ""  # フリーテキスト
+back = "back.png"  # 背景画像パス
+characters = { "ずんだもん" = 1, "春日部つむぎ" = 1 }  # 場面の登場人物及びその表情
+
+# [任意] 前景画像を登録します
+[front_images]
+wlt = { path = "wlt.png", coord = [51, 23] }
+iso = { path = "iso.png", coord = [51, 23] }
+credit = { path = "credit.png", coord = [51, 23] }
 
 # [必須] 各場面のセリフや背景画像や表情などを指定していきます
 [[shots]]
 silence = 1
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "グラフ同型性のWLテストってなにー？"
-front_img = "./resources/sample2/wlt.png" 
+front_imgs = [ "wlt", ]
+
 [[shots]]
-speaker = 3
+speaker = "ずんだもん"
 serifu = "WLテストは2つのグラフが同型かどうかを判定するアルゴリズムなのだ。"
-front_img = "./resources/sample2/wlt.png" 
+front_imgs = [ "wlt", ]
+
 [[shots]]
-speaker = 3
+speaker = "ずんだもん"
 serifu = "2つのグラフが同型かどうかを判定する問題を多項式時間で解く方法は発見されていないそうなのだ。"
-front_img = "./resources/sample2/wlt.png" 
+front_imgs = [ "wlt", ]
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "<s>……</s>"
 silence = 1
-front_img = "./resources/sample2/wlt.png"
-characters = { 3 = "eyes_open", 8 = "eyes_closed" }
+front_imgs = [ "wlt", ]
+characters = { "ずんだもん" = 1, "春日部つむぎ" = 0 }
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "……2つのグラフが同型かどうかって、こっち\nの頂点からあっちの頂点への全単射であって、\n「こっちで2頂点間に枝が張られているならば、"
-front_img = "./resources/sample2/iso.png" 
+front_imgs = [ "iso", ]
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "かつそのときに限り、対応するあっちの2頂点でも枝が張られている」ものがあれば同型なんだよね？"
-front_img = "./resources/sample2/iso.png" 
+front_imgs = [ "iso", ]
+
 [[shots]]
-speaker = 3
+speaker = "ずんだもん"
 serifu = "その通りなのだ。"
-front_img = "./resources/sample2/iso.png"
+front_imgs = [ "iso", ]
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "じゃあ頂点集合どうしの全単射を全部調べて枝と整合的なものがあるかみれば同型かわかるんじゃないの？"
-front_img = "./resources/sample2/iso.png" 
+front_imgs = [ "iso", ]
+
 [[shots]]
-speaker = 3
+speaker = "ずんだもん"
 serifu = "その調べ方は階乗オーダーなのだ。多項式時間じゃないのだ。"
-front_img = "./resources/sample2/iso.png"
-characters = { 3 = "smile", 8 = "eyes_open" }
+front_imgs = [ "iso", ]
+characters = { "ずんだもん" = 2, "春日部つむぎ" = 1 }
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "あーそっかー。"
-front_img = "./resources/sample2/iso.png"
-characters = { 3 = "smile", 8 = "smile" }
+front_imgs = [ "iso", ]
+characters = { "ずんだもん" = 2, "春日部つむぎ" = 2 }
+
 [[shots]]
-speaker = 3
+speaker = "ずんだもん"
 serifu = "でも1次元のWLテストなら線形時間で2つのグラフが同型でないことを判定できるそうなのだ。"
-front_img = "./resources/sample2/iso.png"
+front_imgs = [ "iso", ]
+
 [[shots]]
-speaker = 3
+speaker = "ずんだもん"
 serifu = "ただし誤って同型と判定してしまうこともあるのだ。それでも他のアルゴリズムより広いクラスのグラフの同型性を判定できるそうなのだ。"
-front_img = "./resources/sample2/iso.png" 
+front_imgs = [ "iso", ]
+
 [[shots]]
-speaker = 8
+speaker = "春日部つむぎ"
 serifu = "それはすごいねー。"
-front_img = "./resources/sample2/iso.png" 
+front_imgs = [ "iso", ]
+
 [[shots]]
-front_img = "./resources/sample2/iso.png" 
+front_imgs = [ "iso", ]
 silence = 1
+
 [[shots]]
 silence = 5
-characters = { 3 = "smile", 8 = "smile" }
-front_img = "./resources/sample2/credit.png" 
+characters = { "ずんだもん" = 2, "春日部つむぎ" = 2 }
+front_imgs = [ "credit", ]
