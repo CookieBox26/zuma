@@ -74,7 +74,7 @@ class ImageGenerator:
             for chara_img in d['chara_imgs'].values():
                 self._paste(img_, **chara_img)
             # セリフを表示する設定であってセリフがあれば貼ります
-            if self.serifu_text_settings['display'] and shot['serifu_show'] != '':
+            if shot['display_serifu'] and shot['serifu_show'] != '':
                 self._add_serifu_text(img_, shot['serifu_show'], shot['speaker'])
             img_.save(filepath)
 

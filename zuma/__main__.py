@@ -11,7 +11,7 @@ from zuma.movie import MovieGenerator
 
 def _resolve(path_str, out_dir):
     # もしファイルパスにファイルがないなら最終生成物以下のファイルとみなします
-    # (背景画像, 前景画像, BGM 用)
+    # (背景画像, 前景画像, キャラクター画像, BGM 用)
     if not path_str:
         return path_str
     if Path(path_str).is_file():
@@ -57,18 +57,26 @@ def main():
     storyboard['out_dir_intermediate'] = storyboard['out_dir'] / 'intermediate'
     storyboard['out_dir_intermediate'].mkdir(exist_ok=True)
 
-    # 立ち絵画像設定をキャラクター名をキーにした辞書にしておきます
+    # 立ち絵画像設定をキャラクター名をキーにした辞書にしてパスを解決しておきます
     character_images = storyboard.get('character_images', [])
     storyboard['character_images'] = {c['name']: c for c in character_images}
+    for k, v in storyboard['character_images'].items():
+        for i_face in range(len(v['faces'])):
+            for i_mouth in range(len(v['faces'][i_face])):
+                path = storyboard['character_images'][k]['faces'][i_face][i_mouth]
+                storyboard['character_images'][k]['faces'][i_face][i_mouth] \
+                    = _resolve(path, storyboard['out_dir'])
 
     # (あれば) BGM のパスを解決しておきます
     if 'bgm_settings' in storyboard:
-        mp3_path = storyboard['bgm_settings']['mp3_path']
-        storyboard['bgm_settings']['mp3_path'] = _resolve(mp3_path, storyboard['out_dir'])
+        path = storyboard['bgm_settings']['mp3_path']
+        storyboard['bgm_settings']['mp3_path'] = _resolve(path, storyboard['out_dir'])
 
     # デフォルト場面に以下のキーがなければ設定しておきます
+    storyboard['shot_default'].setdefault('back', '')
     storyboard['shot_default'].setdefault('front_imgs', [])
     storyboard['shot_default'].setdefault('characters', {})
+    storyboard['shot_default'].setdefault('display_serifu', True)
     storyboard['shot_default'].setdefault('speaker', '')
     storyboard['shot_default'].setdefault('style', 'ノーマル')
     storyboard['shot_default'].setdefault('serifu', '')
@@ -86,7 +94,6 @@ def main():
         shot_.update(shot)
 
         shot_['shot_id'] = f'{i_shot:04d}'
-        # 背景画像のパスを解決しておきます
         shot_['back'] = _resolve(shot_['back'], storyboard['out_dir'])
         shot_['serifu_show'] = prepare_serifu(shot_['serifu'], flag='s')
         shot_['serifu_voice'] = prepare_serifu(shot_['serifu'], flag='v')
